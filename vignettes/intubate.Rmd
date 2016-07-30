@@ -141,12 +141,12 @@ well established  statistical procedures, receive the data as the **second**
 parameter.
 
 This *minor* detail can make a difference, actually a huge one.
-In fact, it may create a division line of two clearly separated cultures, that I will call, for the lack of better names, the "traditionalists"
-and the "modernists" (they could be the "modeldatas" and the "datamodels",
-whichever you prefer)
+In fact, it may create a division line of two clearly separated cultures, that I will call, for the lack of better names, the "traditionalists" and the "modernists".
+
+(They could be the "modeldatas" and the "datamodels".
+Whichever you prefer that does not offend anyone)
  
-The aim of `intubate` is to provide an easy alternative so nobody has to change
-the way they do things.
+The aim of `intubate` is to provide an easy alternative so nobody has to change the way they do things.
 
 If you are a "traditionalist" and you want to create your new 
 statistical package in the traditional way
