@@ -1,17 +1,8 @@
 ---
 title: "intubate"
 author: "Roberto Bertolusso"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+date: "2016-07-30"
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 The aim of `intubate` is to offer a painless way to
 add R statistical functions that use formula interface
