@@ -5,6 +5,7 @@ importFrom("gbm", "gbm")
 import("graphics")
 import("lattice")
 importFrom("leaps", "regsubsets")
+importFrom("lfe", "felm")
 import("magrittr")
 importFrom("MASS", "corresp", "glm.nb", "lda", "lm.gls", "lm.ridge",
            "loglm", "logtrans", "lqs", "polr", "qda", "rlm")

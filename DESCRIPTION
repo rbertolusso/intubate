@@ -18,6 +18,7 @@ Imports:
   graphics,
   lattice,
   leaps,
+  lfe,
   magrittr,
   MASS,
   nlme,

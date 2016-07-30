@@ -15,7 +15,7 @@
   (one line) way to to create new interfaces "on demand" 
   (see \code{\link{ntbt_function_formula_data}}) that should cover
   the vast majority of functions with formulas
-  (only 4 out of 91 interfaces implemented so far
+  (only 4 out of 92 interfaces implemented so far
   require nonstandard treatment).
   
   Currently, there are interfaces for:
@@ -32,6 +32,8 @@
   
   \code{leaps}: Regression Subset Selection
   
+  \code{lfe}: Linear Group Fixed Effects
+
   \code{MASS}: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
   

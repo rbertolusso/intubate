@@ -224,7 +224,7 @@ very suspicious if they would). The *interfaced* functions (those that are alrea
 well tested) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 91 interfaces that can be related to data science methodologies.
+`intubate` currently implements 92 interfaces that can be related to data science methodologies.
 The R packages that have interfaces implemented so far are:
 
 * `e1071`: Support Vector Machines
@@ -233,6 +233,7 @@ The R packages that have interfaces implemented so far are:
 * `graphics`: The R Graphics Package
 * `lattice`: Trellis Graphics for R
 * `leaps`: Regression Subset Selection
+* `lfe`: Linear Group Fixed Effects
 * `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
 * `nlme`: Linear and Nonlinear Mixed Effects Models

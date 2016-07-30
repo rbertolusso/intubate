@@ -84,12 +84,15 @@ get_function_name <- function(ntbt_name) {
 
 ## Functions that use *formula* followed by *data*, not needing switch.
 
-  ## graphics
-  ntbt_coplot <-
+## graphics
+ntbt_coplot <-
   
   ## lattice
   ntbt_oneway <-
   
+  ## lfe
+  ntbt_felm <-
+
   ## MASS
   ntbt_glm.nb <-
   ntbt_lm.gls <-
