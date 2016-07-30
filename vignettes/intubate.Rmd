@@ -18,6 +18,23 @@ add R statistical functions that use formula interface
 to pipelines implemented by `magrittr` with the
 operator `%>%`, without having to rely on workarounds.
 
+You can install:
+
+* the latest released version from CRAN (0.99.2) with
+
+```{r, eval=FALSE}
+install.packages("intubate")
+```
+
+* the latest development version from github with
+
+```{r, eval=FALSE}
+if (packageVersion("devtools") < 1.6) {
+  install.packages("devtools")
+}
+devtools::install_github("rbertolusso/intubate")
+```
+
 ### Pipelines
 Pipelines in R are made possible by the package `magrittr`,
 by Stefan Milton Bache and Hadley Wickham.
@@ -854,7 +871,7 @@ Iris %>%
  
  
 ### Final thoughts for new data scientists, unrelated to `intubate`.
-(Please skip it if you still believe in Santa.)
+(Please skip it if you still believe in Santa)
 
 I am *not* stating that, in
 the particular case presented at the beginning of the document, doing a
