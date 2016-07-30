@@ -130,23 +130,28 @@ The aim of `intubate` is to provide an easy alternative so nobody has to change 
 
 If you are a "traditionalist" and you want to create your new 
 statistical package in the traditional way
-(first `model` and then `data`),
-you will not find yourself at a crossroad deciding which community
-to serve, when in fact you can serve *both* communities
-without having to do anything differently to what you have done so far. You can just keep doing it in the traditional way.
-In fact, please! Keep doing it in the traditional way!
+(first `model` and then `data`), you will not potentially find yourself at a crossroad if you think you need to decide which community to serve, when in fact you can serve *both* communities without having to do anything differently to what you have done so far. You can just keep doing it in the traditional way. In fact, (please...) keep doing it in the traditional way!
 
 Why? Because *everybody* will benefit.
 
-    (Background music initially inaudible increasing in volume while
-     a panning camera starting from a small and fragile flower
-     reveals legions of smiling people holding hands...
- 
-                     And *Everybody* sing!
-
-    We aaaaare the Woooorld - ta ta ta ta taaaan -
- 
-    We aaaare the chiildreeeen - ta ta ta ta taaaan...)
+     Background music initially inaudible increases in volume
+     while the panning camera, starting from a small and fragile
+     flower, reveals legions of smiling people holding hands,
+     half with t-shirts with a capital T, the other half with
+     a capital M.
+     Everybody raises their hands - still holding - as if trying
+     to embrace the universe.
+     Camera raises, zooming out and tilting down, so everybody
+     is included in the frame, while everybody mantains eye
+     contact with the camera.
+     Sun rays break through heavy pure-white clouds.
+     Everybody opens their mouth and slowly inhales while closing
+     their eyes as if they really mean what comes next.
+     Music at full volume.
+     Everybody sing.
+                           Everybody
+         We aaaaare the Woooorld - ta ta ta ta taaaa...
+         We aaaare the chiildreeeen - ta ta ta ta taaaa...)
 
 For "traditionalist" users (as I was until a couple of months ago), nothing will have changed. In fact, they will be
 completely unaware of anything different happening at all. Just 
