@@ -11,6 +11,7 @@ Description:
   with the operator %>%.
 License: GPL (>=2)
 Imports:
+  dplyr,
   e1071,
   gam,
   gbm,
@@ -26,7 +27,8 @@ Imports:
   rpart,
   stats,
   survival,
-  tree
+  tree,
+  yrbss
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

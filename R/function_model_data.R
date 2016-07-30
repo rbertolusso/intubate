@@ -28,7 +28,7 @@ ntbt_function_model_data <-
   ## Interface for functions that use *model* followed by *data*
   function(data, model, ...) {
     Call <- match.call()
-    Call[[1]] <- as.name(gsub("ntbt_(.+)", "\\1", as.character(Call[[1]])))
+    Call[[1]] <- get_function_name(as.character(Call[[1]]))
     eval(Call, envir = parent.frame())
   }
 

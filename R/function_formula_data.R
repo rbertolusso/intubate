@@ -67,11 +67,20 @@ ntbt_function_formula_data <-
   ## and need the switch of the parameters.
   function(data, formula, ...) {
     Call <- match.call()
-    Call[[1]] <- as.name(gsub("ntbt_(.+)", "\\1", as.character(Call[[1]])))
+    Call[[1]] <- get_function_name(as.character(Call[[1]]))
     Call[2:3] <- Call[3:2]
     names(Call)[2:3] <- names(Call)[3:2]
     eval(Call, envir = parent.frame())
   }
+
+get_function_name <- function(ntbt_name) {
+  if (gsub("(ntbt_).+", "\\1", ntbt_name) != "ntbt_")
+    stop(paste0(ntbt_name, 
+                " is an invalid name.\n", 
+                "The interface should be named xtbt_<name>\n",
+                "where <name> is the name of the function to be interfaced."))
+  gsub("ntbt_(.+)", "\\1", ntbt_name)
+}
 
 ## Functions that use *formula* followed by *data*, not needing switch.
 
@@ -128,7 +137,7 @@ ntbt_function_formula_data <-
   ## and do not need the switch of the parameters.
   function(data, formula, ...) {
     Call <- match.call()
-    Call[[1]] <- as.name(gsub("ntbt_(.+)", "\\1", as.character(Call[[1]])))
+    Call[[1]] <- get_function_name(as.character(Call[[1]]))
     eval(Call, envir = parent.frame())
   }
 

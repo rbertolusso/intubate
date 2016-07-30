@@ -20,7 +20,7 @@
 ntbt_aggregate <- ## stats
   function(data, formula, FUN, ...) {
     Call <- match.call()
-    Call[[1]] <- as.name(gsub("ntbt_(.+)", "\\1", as.character(Call[[1]])))
+    Call[[1]] <- get_function_name(as.character(Call[[1]]))
     Call[2:3] <- Call[3:2]
     names(Call)[2:3] <- names(Call)[3:2]
     eval(Call, envir = parent.frame())
@@ -30,13 +30,13 @@ ntbt_gam <-    ## gam
   ntbt_glm <-  ## stats
   function(data, formula, family = gaussian, ...) {
     Call <- match.call()
-    Call[[1]] <- as.name(gsub("ntbt_(.+)", "\\1", as.character(Call[[1]])))
+    Call[[1]] <- get_function_name(as.character(Call[[1]]))
     eval(Call, envir = parent.frame())
   }
 
 ntbt_gbm <-   ## gbm
   function(data, formula, distribution = "bernoulli", ...) {
     Call <- match.call()
-    Call[[1]] <- as.name(gsub("ntbt_(.+)", "\\1", as.character(Call[[1]])))
+    Call[[1]] <- get_function_name(as.character(Call[[1]]))
     eval(Call, envir = parent.frame())
   }
