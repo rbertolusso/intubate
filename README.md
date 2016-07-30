@@ -138,6 +138,16 @@ In fact, please! Keep doing it in the traditional way!
 
 Why? Because *everybody* will benefit.
 
+    (Background music initially inaudible increasing in volume while
+     a panning camera starting from a small and fragile flower
+     reveals legions of smiling people holding hands...
+ 
+                     And *Everybody* sing!
+
+    We aaaaare the Woooorld - ta ta ta ta taaaan -
+ 
+    We aaaare the chiildreeeen - ta ta ta ta taaaan...)
+
 For "traditionalist" users (as I was until a couple of months ago), nothing will have changed. In fact, they will be
 completely unaware of anything different happening at all. Just 
 business as usual and another fantastic
@@ -820,7 +830,7 @@ your results become.
 Always remember that *there is no provision coded in that black box that is the statistical function that will protect you from
 doing a statistical analysis on the wrong data*. Nothing will be corrected
 or compensated on your behalf. For example, if the methodology is expecting a random
-sample and you are not providing one, no *magical trick* will convert
+sample (the vast majority do) and you are not providing one, no *magical trick* will convert
 your non-random-sample into one that is random and satisfies all the assumptions.
 
 (Remember I warned you to skip this section if you still believed in Santa?)
