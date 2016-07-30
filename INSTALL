@@ -1,0 +1,13 @@
+  XBRL has been developed on a Gentoo 64 bits Linux platform. 32 bits
+  systems should not make any difference. It should work in other *nix
+  variants, including OS X, with little or no modification of location
+  of include files and libraries.
+
+  Binary packages for Windows, both 32 and 64 bits, have been
+  successfully built in winbuilder (http://win-builder.r-project.org),
+  as libxml2 is part of the Rtools standard library set
+  (http://www.stats.ox.ac.uk/pub/Rtools/libs.html)
+
+  If you want to install XBRL in Windows from source, you will need to
+  have a recent version of Rtools installed. You will also need to
+  declare LIB_XML to point where libxml2 is installed.

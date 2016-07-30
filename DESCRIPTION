@@ -1,0 +1,32 @@
+Package: intubate
+Type: Package
+Title: Interface to Popular R Functions for Data Science Pipelines
+Version: 0.99.3
+Date: 2016-07-27
+Author: Roberto Bertolusso
+Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
+Description:
+  Interface to popular R functions with formulas, such as 'lm', so they
+  can be included painlessly in data science pipelines implemented by 'magrittr'
+  with the operator %>%.
+License: GPL (>=2)
+Imports:
+  e1071,
+  gam,
+  gbm,
+  graphics,
+  lattice,
+  leaps,
+  magrittr,
+  MASS,
+  nlme,
+  nnet,
+  pls,
+  randomForest,
+  rpart,
+  stats,
+  survival,
+  tree
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,0 +1,28 @@
+2016-08-27  Roberto Bertolusso  <rbertolusso@rice.edu>
+
+        * Release 0.99.3
+
+        * Interfaces to more CRAN packages ("e1071", "gbm",
+          "randomForest", "tree").
+          
+        * Functions with formula followed by data now are
+          in two groups: one in which the reversal of
+          parameters is necessary (and this is associated
+          to the helper function ntbt_function_formula_data),
+          and another in which it is not.
+          
+        * Added vignette
+
+2016-07-29  Roberto Bertolusso  <rbertolusso@rice.edu>
+
+        * Release 0.99.2
+
+        * Interfaces to recommended R packages ("lattice", "nlme",
+          "nnet", "rpart", "survival") and CRAN packages
+          ("gam", "leaps", "pls") useful for data science.
+
+2016-07-26  Roberto Bertolusso  <rbertolusso@rice.edu>
+
+        * Release 0.99.1
+
+        * Initial version. Interfaces to "stats", "graphics", and "MASS".
