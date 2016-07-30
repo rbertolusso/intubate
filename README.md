@@ -20,9 +20,7 @@ install.packages("intubate")
 * the latest development version from github with
 
 ```{r, eval=FALSE}
-if (packageVersion("devtools") < 1.6) {
-  install.packages("devtools")
-}
+# install.packages("devtools")
 devtools::install_github("rbertolusso/intubate")
 ```
 
@@ -39,6 +37,7 @@ library(dplyr)     ## Does data transformation
 library(magrittr)  ## Implements pipelines
 
 ## Data used
+# devtools::install_github("hadley/yrbss")
 library(yrbss)
 data(survey)
 ```
@@ -153,8 +152,8 @@ Why? Because *everybody* will benefit.
      Music at full volume.
      Everybody sing.
                             Everybody
-         We aaaaare the Woooorld - ta ta ta ta taaaan...
-         We aaaare the chiildreeeen - ta ta ta ta taaaan...)
+         We aaaaare the Woooorld - ta ta ta ta taaaa...
+         We aaaare the chiildreeeen - ta ta ta ta taaaa...)
 
 For "traditionalist" users (as I was until a couple of months ago), nothing will have changed. In fact, they will be
 completely unaware of anything different happening at all. Just 
@@ -194,8 +193,9 @@ as its first parameter and `formula` second, performs some function transformati
 and `data` in second place). Now `lm` can
 continue to do all the good things we are used to.
 
-(It is as if `lm` went to the beauty parlor, had a hair cut,
-and suddently looks "modern")
+(It is as if `lm` couldn't take anymore being accused by some
+ of looking old. So it went to the beauty parlor, had a hair
+ cut, and suddently looks "modern" and now is popular again.)
 
 All the interfaces start with `ntbt_` followed by the name of the *interfaced* function.
 
