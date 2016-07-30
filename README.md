@@ -95,7 +95,7 @@ to continue to devote your efforts in reading this document.
 `intubate` is not for you. I am happy we could establish this in such little time.)
 
 But what if, in addition to the data transformation, you
-would also like to perform your data analysis under the
+would also like to perform your data modeling/analysis under the
 same pipeline paradigm (by adding lm to it),
 which would impart notation consistency and
 would avoid the need of creating the temporary object?
@@ -810,7 +810,7 @@ after all, in the case of linear regression
 the fitting procedure is no other thing than an optimization technique
 (minimization of the sum of squared residuals) completely unrelated to
 statistics, so why can't you
-just find the line of best fit for the sake of it even if it doesn't make any sense and
+just find the line of best fit for the sake of it, even if it doesn't make any sense and
 does not represent anything? Touché, you got me! (You are good!) You can, and nobody is
 going to throw you in jail for that.
 
@@ -823,9 +823,10 @@ an observation?
 
 Then you should probably start
 asking yourself, *before* doing anything, if the assumptions of the linear regression *model* are met or not,
-and if not how bad is the violation of such assumptions (what about
-independence of the Y? Do they form a time series?
-Is the error structure normally distributed with mean zero and constant variance?).
+and if not, how bad is the violation of such assumptions (what about
+independence of the Y? Are you sure they don't form a time series?
+Are the errors iid normally distributed with mean zero and constant variance? Are you sure the error variance doesn't change when you
+change the values of the independent variable?).
 
 The statistical function (every statistical function) will only perform calculations and spit out a
 collection of numerical values whose interpretation will *only* make sense
