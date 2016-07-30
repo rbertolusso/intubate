@@ -595,7 +595,7 @@ Iris %$%
 ```
 
 **Finally!** But... we had to specify all the variables 
-(and they may be a lot), and use `%$%` instead of `%>`.
+(and they may be a lot), and use `%$%` instead of `%>%`.
 
 There is still another workaround that allows
 these functions to be used directly in a pipeline.
