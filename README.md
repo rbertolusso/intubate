@@ -136,24 +136,25 @@ Why? Because *everybody* will benefit.
 
      EXT. BUCOLIC PASTURE - EARLY MORNING
      
-     Background music initially inaudible increases in volume
-     while the panning camera, starting from a small and fragile
-     flower, reveals legions of smiling people holding hands,
-     half with t-shirts with a capital T, the other half with
-     a capital M.
-     Everybody raises their hands - still holding - as if trying
-     to embrace the universe.
-     Camera raises, zooming out and tilting down, so everybody
-     is included in the frame, while everybody mantains eye
-     contact with the camera.
+     Background music initially inaudible slowly increases in
+     volume while the panning camera, starting from a small
+     and fragile flower, reveals legions of smiling people
+     holding hands, half dress t-shirts with a capital T, the
+     other half with a capital M.
+     Everybody raises their arms to the sky - still holding hands -
+     as if trying to embrace the universe.
+     Camera slowly raises, zooming out and tilting down, making
+     sure everybody is included in the frame, while everybody
+     mantains eye contact with the camera.
      Sun rays break through heavy pure snow-white clouds.
      Everybody opens their mouth and slowly inhales while closing
      their eyes as if they really mean what comes next.
+     (This is critical. Make sure it looks credible.)
      Music at full volume.
      Everybody sing.
                             Everybody
-         We aaaaare the Woooorld - ta ta ta ta taaaa...
-         We aaaare the chiildreeeen - ta ta ta ta taaaa...)
+         We aaaaare the Woooorld - ta ta ta ta taaaan...
+         We aaaare the chiildreeeen - ta ta ta ta taaaan...)
 
 For "traditionalist" users (as I was until a couple of months ago), nothing will have changed. In fact, they will be
 completely unaware of anything different happening at all. Just 
