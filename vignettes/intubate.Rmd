@@ -890,7 +890,7 @@ they were doing what they were supposed to do.)
 
 Sure, you may argue that,
 after all, in the case of linear regression
-the fitting procedure is no other thing of that an optimization technique
+the fitting procedure is no other thing than an optimization technique
 (minimization of the sum of squared residuals) completely unrelated to
 statistics, so why can't you
 just find the line of best fit for the sake of it even if it doesn't make any sense and
