@@ -41,9 +41,6 @@ library(magrittr)  ## Implements pipelines
 ## Data used
 library(yrbss)
 data(survey)
-## Let's show the last 10 rows of the data
-survey[nrow(survey) - 9:0,
-       c("year", "sex", "stheight", "stweight")]
 ```
 
 This *machinery* allows to perform data transformations
