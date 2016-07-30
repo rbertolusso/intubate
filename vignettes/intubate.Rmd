@@ -140,7 +140,7 @@ statistical package in the traditional way
 you will not find yourself at a crossroad deciding which community
 to serve, when in fact you can serve *both* communities
 without having to do anything differently to what you have done so far. You can just keep doing it in the traditional way.
-In fact, please! keep doing it in the traditional way!
+In fact, please! Keep doing it in the traditional way!
 
 Why? Because *everybody* will benefit.
 
@@ -330,7 +330,7 @@ tmp %>%
 
 Adding interfaces to the `intubate` package also represent one-liners for me.
 
-(Did you think I would work more that you?)
+(Did you think I would work more than you?)
 
 The time consuming part on my side is to prepare
 the documentation, that certainly needs improvement, and make sure
@@ -717,7 +717,8 @@ do *this* to *yourself*.
        structure passed by the pipe. Yes, it is called `.`!)
 
  Undoubtedly, there may be more elegant workarounds that
- I am unaware of. But the point is that they are, well,
+ I am unaware of. But the point is that, no matter how elegant,
+ they will be, well...
  *still* workarounds. You want to *force* unbehaving functions
  into something that is unnatural to them:
  
@@ -727,13 +728,13 @@ do *this* to *yourself*.
 * if you wanted to use `%>%` you had to use
  also `which` and include `.` as the second parameter.
  
- Does this sound right to you?
+Does this sound right to you?
  
- I certainly do not want to be distracted implementing workarounds
+I certainly do not want to be distracted implementing workarounds
  when I am supposed to concentrate in producing 
  the right statistical analysis.
 
- The idea of avoiding such "hacks"
+The idea of avoiding such "hacks"
  motivated me to write `intubate`.
 
 (That was low, please! Were you really *that* desperate
@@ -853,7 +854,7 @@ Iris %>%
  
  
 ### Final thoughts for new data scientists, unrelated to `intubate`.
-(After all, I am a statistician... Please skip it if you still believe in Santa.)
+(Please skip it if you still believe in Santa.)
 
 I am *not* stating that, in
 the particular case presented at the beginning of the document, doing a
