@@ -165,7 +165,7 @@ continue to do all the good things we are used to.
 (It is as if `lm` went to the beauty parlor, had a hair cut,
 and suddently looks "modern")
 
-All the interfaces start with `ntbt_` followed by the name of *interfaced* function.
+All the interfaces start with `ntbt_` followed by the name of the *interfaced* function.
 
 Just in case, worry not! The *interfaces* do not perform any statistical computations (you should be
 very suspicious if they would). The *interfaced* functions (those that are already
@@ -324,7 +324,7 @@ only have dependencies on `base`. The implementation is extremely lean.
 *I have a vested interest in making* `intubate` *a success
              for egotistical purposes. As such, I may
              be overstating the strengths and understating the
-             weaknesses (weaknesses?? which weaknesses??) of *`intubate`.
+             weaknesses (weaknesses?? which weaknesses??) of* `intubate`.
              *More than a discussion, this can be easily considered
              like a sales pitch for a product of dubious quality.*
              
