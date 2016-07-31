@@ -13,16 +13,22 @@ You can install:
 
 * the latest released version from CRAN (0.99.2) with
 
-```{r, eval=FALSE}
+```{r}
 install.packages("intubate")
 ```
 
 * the latest development version from github with
 
-```{r, eval=FALSE}
+```{r}
 # install.packages("devtools")
 devtools::install_github("rbertolusso/intubate")
 ```
+
+#### See also
+The [*setter*](https://bitbucket.org/richierocks/setter)
+package contains mutators to set attributes of variables,
+that work well in a pipe (much like `stats::setNames())`.
+
 
 ### Pipelines
 Pipelines in R are made possible by the package `magrittr`,
@@ -30,8 +36,7 @@ by Stefan Milton Bache and Hadley Wickham.
 
 `dplyr`, by Hadley Wickham, Romain Francois, and RStudio,
 is used here to illustrate data transformation.
-
-```{r, message=FALSE, results='hide'}
+```{r}
 ## Packages needed
 library(dplyr)     ## Does data transformation
 library(magrittr)  ## Implements pipelines
