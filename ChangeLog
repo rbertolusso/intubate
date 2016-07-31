@@ -18,7 +18,10 @@
           
         * Feature request: support for lfe::felm #3 (kendonB)
           Interface to "felm" in "lfe"is there now.
-
+          
+        * ntbt_function_* functions fail if you use :: #5 (richierocks)
+          Fixed.
+        
 2016-07-29  Roberto Bertolusso  <rbertolusso@rice.edu>
 
         * Release 0.99.2

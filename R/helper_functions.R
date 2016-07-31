@@ -16,6 +16,10 @@
 ## along with intubate. If not, see <http://www.gnu.org/licenses/>.
 
 get_function_name <- function(ntbt_name) {
+  ## There are two possibilities:
+  ## 1) ntbt_<name>           (1 element  => ntbt_<name>)
+  ## 2) intubate::ntbt_<name> (3 elements => ::, intubate, ntbt_<name> )
+  ntbt_name <- ntbt_name[length(ntbt_name)]
   if (gsub("(ntbt_).+", "\\1", ntbt_name) != "ntbt_")
     stop(paste0(ntbt_name, 
                 " is an invalid name.\n", 
@@ -23,3 +27,13 @@ get_function_name <- function(ntbt_name) {
                 "where <name> is the name of the function to be interfaced."))
   as.name(gsub("ntbt_(.+)", "\\1", ntbt_name))
 }
+
+#get_function_name <- function(ntbt_name) {
+#  if (gsub("(intubate::)(ntbt_).+", "\\1", ntbt_name) != "ntbt_" &&
+#      gsub("(ntbt2_).+", "\\1", ntbt_name) != "ntbt2_")
+#    stop(paste0(ntbt_name, 
+#                " is an invalid name.\n", 
+#                "The interface should be named xtbt_<name>\n",
+#                "where <name> is the name of the function to be interfaced."))
+#  as.name(gsub("ntbt2?_(.+)", "\\1", ntbt_name))
+#}

@@ -65,15 +65,16 @@ ntbt_function_formula_data <-
   ntbt_svm <-
 
   ## Interface for functions that use *formula* followed by *data*,
-  ## and need the switch of the parameters.
+  ## and need to physically switch parameters.
   function(data, formula, ...) {
     Call <- match.call()
     Call[[1]] <- get_function_name(as.character(Call[[1]]))
-    Call[2:3] <- Call[3:2]
-    names(Call)[2:3] <- names(Call)[3:2]
+    print(Call[[1]])
+    Call[2:3] <- Call[3:2]                  ## Switching parameters
+    names(Call)[2:3] <- names(Call)[3:2]    ## Switching names
     if (is.null(ret <- eval(Call, envir = parent.frame())))
       return (invisible(data))
-    ret  
+    ret
   }
 
 ## Functions that use *formula* followed by *data*, not needing switch.
@@ -131,7 +132,7 @@ ntbt_coplot <-
   ntbt_tree <-
   
   ## Interface for functions that use *formula* followed by *data*,
-  ## and do not need the switch of the parameters.
+  ## and do not need the to physically switch parameters.
   function(data, formula, ...) {
     Call <- match.call()
     Call[[1]] <- get_function_name(as.character(Call[[1]]))
