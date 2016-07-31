@@ -22,7 +22,7 @@ function_x_data <- function(x, data, ...) data
 ntbt_function_x_data <-
   
   ## graphics
-  ntbt_stripchart <-
+#  ntbt_stripchart <-
 
   ## lattice
   ntbt_barchart <-
@@ -42,7 +42,7 @@ ntbt_function_x_data <-
   ntbt_xyplot <-
 
   ## leaps
-  ntbt_regsubsets <-
+#  ntbt_regsubsets <-
   
   ## Interface for functions that use *x* followed by *data*.
   function(data, x, ...) {

@@ -27,10 +27,10 @@ ntbt_function_formula_data <-
   ntbt_cdplot <-
   ntbt_mosaicplot <-
   ntbt_pairs <-
-  ntbt_plot <-
+#  ntbt_plot <-
   ntbt_spineplot <-
   ntbt_sunflowerplot <-
-  ntbt_text <-
+#  ntbt_text <-
   
   ## MASS
   ntbt_corresp <-
@@ -47,7 +47,7 @@ ntbt_function_formula_data <-
   ## stats
   ntbt_ansari.test <-
   ntbt_bartlett.test <-
-  ntbt_cor.test <-
+#  ntbt_cor.test <-
   ntbt_fligner.test <-
   ntbt_friedman.test <-
   ntbt_kruskal.test <-
@@ -110,7 +110,7 @@ ntbt_coplot <-
   ## stats
   ntbt_aov <-
   ntbt_ftable <-
-  ntbt_lm <-
+#  ntbt_lm <-
   ntbt_loess <-
   ntbt_model.frame <-
   ntbt_nls <-

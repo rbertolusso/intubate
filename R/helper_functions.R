@@ -23,7 +23,7 @@ get_function_name <- function(ntbt_name) {
   if (gsub("(ntbt_).+", "\\1", ntbt_name) != "ntbt_")
     stop(paste0(ntbt_name, 
                 " is an invalid name.\n", 
-                "The interface should be named xtbt_<name>\n",
+                "The interface should be named ntbt_<name>\n",
                 "where <name> is the name of the function to be interfaced."))
   as.name(gsub("ntbt_(.+)", "\\1", ntbt_name))
 }
