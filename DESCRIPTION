@@ -28,8 +28,7 @@ Imports:
   rpart,
   stats,
   survival,
-  tree,
-  yrbss
+  tree
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

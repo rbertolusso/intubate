@@ -18,5 +18,4 @@ import("stats")
 importFrom("survival", "cch", "coxph", "finegray", "pyears",
            "survConcordance", "survexp", "survfit", "survSplit")
 importFrom("tree", "tree")
-importFrom("yrbss", "survey")
 exportPattern("^[[:alpha:]]+")

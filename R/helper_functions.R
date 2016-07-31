@@ -15,20 +15,11 @@
 ## You should have received a copy of the GNU General Public License
 ## along with intubate. If not, see <http://www.gnu.org/licenses/>.
 
-function_fixed_data <- function(fixed, data, ...) data
-
-## Functions that use *fixed* followed by *data*.
-
-ntbt_function_fixed_data <-
-  
-  ## nlme
-  ntbt_lme <-
-  
-  ## Interface for functions that use *fixed* followed by *data*.
-  function(data, fixed, ...) {
-    Call <- match.call()
-    Call[[1]] <- get_function_name(as.character(Call[[1]]))
-    if (is.null(ret <- eval(Call, envir = parent.frame())))
-      return (invisible(data))
-    ret  
-  }
+get_function_name <- function(ntbt_name) {
+  if (gsub("(ntbt_).+", "\\1", ntbt_name) != "ntbt_")
+    stop(paste0(ntbt_name, 
+                " is an invalid name.\n", 
+                "The interface should be named xtbt_<name>\n",
+                "where <name> is the name of the function to be interfaced."))
+  as.name(gsub("ntbt_(.+)", "\\1", ntbt_name))
+}

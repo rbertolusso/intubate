@@ -204,7 +204,7 @@ very suspicious if they would). The *interfaced* functions (those that are alrea
 well tested) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 92 interfaces that can be related to data science methodologies.
+`intubate` currently implements 93 interfaces that can be related to data science methodologies.
 The R packages that have interfaces implemented so far are:
 
 * `e1071`: Support Vector Machines
@@ -229,8 +229,9 @@ The aim is to continue to add interfaces to most methodologies
   used in data science.
 
 Again, the important and sensitive work is performed by the functions provided
-in those well tested packages. `intubate` is no more that a middleman
-that takes credit for other people's honest work.
+in those well tested packages.
+
+`intubate` is simply a middleman that takes credit for other people's honest work.
 
 ### Interfaces "on demand"
 
@@ -240,7 +241,7 @@ What if you would like to have an interface to a non pipeline-aware function
 that is not currently implemented by `intubate`?
 
 In a vast majority of cases of R functions that have a formula interface,
-as it is the case in 87 out of 91 of the functions interfaced so far,
+as it is the case in 89 out of 93 of the functions interfaced so far,
 you can create your own interface "on demand".
 
 To help you in the process,

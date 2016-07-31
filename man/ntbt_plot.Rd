@@ -3,7 +3,7 @@
 \title{Interface to plot for data science pipelines.}
 \description{
   \code{ntbt_plot} is an interface to \code{graphics::\link{plot}}
-  (Generic X-Y Plotting) that can be used
+  (Formula Notation for Scatterplots) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
 ntbt_plot(data, formula, ...)
@@ -18,7 +18,7 @@ ntbt_plot(data, formula, ...)
   part of a pipeline. It then calls \code{plot}.
 }
 \value{
-  Object returned by \code{\link{plot}}.
+  \code{data}.
 }
 \author{
 Roberto Bertolusso
@@ -39,12 +39,20 @@ airquality \%>\%
   ntbt_plot(Ozone ~ Wind, pch = as.character(Month))
   
 op <- par(mfrow = c(2,1))
-airquality \%T>\%  ## Note the tee operator.
+airquality \%>\%  ## Note: we are *not* using the tee operator.
   ntbt_plot(Ozone ~ Wind, pch = as.character(Month)) \%>\%
   ntbt_plot(Ozone ~ Wind, pch = as.character(Month),
-            subset = Month != 7)
+            subset = Month != 7) \%>\%
+  head()          ## Yes! We still have the data to do what we want!
 par(op)
 
+## text.formula() can be very natural:
+within(warpbreaks, {
+    time <- seq_along(breaks)
+    W.T <- wool:tension
+}) \%>\%
+  ntbt_plot(breaks ~ time, type = "b") \%>\%
+  ntbt_text(breaks ~ time, label = W.T, col = 1 + as.integer(wool))
 }
 \keyword{intubate}
 \keyword{magrittr}
