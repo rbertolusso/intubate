@@ -21,9 +21,9 @@ function_model_data <- function(model, data, ...) data
 ntbt_function_model_data <-
   
   ## nlme
-  ntbt_gls <-
-  ntbt_nlme <-
-  ntbt_nlsList <-
+#  ntbt_gls <-
+#  ntbt_nlme <-
+#  ntbt_nlsList <-
   
   ## Interface for functions that use *model* followed by *data*
   function(data, model, ...) {

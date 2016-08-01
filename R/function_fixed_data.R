@@ -22,7 +22,7 @@ function_fixed_data <- function(fixed, data, ...) data
 ntbt_function_fixed_data <-
   
   ## nlme
-  ntbt_lme <-
+#  ntbt_lme <-
   
   ## Interface for functions that use *fixed* followed by *data*.
   function(data, fixed, ...) {

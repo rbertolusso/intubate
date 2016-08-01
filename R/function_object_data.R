@@ -21,18 +21,18 @@ function_object_data <- function(object, data, ...) data
 ntbt_function_object_data <-
   
   ## lattice
-  ntbt_tmd <-
+#  ntbt_tmd <-
   
   ## MASS
-  ntbt_logtrans <-
+#  ntbt_logtrans <-
   
   ## nlme <-
-  ntbt_lmList <-
+#  ntbt_lmList <-
 
   ## stats
-  ntbt_alias <-
-  ntbt_getInitial <-
-  ntbt_model.matrix <-
+#  ntbt_alias <-
+#  ntbt_getInitial <-
+#  ntbt_model.matrix <-
 
   ## Interface for functions that use *object* followed by *data*
   function(data, object, ...) {

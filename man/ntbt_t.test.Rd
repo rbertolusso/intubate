@@ -6,16 +6,14 @@
   (Student's t-Test) so it can be used
   in a pipeline as implemented by \code{magrittr}.}
 \usage{
-ntbt_t.test(data, formula, ...)
+ntbt_t.test(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{t.test}}.}
 }
 \details{
-  ntbt_t.test reverses the order of \code{data} and \code{formula}, so it can be
-  used in a pipeline. It then calls \code{t.test}.
+  ntbt_t.test calls \code{t.test}.
 }
 \value{
   Object returned by \code{\link{t.test}}.

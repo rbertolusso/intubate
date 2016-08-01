@@ -6,17 +6,14 @@
   (Compute Summary Statistics of Data Subsets) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_aggregate(data, formula, FUN, ...)
+ntbt_aggregate(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
-  \item{FUN}{a function to compute the summary statistics which can be applied to all data subsets.}
   \item{...}{Other arguments passed to \code{\link{aggregate}}.}
 }
 \details{
-  ntbt_aggregate reverses the order of \code{data} and \code{formula}, so it can be
-  used in a pipeline. It then calls \code{\link{aggregate}}.
+  ntbt_aggregate calls \code{\link{aggregate}}.
 }
 \value{
   Object returned by \code{\link{aggregate}}.

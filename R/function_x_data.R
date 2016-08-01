@@ -25,21 +25,21 @@ ntbt_function_x_data <-
 #  ntbt_stripchart <-
 
   ## lattice
-  ntbt_barchart <-
-  ntbt_cloud <-
-  ntbt_bwplot <-
-  ntbt_contourplot <-
-  ntbt_dotplot <-
-  ntbt_densityplot <-
-  ntbt_histogram <-
-  ntbt_levelplot <-
-  ntbt_parallelplot <-
-  ntbt_qq <-
-  ntbt_qqmath <-
-  ntbt_splom <-
-  ntbt_stripplot <-
-  ntbt_wireframe <-
-  ntbt_xyplot <-
+#  ntbt_barchart <-
+#  ntbt_cloud <-
+#  ntbt_bwplot <-
+#  ntbt_contourplot <-
+#  ntbt_dotplot <-
+#  ntbt_densityplot <-
+#  ntbt_histogram <-
+#  ntbt_levelplot <-
+#  ntbt_parallelplot <-
+#  ntbt_qq <-
+#  ntbt_qqmath <-
+#  ntbt_splom <-
+#  ntbt_stripplot <-
+#  ntbt_wireframe <-
+#  ntbt_xyplot <-
 
   ## leaps
 #  ntbt_regsubsets <-

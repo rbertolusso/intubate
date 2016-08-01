@@ -10,13 +10,10 @@ ntbt_gam(data, formula, family=gaussian, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
-  \item{family}{See \code{link{family}} for details of family functions.}
   \item{...}{Other arguments passed to \code{\link{gam}}.}
 }
 \details{
-  ntbt_gam reverses the order of \code{data} and \code{formula}, so it can be
-  used in a pipeline. It then calls \code{\link{gam}}.
+  ntbt_gam calls \code{\link{gam}}.
 }
 \value{
   Object returned by \code{\link{gam}}.

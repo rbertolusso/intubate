@@ -17,7 +17,7 @@
 
 ## Functions that need specific manipulations.
 
-ntbt_aggregate <- ## stats
+# ntbt_aggregate <- ## stats
   function(data, formula, FUN, ...) {
     Call <- match.call()
     Call[[1]] <- get_function_name(as.character(Call[[1]]))
@@ -26,15 +26,15 @@ ntbt_aggregate <- ## stats
     eval(Call, envir = parent.frame())
   }
 
-ntbt_gam <-    ## gam
-  ntbt_glm <-  ## stats
+#ntbt_gam <-    ## gam
+#  ntbt_glm <-  ## stats
   function(data, formula, family = gaussian, ...) {
     Call <- match.call()
     Call[[1]] <- get_function_name(as.character(Call[[1]]))
     eval(Call, envir = parent.frame())
   }
 
-ntbt_gbm <-   ## gbm
+#ntbt_gbm <-   ## gbm
   function(data, formula, distribution = "bernoulli", ...) {
     Call <- match.call()
     Call[[1]] <- get_function_name(as.character(Call[[1]]))

@@ -23,46 +23,46 @@ function_formula_data <- function(formula, data, ...) data
 ntbt_function_formula_data <-
 
   ## graphics
-  ntbt_boxplot <-
-  ntbt_cdplot <-
-  ntbt_mosaicplot <-
-  ntbt_pairs <-
+#  ntbt_boxplot <-
+#  ntbt_cdplot <-
+#  ntbt_mosaicplot <-
+#  ntbt_pairs <-
 #  ntbt_plot <-
-  ntbt_spineplot <-
-  ntbt_sunflowerplot <-
+#  ntbt_spineplot <-
+#  ntbt_sunflowerplot <-
 #  ntbt_text <-
   
   ## MASS
-  ntbt_corresp <-
-  ntbt_lda <-
-  ntbt_qda <-
-  ntbt_rlm <-
+#  ntbt_corresp <-
+#  ntbt_lda <-
+#  ntbt_qda <-
+#  ntbt_rlm <-
   
   ## nnet
-  ntbt_nnet <-
+#  ntbt_nnet <-
 
   ## randomForest
-  ntbt_randomForest <-
+#  ntbt_randomForest <-
   
   ## stats
-  ntbt_ansari.test <-
-  ntbt_bartlett.test <-
+#  ntbt_ansari.test <-
+#  ntbt_bartlett.test <-
 #  ntbt_cor.test <-
-  ntbt_fligner.test <-
-  ntbt_friedman.test <-
-  ntbt_kruskal.test <-
-  ntbt_lqs <-
-  ntbt_mood.test <-
-  ntbt_ppr <-
-  ntbt_prcomp <-
-  ntbt_princomp <-
-  ntbt_quade.test <-
-  ntbt_t.test <-
-  ntbt_var.test <-
-  ntbt_wilcox.test <-
+#  ntbt_fligner.test <-
+#  ntbt_friedman.test <-
+#  ntbt_kruskal.test <-
+#  ntbt_lqs <-
+#  ntbt_mood.test <-
+#  ntbt_ppr <-
+#  ntbt_prcomp <-
+#  ntbt_princomp <-
+#  ntbt_quade.test <-
+#  ntbt_t.test <-
+#  ntbt_var.test <-
+#  ntbt_wilcox.test <-
   
   ## e1071
-  ntbt_svm <-
+#  ntbt_svm <-
 
   ## Interface for functions that use *formula* followed by *data*,
   ## and need to physically switch parameters.
@@ -80,56 +80,56 @@ ntbt_function_formula_data <-
 ## Functions that use *formula* followed by *data*, not needing switch.
 
 ## graphics
-ntbt_coplot <-
+#ntbt_coplot <-
   
   ## lattice
-  ntbt_oneway <-
+#  ntbt_oneway <-
   
   ## lfe
-  ntbt_felm <-
+#  ntbt_felm <-
 
   ## MASS
-  ntbt_glm.nb <-
-  ntbt_lm.gls <-
-  ntbt_lm.ridge <-
-  ntbt_loglm <-
-  ntbt_polr <-
+#  ntbt_glm.nb <-
+#  ntbt_lm.gls <-
+#  ntbt_lm.ridge <-
+#  ntbt_loglm <-
+#  ntbt_polr <-
   
   ## nnet
-  ntbt_multinom <-
+#  ntbt_multinom <-
 
   ## pls
-  ntbt_cppls <-
-  ntbt_mvr <-
-  ntbt_pcr <-
-  ntbt_plsr <-
+#  ntbt_cppls <-
+#  ntbt_mvr <-
+#  ntbt_pcr <-
+#  ntbt_plsr <-
   
   ## rpart
-  ntbt_rpart <-
+#  ntbt_rpart <-
   
   ## stats
-  ntbt_aov <-
-  ntbt_ftable <-
+#  ntbt_aov <-
+#  ntbt_ftable <-
 #  ntbt_lm <-
-  ntbt_loess <-
-  ntbt_model.frame <-
-  ntbt_nls <-
-  ntbt_oneway.test <-
-  ntbt_replications <-
-  ntbt_xtabs <-
+#  ntbt_loess <-
+#  ntbt_model.frame <-
+#  ntbt_nls <-
+#  ntbt_oneway.test <-
+#  ntbt_replications <-
+#  ntbt_xtabs <-
   
   ## survival
-  ntbt_cch <-
-  ntbt_coxph <-
-  ntbt_finegray <-
-  ntbt_pyears <-
-  ntbt_survConcordance <-
-  ntbt_survexp <-
-  ntbt_survfit <-
-  ntbt_survSplit <-
+#  ntbt_cch <-
+#  ntbt_coxph <-
+#  ntbt_finegray <-
+#  ntbt_pyears <-
+#  ntbt_survConcordance <-
+#  ntbt_survexp <-
+#  ntbt_survfit <-
+#  ntbt_survSplit <-
   
   ## tree
-  ntbt_tree <-
+#  ntbt_tree <-
   
   ## Interface for functions that use *formula* followed by *data*,
   ## and do not need the to physically switch parameters.
