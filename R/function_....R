@@ -20,8 +20,8 @@ function_... <- function(...) ..1
 ## Functions with any number of parameters. It is suitable for
 ## functions such as print() or View(), that return NULL.
 ntbt_function_... <-
-  ntbt_print <- 
-  ntbt_View <-
+#  ntbt_print <- 
+#  ntbt_View <-
   
   function(...) {
     Call <- match.call()
@@ -38,17 +38,17 @@ ntbt_function_data_... <-
   ##    I will try some cases and we will see.
   ##    This may be the definitive solution.
 
-  ntbt_cat <-
+#  ntbt_cat <-
   
                       ##           Before
-  ntbt_cor.test <-    ## formula_data, switching
+#  ntbt_cor.test <-    ## formula_data, switching
 
-  ntbt_lm <-          ## formula_data, no switching
-  ntbt_plot <-
-  ntbt_text <-
+#  ntbt_lm <-          ## formula_data, no switching
+#  ntbt_plot <-
+#  ntbt_text <-
   
-  ntbt_regsubsets <-  ## x_data
-  ntbt_stripchart <-
+#  ntbt_regsubsets <-  ## x_data
+#  ntbt_stripchart <-
   
   ## The Lord of the Rings?
   ## This seems to be the only needed implementation
