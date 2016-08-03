@@ -19,6 +19,15 @@ function_data <- function(data, ...) data
 
 ntbt_function_data <-
   
+  ## e1071
+  ntbt_svm <-
+  
+  ## gam
+  ntbt_gam <-
+  
+  ## gbm
+  ntbt_gbm <-
+  
   ## graphics
   ntbt_boxplot <-
   ntbt_cdplot <-
@@ -28,24 +37,30 @@ ntbt_function_data <-
   ntbt_plot <-
   ntbt_spineplot <-
   ntbt_sunflowerplot <-
+  ntbt_stripchart <-
   ntbt_text <-
   
-  ## nnet
-  ntbt_multinom <-
-  ntbt_nnet <-
-  
-  
-  ## randomForest
-  ntbt_randomForest <-
-  
-  
+  ## lattice
+  ntbt_barchart <-
+  ntbt_cloud <-
+  ntbt_bwplot <-
+  ntbt_contourplot <-
+  ntbt_dotplot <-
+  ntbt_densityplot <-
+  ntbt_histogram <-
+  ntbt_levelplot <-
+  ntbt_oneway <-
+  ntbt_parallelplot <-
+  ntbt_qq <-
+  ntbt_qqmath <-
+  ntbt_splom <-
+  ntbt_stripplot <-
+  ntbt_wireframe <-
+  ntbt_xyplot <-
 
-
-  
-  
-    
-  ## e1071
-  ntbt_svm <-
+  ## leaps
+  ntbt_regsubsets <-
+  ntbt_tmd <-
   
   ## lfe
   ntbt_felm <-
@@ -61,6 +76,17 @@ ntbt_function_data <-
   ntbt_polr <-
   ntbt_qda <-
   ntbt_rlm <-
+  
+  ## nlme
+  ntbt_gls <-
+  ntbt_lme <-
+  ntbt_lmList <-
+  ntbt_nlme <-
+  ntbt_nlsList <-
+  
+  ## nnet
+  ntbt_multinom <-
+  ntbt_nnet <-
 
   ## pls
   ntbt_cppls <-
@@ -68,10 +94,12 @@ ntbt_function_data <-
   ntbt_pcr <-
   ntbt_plsr <-
   
+  ## randomForest
+  ntbt_randomForest <-
+  
   ## rpart
   ntbt_rpart <-
   
-
   ## stats
   ntbt_aggregate <-
   ntbt_alias <-
@@ -103,7 +131,6 @@ ntbt_function_data <-
   ntbt_wilcox.test <-
   ntbt_xtabs <-
   
-  
   ## survival
   ntbt_cch <-
   ntbt_coxph <-
@@ -117,77 +144,40 @@ ntbt_function_data <-
   ## tree
   ntbt_tree <-
   
-  ## graphics
-  ntbt_stripchart <-
-  
-  ## lattice
-  ntbt_barchart <-
-  ntbt_cloud <-
-  ntbt_bwplot <-
-  ntbt_contourplot <-
-  ntbt_dotplot <-
-  ntbt_densityplot <-
-  ntbt_histogram <-
-  ntbt_levelplot <-
-  ntbt_oneway <-
-  ntbt_parallelplot <-
-  ntbt_qq <-
-  ntbt_qqmath <-
-  ntbt_splom <-
-  ntbt_stripplot <-
-  ntbt_wireframe <-
-  ntbt_xyplot <-
-
-  
-  ## leaps
-  ntbt_regsubsets <-
-  ntbt_tmd <-
-  
-  
-  ## nlme
-  ntbt_gls <-
-  ntbt_lme <-
-  ntbt_lmList <-
-  ntbt_nlme <-
-  ntbt_nlsList <-
-
-  ## gam
-  ntbt_gam <-
-  
-  ## gbm
-  ntbt_gbm <-
-
-  ## The function below seems to address, for now,
-  ## *all* the cases that 0.99.2 was able to
-  ## (functions with a formula, with whichever
-  ## name variant the formula has).
-  ## Moreover, now it seems it can address
-  ## non-formula variants too. Needs testing.
   function(data, ...) {
-    Call <- match.call(expand.dots = FALSE)
-
-    ## If there is a formula, it is assumed following data.
-    formula <- as.character(Call$...[[1]])
-    ## Trying to determine if it is a formula.
-    is_formula <- (formula[1] == "~" && length(formula) >= 2 && length(formula) <= 3)
-    ## Better way?
-
+    preCall <- match.call(expand.dots = FALSE)
+    
     Call <- match.call(expand.dots = TRUE)
     Call[[1]] <- get_calling_name("ntbt", as.character(Call[[1]]))
-
+    Call[[2]] <- as.name("data")
+    
+    is_formula <- try(inherits(as.formula(as.character(preCall$...[[1]])),
+                               "formula"), silent = TRUE)
+    if (class(is_formula) == "try-error")
+      is_formula <- FALSE
+    
     if (is_formula) {
-      Call[[2]] <- as.name("data")
+      ## cat("Formula\n")
       Call[2:3] <- Call[3:2]             ## Switch parameters
       names(Call)[2:3] <- c("", "data")  ## Leave formula unnamed
       ret <- eval(Call)
-    } else  {
+    } else if (length(preCall$...) > 0)  {
+      ## cat("Rest of cases\n")
       ret <- with(data, eval(Call[-2]))  ## Need to remove data [-2]
+    } else  {
+      ## cat("No arguments other that data\n")
+      names(Call)[[2]] <- ""             ## Leave data unnamed
+      print(Call)
+      ret <- eval(Call)
     }
-    if (!is.null(ret))
-      return(ret)
+    if (!is.null(ret)) {
+      if (withVisible(ret)$visible)
+        return (ret)
+      else
+        data <- ret
+    }
     invisible(data) ## If no value returned, forward data invisibly
   }
-
 
 get_calling_name <- function(prefix, full_name) {
   ## There are two possibilities:

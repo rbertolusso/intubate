@@ -42,11 +42,17 @@ ntbt_legend <- ntbt_cat <-
   (Two steps to create an interface seemed excessive,
    too much, no-way dude,
    especially with one of them requiring a rational decision.
-   You need one step only now, and can create your interfaces
-   while you drink your coffee and text driving to work.
-   Anyway, I am still not satisfied
-   with the amount of labor involved and I will put my best
-   effort trying to further reduce it.)
+   You need one step only now, so you can create your interfaces
+   when you drink your coffee and text while driving to work.
+   
+   This will be particularly appreciated down the line, when the
+   technology of self-driving cars is definitely polished and
+   established, and you will be forced to work while commuting
+   to work after working at home...
+   I mean you will have even more free time available to relax and enjoy.
+   
+   Anyway, I am still not satisfied with the amount of labor required on
+   the user's side and will put my best effort in trying to further reduce it.)
 
 * In addition to formula versions:
 
@@ -109,6 +115,23 @@ within(warpbreaks, {
   invisible()
 ```
 
+* You can also do things like
+
+```{r}
+ntbt_cat <- ntbt_print <- ntbt_View <-
+  ntbt_function_data
+
+CO2 %>%
+  ntbt_cat("The first row has uptake -", uptake[1],
+           "- and concentration", conc[1],"\n") %>%
+  ntbt_cat("The mean uptake is -", mean(uptake),
+           "- with standard deviation", sd(uptake),"\n") %>%
+  ntbt_cat("uptake observations", uptake, sep="\n") %>%
+  ntbt_print() %>%
+  ntbt_View() %>%
+  ntbt_lm(conc ~ .) %>%
+  summary()
+```
 
 ## 2016/07/30
 
@@ -218,19 +241,19 @@ If you are a "traditionalist" and you want to create your new
 statistical package in the traditional way
 (first `model` and then `data`), you will not potentially find yourself at a crossroad if you think you need to decide which community to serve, when in fact you can serve *both* communities without having to do anything differently to what you have done so far. You can just keep doing it in the traditional way. In fact, (please...) keep doing it in the traditional way!
 
-Why? Because *everybody* will benefit.
+Why? Because *Everybody* will benefit.
 
      EXT. BUCOLIC PASTURE - EARLY MORNING
      
      Background music initially inaudible slowly increases in
      volume while the panning camera, starting from a small
      and fragile flower, reveals legions of smiling people
-     holding hands, half dress t-shirts with a capital T, the
+     holding hands. Half dress t-shirts with a capital T, the
      other half with a capital M.
      Everybody raises their arms to the sky - still holding hands -
      as if trying to embrace the universe.
      Camera slowly raises, zooming out and tilting down, making
-     sure everybody is included in the frame, while everybody
+     sure Everybody is included in the frame, while Everybody
      mantains eye contact with the camera.
      Sun rays break through heavy pure snow-white clouds.
      Everybody opens their mouth and slowly inhales while closing
