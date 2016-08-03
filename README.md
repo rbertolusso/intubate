@@ -30,8 +30,14 @@ that work well in a pipe (much like `stats::setNames())`.
 
 ## 2016/08/02
 
-* Now all interfaces derive from one function only called,
+* Now all interfaces derive from *one* helper function called,
   for now, `ntbt_function_data`.
+
+```{r}
+## Create some non implemented interfaces
+ntbt_legend <- ntbt_cat <-
+  ntbt_function_data  ## One helper function only to create interfaces
+```
   
   (Two steps to create an interface seemed way too much.
   You need one step now. Anyway, I am still not satisfied
@@ -57,13 +63,21 @@ USJudgeRatings %>%
 
 All the examples in the documentation run (but they
 are formula-only versions). Tests to see if this
-works as expected are welcome. Of course it would be pure
+works as expected are welcome.
+
+Of course it would be pure
 magic if it just simply works no matter what you throw at
-it, but I simply have no clue of all the possible behaviors
-of the interfaced functions.
-My goal is that it works for reasonable cases. I anticipate
-limitations. The interface machinery has to stay powerful
-yet simple.
+it, and I simply have no clue of all the possible behaviors
+of the interfaced functions (and do not plan to reduce my
+ignorance).
+
+My goal is that it works reasonably in cases you would
+*normally* use in data science pipelines.
+
+I anticipate *limitations*. I will try to address the ones
+that can be solved in a general and easy way and that
+*really* represent a need, because he helper function
+machinery has to stay powerful yet simple.
 
 * If interfaced function returns NULL, the interface function
   forwards invisibly the input, so you can use the data downstream.
@@ -76,9 +90,6 @@ CO2 %>%
   ntbt_plot(conc, uptake, col = color) %>%  ## plot returns NULL
   ntbt_lm(conc ~ uptake) %>%  ## data passes through ntbt_plot
   summary()
-
-## Create some non implemented interfaces
-ntbt_legend <- ntbt_cat <- ntbt_function_data  ## One interface only
 
 within(warpbreaks, {
   time <- seq_along(breaks)
