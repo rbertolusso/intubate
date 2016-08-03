@@ -9,7 +9,58 @@ add R statistical functions that use formula interface
 to pipelines implemented by `magrittr` with the
 operator `%>%`, without having to rely on workarounds.
 
-You can install:
+### In a nutshell
+If you like `magrittr` pipelines (%>%) and your are looking
+for an alternative to perfoming a statistical analysis
+in the following way:
+
+```{r}
+fit <- lm(sr ~ ., data = LifeCycleSavings)
+summary(fit)
+```
+`intubate` let's you do it this other way:
+
+```{r}
+library(magrittr)
+library(intubate)
+
+LifeCycleSavings %>%
+  ntbt_lm(sr ~ .) %>%
+  summary()
+```
+
+`intubate` currently implements close to a 100 interfaces to popular
+statistical functions associated to data science, but *also* let's you
+create your own interfaces "on demand".
+
+Suppose you want to create an interface to `cor.test` to have an
+alternative to this way of coding:
+
+```{r}
+attach(USJudgeRatings)
+cor.test(CONT, INTG)
+detach()
+
+## or
+with(USJudgeRatings, cor.test(CONT, INTG))
+     
+## or even
+USJudgeRatings %>%
+   with(cor.test(CONT, INTG))
+```
+Creation of interface and subsequent use follows:
+
+```{r}
+ntbt_cor.test <- ntbt_function_data   ## Create interface
+
+USJudgeRatings %>%
+  ntbt_cor.test(CONT, INTG)           ## Use it right away
+
+USJudgeRatings %>%                    
+  ntbt_cor.test(~ CONT + INTG)        ## Also the formula variant
+```
+
+#### Installation
 
 * the latest released version from CRAN (0.99.2) with
 
@@ -24,11 +75,14 @@ install.packages("intubate")
 devtools::install_github("rbertolusso/intubate")
 ```
 #### See also
-The [*setter*](https://bitbucket.org/richierocks/setter)
+
+* The [*setter*](https://bitbucket.org/richierocks/setter)
 package contains mutators to set attributes of variables,
 that work well in a pipe (much like `stats::setNames())`.
 
-## 2016/08/02 (older entries, some obsolete, below)
+* The [*srvyr*](http://www.github.com/gergness/srvyr) package allows for analysis of complex surveys using the pipe-friendly syntax of dplyr.
+
+### 2016/08/02 (older entries, some obsolete, below)
 
 * Now all interfaces derive from *one* helper function called,
   for now, `ntbt_function_data`.
@@ -133,7 +187,7 @@ CO2 %>%
   summary()
 ```
 
-## 2016/07/30
+### 2016/07/30
 
 ### Pipelines
 Pipelines in R are made possible by the package `magrittr`,

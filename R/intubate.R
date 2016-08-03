@@ -176,7 +176,7 @@ ntbt_function_data <-
       else
         data <- ret
     }
-    invisible(data) ## If no value returned, forward data invisibly
+    invisible(data)
   }
 
 get_calling_name <- function(prefix, full_name) {
