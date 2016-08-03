@@ -28,21 +28,25 @@ The [*setter*](https://bitbucket.org/richierocks/setter)
 package contains mutators to set attributes of variables,
 that work well in a pipe (much like `stats::setNames())`.
 
-## 2016/08/02
+## 2016/08/02 (older entries, some obsolete, below)
 
 * Now all interfaces derive from *one* helper function called,
   for now, `ntbt_function_data`.
 
 ```{r}
-## Create some non implemented interfaces
+### Create some non implemented interfaces
 ntbt_legend <- ntbt_cat <-
   ntbt_function_data  ## One helper function only to create interfaces
 ```
   
-  (Two steps to create an interface seemed way too much.
-  You need one step now. Anyway, I am still not satisfied
-  with the amount of labor involved and I will put my best
-  effort trying to reduce it further.)
+  (Two steps to create an interface seemed excessive,
+   too much, no-way dude,
+   especially with one of them requiring a rational decision.
+   You need one step only now, and can create your interfaces
+   while you drink your coffee and text driving to work.
+   Anyway, I am still not satisfied
+   with the amount of labor involved and I will put my best
+   effort trying to further reduce it.)
 
 * In addition to formula versions:
 
