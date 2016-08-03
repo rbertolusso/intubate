@@ -6,16 +6,14 @@
   (Histograms) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_histogram(data, x, ...)
+ntbt_histogram(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{x}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{histogram}}.}
 }
 \details{
-  ntbt_histogram reverses the order of \code{data} and \code{x}, so it can be
-  used in a pipeline. It then calls \code{histogram}.
+  ntbt_histogram calls \code{histogram}.
 }
 \value{
   Object returned by \code{\link{histogram}}.

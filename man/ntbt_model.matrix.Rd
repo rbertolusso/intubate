@@ -6,16 +6,14 @@
   (Construct Design Matrices) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_model.matrix(data, object, ...)
+ntbt_model.matrix(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{object}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{model.matrix}}.}
 }
 \details{
-  ntbt_model.matrix reverses the order of \code{data} and \code{formula}, so it can be
-  used in a pipeline. It then calls \code{model.matrix}.
+  ntbt_model.matrix calls \code{model.matrix}.
 }
 \value{
   Object returned by \code{\link{model.matrix}}.

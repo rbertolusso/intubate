@@ -10,7 +10,7 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 ```
 
 The aim of `intubate` is to offer a painless way to
@@ -40,7 +40,7 @@ by Stefan Milton Bache and Hadley Wickham.
 `dplyr`, by Hadley Wickham, Romain Francois, and RStudio,
 is used here to illustrate data transformation.
 
-```{r, message=FALSE, results='hide'}
+```{r, message=FALSE, eval=FALSE}
 ## Packages needed
 library(dplyr)     ## Does data transformation
 library(magrittr)  ## Implements pipelines
@@ -53,13 +53,12 @@ data(survey)
 
 This *machinery* allows to perform data transformations
 using pipelines in the following way:
-```{r}
+```{r, eval=FALSE}
 survey %>%
   group_by(year) %>%
   summarise(count = n(),
             countNA = sum(is.na(stheight)),
-            propNA = mean(is.na(stheight))) %>%
-  knitr::kable()
+            propNA = mean(is.na(stheight)))
 ```
 
 Pipelines seem to be the preferred way, these days, of doing data
@@ -82,7 +81,7 @@ should do something like the following.
 
 First, you perform your data science transformations
 and save the result to a temporary object (`tmp` in this case).
-```{r}
+```{r, eval=FALSE}
 survey %>%
   filter(!is.na(stheight) & !is.na(stweight) &
            year == 2013 & sex == "Male"
@@ -93,7 +92,7 @@ tmp
 
 Then, you perform your regression analysis on the transformed
 data stored in `tmp`.
-```{r}
+```{r, eval=FALSE}
 fit <- lm(stweight ~ stheight, tmp)
 summary(fit)
 ```
@@ -118,7 +117,7 @@ survey %>%
   summary()
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 try(survey %>%
       filter(!is.na(stheight) & !is.na(stweight) &
                year == 2013 & sex == "Male"
@@ -195,7 +194,7 @@ If you choose `intubate` is because you do not want to bother about workarounds 
 The solution `intubate` proposes is to provide an *interface* to `lm`,
 called `ntbt_lm`, that can be used *directly in the pipeline without error* and
 without losing any of `lm`'s capabilities.
-```{r}
+```{r, eval=FALSE}
 library(intubate)
 survey %>%
   filter(!is.na(stheight) & !is.na(stweight) &

@@ -1,4 +1,5 @@
-\name{ntbt_function_formula_data}
+\name{ntbt_function_data}
+\alias{ntbt_function_data}
 \alias{ntbt_function_formula_data}
 \alias{ntbt_function_x_data}
 \alias{ntbt_function_object_data}
@@ -11,6 +12,9 @@
 \alias{function_fixed_data}
 \title{Creation of ntbt_ interfaces "on demand" for data science pipelines.}
 \description{
+
+All that follows is obsolete. Needs to be addressed.
+
   \code{ntbt_function_formula_data}, \code{ntbt_function_x_data},
   \code{ntbt_function_object_data}, \code{ntbt_function_model_data}, and
   \code{ntbt_function_fixed_data}
@@ -24,6 +28,8 @@
   after which \code{ntbt_fantasy(data, formula, ...)} can be used in a data
   science pipeline. See examples for details and discussion.}
 \usage{
+ntbt_function_data(data, ...)
+
 ntbt_function_formula_data(data, formula, ...)
 function_formula_data(formula, data, ...)
 

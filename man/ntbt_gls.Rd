@@ -6,16 +6,14 @@
   (Fit Linear Model Using Generalized Least Squares) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_gls(data, model, ...)
+ntbt_gls(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{model}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{gls}}.}
 }
 \details{
-  ntbt_gls reverses the order of \code{data} and \code{model}, so it can be
-  used in a pipeline. It then calls \code{gls}.
+  ntbt_gls calls \code{gls}.
 }
 \value{
   Object returned by \code{\link{gls}}.

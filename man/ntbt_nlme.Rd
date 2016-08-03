@@ -6,16 +6,14 @@
   (Nonlinear Mixed-Effects Models) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_nlme(data, model, ...)
+ntbt_nlme(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{model}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{nlme}}.}
 }
 \details{
-  ntbt_nlme reverses the order of \code{data} and \code{model}, so it can be
-  used in a pipeline. It then calls \code{nlme}.
+  ntbt_nlme calls \code{nlme}.
 }
 \value{
   Object returned by \code{\link{nlme}}.

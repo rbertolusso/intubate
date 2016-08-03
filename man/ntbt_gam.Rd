@@ -6,7 +6,7 @@
   (Fitting Generalized Additive Models) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_gam(data, formula, family=gaussian, ...)
+ntbt_gam(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}

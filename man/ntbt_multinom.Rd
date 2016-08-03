@@ -6,16 +6,14 @@
   (Fit Neural Networks) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_multinom(data, formula, ...)
+ntbt_multinom(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{multinom}}.}
 }
 \details{
-  ntbt_multinom reverses the order of \code{data} and \code{formula}, so it can be
-  used in a pipeline. It then calls \code{multinom}.
+  ntbt_multinom calls \code{multinom}.
 }
 \value{
   Object returned by multinom function.

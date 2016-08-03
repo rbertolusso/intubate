@@ -6,16 +6,14 @@
   (Fit a Negative Binomial Generalized Linear Model) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_glm.nb(data, formula, ...)
+ntbt_glm.nb(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{glm.nb}}.}
 }
 \details{
-  ntbt_glm.nb reverses the order of \code{data} and \code{formula}, so it can be
-  used in a pipeline. It then calls \code{\link{glm.nb}}.
+  ntbt_glm.nb calls \code{\link{glm.nb}}.
 }
 \value{
   Object returned by \code{\link{glm.nb}}.

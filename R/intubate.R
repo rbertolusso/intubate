@@ -15,64 +15,14 @@
 ## You should have received a copy of the GNU General Public License
 ## along with intubate. If not, see <http://www.gnu.org/licenses/>.
 
-get_calling_name <- function(prefix, full_name) {
-  ## There are two possibilities:
-  ## 1) <prefix>_<name>           (1 element  => <prefix>_<name>)
-  ## 2) intubate::<prefix>_<name> (3 elements => ::, intubate, <prefix>_<name> )
-  full_name <- full_name[length(full_name)]
-  ## Check the prefix is as expected, and at least one character
-  ## after the _ (we do not check if it starts with . or letter).
-  ## The important thing is to avoid C stack error.
-  if (gsub(paste0("(", prefix, ")_.+"), "\\1", full_name) != prefix)
-    stop(paste0(full_name, 
-                " is an invalid name.\n", 
-                "The interface should be named ", prefix, "_<name>\n",
-                "where <name> is the name of the function to be interfaced."))
-  as.name(gsub(paste0(prefix, "_(.+)"), "\\1", full_name))
-}
+function_data <- function(data, ...) data
 
-function_. <- function(.) .
-
-## Functions with any number of parameters. It is suitable for
-## functions such as print() or View(), that return NULL.
-prmt_function_. <-
-  prmt_print <- 
-  prmt_View <-
-  
-  function(...) {
-    Call <- match.call()
-    Call[[1]] <- get_calling_name("prmt", as.character(Call[[1]]))
-    if (is.null(ret <- eval(Call, envir = parent.frame())))
-      return (invisible(.))
-    ret
-  }
-
-
-function_... <- function(...) ..1
-
-## Functions with any number of parameters. It is suitable for
-## functions such as print() or View(), that return NULL.
-trvs_function_. <-
-  trvs_print <- 
-  trvs_View <-
-
-  function(...) {
-    Call <- match.call(expand.dots = TRUE)
-    Call[[1]] <- get_calling_name("trvs", as.character(Call[[1]]))
-    if (is.null(ret <- eval(Call, envir = parent.frame())))
-      return (invisible(..1))
-    ret
-  }
-
-
-
-function_data_... <- function(data, ...) data
-
-ntbt_function_data_... <-
+ntbt_function_data <-
   
   ## graphics
   ntbt_boxplot <-
   ntbt_cdplot <-
+  ntbt_coplot <-
   ntbt_mosaicplot <-
   ntbt_pairs <-
   ntbt_plot <-
@@ -80,58 +30,38 @@ ntbt_function_data_... <-
   ntbt_sunflowerplot <-
   ntbt_text <-
   
-  ## MASS
-  ntbt_corresp <-
-  ntbt_lda <-
-  ntbt_qda <-
-  ntbt_rlm <-
-  
   ## nnet
+  ntbt_multinom <-
   ntbt_nnet <-
+  
   
   ## randomForest
   ntbt_randomForest <-
   
-  ## stats
-  ntbt_ansari.test <-
-  ntbt_bartlett.test <-
-  ntbt_cor.test <-
-  ntbt_fligner.test <-
-  ntbt_friedman.test <-
-  ntbt_kruskal.test <-
-  ntbt_lqs <-
-  ntbt_mood.test <-
-  ntbt_ppr <-
-  ntbt_prcomp <-
-  ntbt_princomp <-
-  ntbt_quade.test <-
-  ntbt_t.test <-
-  ntbt_var.test <-
-  ntbt_wilcox.test <-
   
+
+
+  
+  
+    
   ## e1071
   ntbt_svm <-
-  
-  ## Ex no need to switch
-  ## graphics
-  ntbt_coplot <-
-  
-  ## lattice
-  ntbt_oneway <-
   
   ## lfe
   ntbt_felm <-
   
   ## MASS
+  ntbt_corresp <-
   ntbt_glm.nb <-
+  ntbt_lda <-
   ntbt_lm.gls <-
   ntbt_lm.ridge <-
   ntbt_loglm <-
+  ntbt_logtrans <-
   ntbt_polr <-
-  
-  ## nnet
-  ntbt_multinom <-
-  
+  ntbt_qda <-
+  ntbt_rlm <-
+
   ## pls
   ntbt_cppls <-
   ntbt_mvr <-
@@ -141,16 +71,38 @@ ntbt_function_data_... <-
   ## rpart
   ntbt_rpart <-
   
+
   ## stats
+  ntbt_aggregate <-
+  ntbt_alias <-
+  ntbt_ansari.test <-
   ntbt_aov <-
+  ntbt_bartlett.test <-
+  ntbt_cor.test <-
+  ntbt_fligner.test <-
+  ntbt_friedman.test <-
   ntbt_ftable <-
+  ntbt_getInitial <-
+  ntbt_glm <-
+  ntbt_kruskal.test <-
   ntbt_lm <-
   ntbt_loess <-
+  ntbt_lqs <-
   ntbt_model.frame <-
+  ntbt_model.matrix <-
+  ntbt_mood.test <-
   ntbt_nls <-
   ntbt_oneway.test <-
+  ntbt_ppr <-
+  ntbt_prcomp <-
+  ntbt_princomp <-
+  ntbt_quade.test <-
   ntbt_replications <-
+  ntbt_t.test <-
+  ntbt_var.test <-
+  ntbt_wilcox.test <-
   ntbt_xtabs <-
+  
   
   ## survival
   ntbt_cch <-
@@ -177,6 +129,7 @@ ntbt_function_data_... <-
   ntbt_densityplot <-
   ntbt_histogram <-
   ntbt_levelplot <-
+  ntbt_oneway <-
   ntbt_parallelplot <-
   ntbt_qq <-
   ntbt_qqmath <-
@@ -184,126 +137,71 @@ ntbt_function_data_... <-
   ntbt_stripplot <-
   ntbt_wireframe <-
   ntbt_xyplot <-
+
   
   ## leaps
   ntbt_regsubsets <-
-  
   ntbt_tmd <-
   
-  ## MASS
-  ntbt_logtrans <-
   
-  ## nlme <-
-  ntbt_lmList <-
-  
-  ## stats
-  ntbt_alias <-
-  ntbt_getInitial <-
-  ntbt_model.matrix <-
-
   ## nlme
   ntbt_gls <-
+  ntbt_lme <-
+  ntbt_lmList <-
   ntbt_nlme <-
   ntbt_nlsList <-
 
-  ## nlme
-  ntbt_lme <-
+  ## gam
+  ntbt_gam <-
   
-  ntbt_aggregate <- ## stats
-  
-  ntbt_gam <-    ## gam
-  ntbt_glm <-  ## stats
-  
-  ntbt_gbm <-   ## gbm
-  ##    I will try some cases and we will see.
-  ##    This may be the definitive solution.
-  
-  ## The function below seems to address *all*
-  ## that will feed on data, regardless
-  ## of having formula or not. Moreover, it can
-  ## be an excellent idea in some cases to start,
-  ## instead than from a data.frame or tibble,
-  ## from a list (or an environment) so the different
-  ## functions can work with variables of different
-  ## lengths if necessary.
+  ## gbm
+  ntbt_gbm <-
+
+  ## The function below seems to address, for now,
+  ## *all* the cases that 0.99.2 was able to
+  ## (functions with a formula, with whichever
+  ## name variant the formula has).
+  ## Moreover, now it seems it can address
+  ## non-formula variants too. Needs testing.
   function(data, ...) {
-    
-    ## We need to make a special case with formula because if in
-    ## the model there is a ".", the general approach below, after attaching,
-    ## will fail as it does not know how to expand that "."
-    ## This top part was, in a nutshel, intubate so far.
-    
     Call <- match.call(expand.dots = FALSE)
+
+    ## If there is a formula, it is assumed following data.
     formula <- as.character(Call$...[[1]])
-    
-    ## It's my best effort, so far, in trying to determine if the first
-    ## parameter after data is a formula.
-    ## If there is a model, it better be right after data.
-    if (formula[1] == "~" && length(formula) >= 2 && length(formula) <= 3) {
-      ## message("Formula\n")
-      Call <- match.call(expand.dots = TRUE)
-      Call[[1]] <- get_calling_name("ntbt", as.character(Call[[1]]))
-      print(Call[[1]])
-      ## We switch data and model as almost all functions will be
-      ## expecting first model and then data.
-      Call[2:3] <- Call[3:2]                  ## Switching parameters
-      ## We name data (all cases with formula have second parameter
-      ## called data) and we remove the name of the formula, as there
-      ## are variants: formula, object, x, model, and fixed.
-      ## No function (I hope) will complain if it's unnamed if ordered.
-      ## All the rest of parameters must be named (or in natural order).
-      names(Call)[2:3] <- c("", "data")
+    ## Trying to determine if it is a formula.
+    is_formula <- (formula[1] == "~" && length(formula) >= 2 && length(formula) <= 3)
+    ## Better way?
 
-      ## And now we relax while the experts do their magic...
-      if (is.null(ret <- eval(Call, envir = parent.frame())))
-        return (invisible(data))  ## If no value returned, forward data.
-      return(ret)
-    }
-
-    ## message("No Formula\n")
-    ## New part that should be good for everything (yes... keep dreaming...)
-    ## with the exception of formulas with a ".", addressed above. If it
-    ## weren't for that detail, what is below should have been enough
-    ## for all cases.
-    attach(data)     ## Careful! We are attaching.
     Call <- match.call(expand.dots = TRUE)
-    ## We need to make sure will are able to detach(),
-    ## so we use a try for each of the following two calls,
-    ## that can fail either for error on name or bad call.
-    Call[[1]] <- try(get_calling_name("ntbt", as.character(Call[[1]])),
-                     silent = TRUE)
-    if (class(Call[[1]]) == "try-error") {
-      detach()            ## First detach
-      stop(Call[[1]])     ## Then stop
+    Call[[1]] <- get_calling_name("ntbt", as.character(Call[[1]]))
+
+    if (is_formula) {
+      Call[[2]] <- as.name("data")
+      Call[2:3] <- Call[3:2]             ## Switch parameters
+      names(Call)[2:3] <- c("", "data")  ## Leave formula unnamed
+      ret <- eval(Call)
+    } else  {
+      ret <- with(data, eval(Call[-2]))  ## Need to remove data [-2]
     }
-    ## First we make sure that we remove "data" from the call
-    ## and then we let the experts take care of business.
-    ret <- try(eval(Call[-2], envir = parent.frame()), silent = TRUE)
-    detach()         ## First detach
-    if (class(ret) == "try-error")
-      stop(ret)      ## Then stop
-    
-    if (is.null(ret))
-      return (invisible(data))  ## If no value returned, forward data.
-    ret
+    if (!is.null(ret))
+      return(ret)
+    invisible(data) ## If no value returned, forward data invisibly
   }
 
 
-
-#library(magrittr)
-#CO2 %>%
-    #ntbt_lm(conc ~ Type)
-#    ntbt_lm(conc ~ .)
-
-## For now it fails only if you have a formula with a .
-#function(., ...) {
-#  attach(.)
-#  Call <- match.call()
-#  print(Call)
-#  Call[[1]] <- get_calling_name("ntbt", as.character(Call[[1]]))
-#  ret <- eval(Call[-2], envir = parent.frame())
-#  detach()
-#  if (is.null(ret))
-#    return (invisible(.))
-#  ret
-#}
+get_calling_name <- function(prefix, full_name) {
+  ## There are two possibilities:
+  ## 1) <prefix>_<name>           (1 element  => <prefix>_<name>)
+  ## 2) intubate::<prefix>_<name> (3 elements => ::, intubate, <prefix>_<name> )
+  full_name <- full_name[length(full_name)]
+  ## Check the prefix is as expected, and at least one character
+  ## after the _ (we do not check if it starts with . or letter,
+  ## that error can be caught by other functions).
+  ## The important thing is to avoid C stack errors.
+  if (gsub(paste0("(", prefix, ")_.+"), "\\1", full_name) != prefix)
+    stop(paste0(full_name, 
+                " is an invalid name.\n", 
+                "The interface should be named ", prefix, "_<name>\n",
+                "where <name> is the name of the function to be interfaced."))
+  as.name(gsub(paste0(prefix, "_(.+)"), "\\1", full_name))
+}

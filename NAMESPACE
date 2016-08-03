@@ -1,4 +1,3 @@
-importFrom("dplyr", "filter", "group_by", "select", "summarise")
 importFrom("e1071", "svm")
 importFrom("gam", "gam")
 importFrom("gbm", "gbm")
@@ -18,4 +17,4 @@ import("stats")
 importFrom("survival", "cch", "coxph", "finegray", "pyears",
            "survConcordance", "survexp", "survfit", "survSplit")
 importFrom("tree", "tree")
-exportPattern("^[[:alpha:]]+")
+exportPattern("^ntbt_[[:alpha:]]+")

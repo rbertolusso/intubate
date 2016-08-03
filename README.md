@@ -23,12 +23,79 @@ install.packages("intubate")
 # install.packages("devtools")
 devtools::install_github("rbertolusso/intubate")
 ```
-
 #### See also
 The [*setter*](https://bitbucket.org/richierocks/setter)
 package contains mutators to set attributes of variables,
 that work well in a pipe (much like `stats::setNames())`.
 
+## 2016/08/02
+
+* Now all interfaces derive from one function only called,
+  for now, `ntbt_function_data`.
+  
+  (Two steps to create an interface seemed way too much.
+  You need one step now. Anyway, I am still not satisfied
+  with the amount of labor involved and I will put my best
+  effort trying to reduce it further.)
+
+* In addition to formula versions:
+
+```{r}
+library(magrittr)
+library(intubate)
+
+USJudgeRatings %>%
+  ntbt_cor.test(~ CONT + INTG)
+```
+
+you can also use, for example, the `x` `y` versions:
+
+```{r}
+USJudgeRatings %>%
+  ntbt_cor.test(CONT, INTG)
+```
+
+All the examples in the documentation run (but they
+are formula-only versions). Tests to see if this
+works as expected are welcome. Of course it would be pure
+magic if it just simply works no matter what you throw at
+it, but I simply have no clue of all the possible behaviors
+of the interfaced functions.
+My goal is that it works for reasonable cases. I anticipate
+limitations. The interface machinery has to stay powerful
+yet simple.
+
+* If interfaced function returns NULL, the interface function
+  forwards invisibly the input, so you can use the data downstream.
+  
+```{r}
+library(dplyr)
+CO2 %>%
+  mutate(color=sample(c("green", "red", "blue"),
+                      length(conc), replace = TRUE))%>%
+  ntbt_plot(conc, uptake, col = color) %>%  ## plot returns NULL
+  ntbt_lm(conc ~ uptake) %>%  ## data passes through ntbt_plot
+  summary()
+
+## Create some non implemented interfaces
+ntbt_legend <- ntbt_cat <- ntbt_function_data  ## One interface only
+
+within(warpbreaks, {
+  time <- seq_along(breaks)
+  W.T <- wool:tension
+}) %>%
+  ntbt_plot(breaks ~ time, type = "b") %>%
+  ntbt_text(breaks ~ time, label = W.T,
+            col = 1 + as.integer(wool)) %>%
+  ntbt_cat("And now we write a legend.") %>%
+  ntbt_legend("top",
+              legend = levels(wool),
+              col = 1 + as.integer(wool)) %>%
+  invisible()
+```
+
+
+## 2016/07/30
 
 ### Pipelines
 Pipelines in R are made possible by the package `magrittr`,

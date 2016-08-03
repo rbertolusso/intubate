@@ -6,16 +6,14 @@
   (List of nls Objects with a Common Model) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_nlsList(data, model, ...)
+ntbt_nlsList(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{model}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{nlsList}}.}
 }
 \details{
-  ntbt_nlsList reverses the order of \code{data} and \code{model}, so it can be
-  used in a pipeline. It then calls \code{nlsList}.
+  ntbt_nlsList calls \code{nlsList}.
 }
 \value{
   Object returned by \code{\link{nlsList}}.

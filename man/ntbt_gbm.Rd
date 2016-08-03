@@ -6,17 +6,14 @@
   (Generalized Boosted Regression Modeling) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_gbm(data, formula, distribution = "bernoulli", ...)
+ntbt_gbm(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
-  \item{distribution}{see \code{\link{gbm}} for details.}
   \item{...}{Other arguments passed to \code{\link{gbm}}.}
 }
 \details{
-  ntbt_gbm reverses the order of \code{data} and \code{formula}, so it can be
-  used in a pipeline. It then calls \code{gbm}.
+  ntbt_gbm calls \code{gbm}.
 }
 \value{
   Object returned by gbm function.
@@ -48,7 +45,8 @@ Y <- Y + rnorm(N,0,sigma)
 X1[sample(1:N,size=500)] <- NA
 X4[sample(1:N,size=300)] <- NA
 
-data <- data.frame(Y=Y,X1=X1,X2=X2,X3=X3,X4=X4,X5=X5,X6=X6)
+data <- data.frame(Y = Y, X1 = X1, X2 = X2, X3 = X3,
+                   X4 = X4, X5 = X5, X6 = X6)
 
 \dontrun{
 ## Original function to interface

@@ -6,16 +6,14 @@
   (List of lm Objects with a Common Model) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_lmList(data, object, ...)
+ntbt_lmList(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{object}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{lmList}}.}
 }
 \details{
-  ntbt_lmList reverses the order of \code{data} and \code{formula}, so it can be
-  used in a pipeline. It then calls \code{lmList}.
+  ntbt_lmList calls \code{lmList}.
 }
 \value{
   Object returned by \code{\link{lmList}}.

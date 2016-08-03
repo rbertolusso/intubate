@@ -2,7 +2,7 @@ Package: intubate
 Type: Package
 Title: Interface to Popular R Functions for Data Science Pipelines
 Version: 0.99.3
-Date: 2016-07-27
+Date: 2016-08-02
 Author: Roberto Bertolusso
 Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
 Description:
@@ -11,7 +11,6 @@ Description:
   with the operator %>%.
 License: GPL (>=2)
 Imports:
-  dplyr,
   e1071,
   gam,
   gbm,

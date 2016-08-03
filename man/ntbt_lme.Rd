@@ -6,16 +6,14 @@
   (Linear Mixed-Effects Models) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
-ntbt_lme(data, fixed, ...)
+ntbt_lme(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{fixed}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted.}
   \item{...}{Other arguments passed to \code{\link{lme}}.}
 }
 \details{
-  ntbt_lme reverses the order of \code{data} and \code{fixed}, so it can be
-  used in a pipeline. It then calls \code{lme}.
+  ntbt_lme calls \code{lme}.
 }
 \value{
   Object returned by \code{\link{lme}}.
