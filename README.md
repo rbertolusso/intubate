@@ -1,13 +1,39 @@
 ---
 title: "intubate"
 author: "Roberto Bertolusso"
-date: "2016-08-02"
+date: "2016-08-04"
 ---
 
 The aim of `intubate` is to offer a painless way to
 add R statistical functions that use formula interface
 to pipelines implemented by `magrittr` with the
 operator `%>%`, without having to rely on workarounds.
+
+#### Installation
+
+* the latest released version from CRAN (0.99.2) with
+
+```{r}
+install.packages("intubate")
+```
+(keep in mind you should use this version only for the interfaces, with
+ a number of helper functions to define your interface. The
+ newer version, 0.99.3, will need only one helper function, `intubate` for all
+ interfaces)
+ 
+* the latest development version from github with
+
+```{r}
+# install.packages("devtools")
+devtools::install_github("rbertolusso/intubate")
+```
+#### See also
+
+* The [*setter*](https://bitbucket.org/richierocks/setter)
+package contains mutators to set attributes of variables,
+that work well in a pipe (much like `stats::setNames())`.
+
+* The [*srvyr*](http://www.github.com/gergness/srvyr) package allows for analysis of complex surveys using the pipe-friendly syntax of dplyr.
 
 ### In a nutshell
 If you like `magrittr` pipelines (%>%) and your are looking
@@ -30,11 +56,20 @@ LifeCycleSavings %>%
 ```
 
 `intubate` currently implements close to a 100 interfaces to popular
-statistical functions associated to data science, but *also* let's you
-create your own interfaces "on demand".
+statistical functions associated, but not limited, to data science.
 
-Suppose you want to create an interface to `cor.test` to have an
-alternative to this way of coding:
+The possibilities do not end there, because `intubate` *also* let's
+you **create your own interfaces** "on demand", **right now**, giving you
+full power of decision regarding which functions to interface. This
+may prove to be particularly welcome in cases you are related to a given
+field that may, in the long run, continue to lack interfaces run due to my
+unforgivable, but unavoidable, ignorance.
+
+As an example of creating an interface "on demand", suppose the interface to
+`cor.test` was lacking in the current version of `intubate` and you want to
+create yours because you are searching for a pipeline-aware alternative to
+the following style of coding (which, by the way, is perfectly fine as it is
+and you shouldn't change it if you like it and serves your purposes):
 
 ```{r}
 attach(USJudgeRatings)
@@ -48,44 +83,68 @@ with(USJudgeRatings, cor.test(CONT, INTG))
 USJudgeRatings %>%
    with(cor.test(CONT, INTG))
 ```
-You can create your interface "on demand" and use it right away:
+To be able to create an interface to `cor.test` "on demand", the *only* thing you
+need to do is to add the following line of code somewhere before its use
+in your pipeline:
 
 ```{r}
-ntbt_cor.test <- ntbt_function_data   ## Create interface
+ntbt_cor.test <- intubate          ## intubate is the helper function
 
+## Note the lack of parentheses
+```
+
+Nothing else is required.
+
+The *only* thing you need to remember is that that the names of all interfaces
+*must* start with `ntbt_` followed by the name of the *interfaced* function
+(`cor.test` in this particular case), no matter which function (well... this of course
+still needs to be *confirmed*, there are thousands of functions to interface, but you
+may agree that if I do not state it this way, how do I convince
+you to adopt `intubate` blindly?)
+
+Now you can use your "still hot" interface in any pipeline. A pipeline
+alternative to the above code may look like this:
+
+```{r}
 USJudgeRatings %>%
   ntbt_cor.test(CONT, INTG)           ## Use it right away
 
 USJudgeRatings %>%                    
   ntbt_cor.test(~ CONT + INTG)        ## Also the formula variant
 ```
+There is more that has already been implemented (explained below), but at
+this point you may have an idea if `intubate` is for you or not. Rest assured
+that `intubate` will not change your life (or at least it *shouldn't*).
+Before leaving, please know that there is much more to come about which I will not comment for now, but that will make `intubate` useful *even* if you do not want
+to use it in pipelines.
 
-### Installation
+#### The evil plan
+What I will (in fact, have to) tell is that `intubate` features a still
+*undisclosed evil plan of world domination* that will be unveiled in the time to come according to my organization's plans.
 
-* the latest released version from CRAN (0.99.2) with
+If you find yourself at loss on the legality of this, know that *someone* (I
+cannot tell the name but trust me that he/she is well connected), told me recently that
+to have an *undisclosed evil plan of world domination* is OK (he/she really
+said *acceptable*) as long as you disclose *that you have one*,
+in the spirit that, even if it should be done as much as possible to protect
+the common citizen from abuse, full disclosure would prove counterproductive
+to the successful fulfillment of hidden goals by the evil organization.
+This solution, albeit non perfect, is considered a fair compromise that protects,
+to some extent, the rights of everybody involved.
 
-```{r}
-install.packages("intubate")
-```
+You have been served!
 
-* the latest development version from github with
-
-```{r}
-# install.packages("devtools")
-devtools::install_github("rbertolusso/intubate")
-```
-### See also
-
-* The [*setter*](https://bitbucket.org/richierocks/setter)
-package contains mutators to set attributes of variables,
-that work well in a pipe (much like `stats::setNames())`.
-
-* The [*srvyr*](http://www.github.com/gergness/srvyr) package allows for analysis of complex surveys using the pipe-friendly syntax of dplyr.
+Have fun (while you can...).
 
 ### Entries by date
 Older entries further below. Some are obsolete.
 
-#### 2016/08/02
+#### 2016/08/04
+* Core of the interface function (now called `intubate`) should be finished.
+Please torture test with as many cases as possible to see how robust it is.
+I will be out for the rest of the week.
+
+#### 2016/08/03
 
 * Now all interfaces derive from only *one* helper function called,
   for now, `ntbt_function_data`.
@@ -143,7 +202,7 @@ My goal is that it works reasonably in cases you would
 
 I anticipate *limitations*. I will try to address the ones
 that can be solved in a general and easy way and that
-*really* represent a need, because he helper function
+*really* represent a need, because the helper function
 machinery has to stay powerful yet simple.
 
 * If interfaced function returns NULL, the interface function

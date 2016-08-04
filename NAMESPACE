@@ -17,4 +17,4 @@ import("stats")
 importFrom("survival", "cch", "coxph", "finegray", "pyears",
            "survConcordance", "survexp", "survfit", "survSplit")
 importFrom("tree", "tree")
-exportPattern("^ntbt_[[:alpha:]]+")
+exportPattern("intubate|^ntbt_[[:alpha:]]+")

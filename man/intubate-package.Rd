@@ -13,7 +13,7 @@
   
   For functions missing interfaces, there is an easy
   (one line) way to to create new interfaces "on demand" 
-  (see \code{\link{ntbt_function_data}}) that should cover
+  (see \code{\link{intubate}}) that should cover
   the vast majority of functions with formulas.
   
   Currently, there are interfaces for:
@@ -142,7 +142,7 @@ try(ToothGrowth \%>\%
 ## see the examples in ntbt_function_data
 }
 \seealso{
-  \code{\link{ntbt_function_data}}
+  \code{\link{intubate}}
 }
 \keyword{intubate}
 \keyword{magrittr}

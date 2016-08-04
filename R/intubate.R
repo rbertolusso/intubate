@@ -15,10 +15,8 @@
 ## You should have received a copy of the GNU General Public License
 ## along with intubate. If not, see <http://www.gnu.org/licenses/>.
 
-function_data <- function(data, ...) data
-
 ## Interface function
-ntbt_function_data <-
+intubate <-
   
   ## e1071
   ntbt_svm <-
@@ -145,38 +143,49 @@ ntbt_function_data <-
   ## tree
   ntbt_tree <-
   
-  ## Interface function
+  ## intubate function
   function(data, ...) {
     preCall <- match.call(expand.dots = FALSE)
     
     Call <- match.call(expand.dots = TRUE)
     Call[[1]] <- get_calling_name("ntbt", as.character(Call[[1]]))
-    Call[[2]] <- as.name("data")
-    
-    is_formula <- try(inherits(as.formula(as.character(preCall$...[[1]])),
-                               "formula"), silent = TRUE)
-    is_formula <- !(class(is_formula)[[1]] == "try-error")
-    
-    if (is_formula) {
-      ## cat("Formula\n")
-      Call[2:3] <- Call[3:2]                ## Switch parameters
-      names(Call)[2:3] <- c("", "data")     ## Leave formula unnamed
-      print(Call)
-      ret <- try(eval(Call), silent = TRUE) ## Let's make it more robust
-      if (class(ret)[[1]] == "try-error") { ## Maybe data has other name
-        names(Call)[[3]] <- ""              ## Leave data unnamed
-        print(Call)
-        ret <- eval(Call)                   ## Retry
-      }
-    } else if (length(preCall$...) > 0)  {
-      ## cat("Rest of cases\n")
-      print(Call)
-      ret <- with(data, eval(Call[-2]))     ## Need to remove data [-2]
-    } else  {
-      ## cat("No arguments other that data\n")
-      names(Call)[[2]] <- ""                ## Leave data unnamed
-      print(Call)
+
+    if (length(preCall$...) == 0)  {
+      ## cat("No arguments other than data\n")
+      ## print(Call)
       ret <- eval(Call)
+    } else if (are_formulas(preCall$...)) {
+      ## This special case for formulas is, at least for now, needed because
+      ## "Rest of cases" below does not know how to manage cases with "." in
+      ## a formula (and the called function neither because only sees the variables
+      ## inside the data, not the data itself). An alternative could be to have in
+      ## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
+      ## not clue how to implement), for *all* the formulas that have a ".", so maybe
+      ## the end result will be even more involved and this is as good as we can do.
+      ## cat("Formula\n")
+      signal_error <- TRUE
+      ## Let's have "data" take a walk until it finds its place in the world,
+      ## as functions are supposed to check if unnamed parameters are sent
+      ## in the wrong order (Right?).
+      for (par in 3:length(names(Call))) {
+        Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
+        names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
+        ## print(Call)
+        ret <- try(eval(Call, envir = parent.frame()),  ## See if it flies
+                   silent = FALSE)
+        if (class(ret)[[1]] != "try-error") {          ## Did. We are done
+          signal_error <- FALSE
+          break
+        }
+      }
+      if (signal_error) {          ## Parameters exhausted and still error
+        print(Call)                ## Show call of last attempt
+        stop(ret)                  ## Give up
+      }
+    } else  {
+      ## cat("Rest of cases\n")
+      ## print(Call)
+      ret <- with(data, eval(Call[-2]))    ## Remove "data" [-2] before calling
     }
     if (!is.null(ret)) {
       if (withVisible(ret)$visible)
@@ -186,6 +195,16 @@ ntbt_function_data <-
     }
     invisible(data)
   }
+
+## Determine if there is a formula (internal)
+are_formulas <- function(par_list) {
+  sum(sapply(par_list,
+             function(par) {
+               is_formula <- try(inherits(as.formula(as.character(par)),
+                                          "formula"), silent = TRUE)
+               !(class(is_formula)[[1]] == "try-error")
+             }) > 0)
+}
 
 ## Name checking (internal)
 get_calling_name <- function(prefix, full_name) {
