@@ -61,9 +61,9 @@ statistical functions associated, but not limited, to data science.
 The possibilities do not end there, because `intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
 full power of decision regarding which functions to interface. This
-may prove to be particularly welcome in cases you are related to a given
+may prove to be particularly welcome in case you are related to a given
 field that may, in the long run, continue to lack interfaces due to my
-unforgivable, but unavoidable, ignorance.
+unforgivable, but unavoidable, lack of interest and/or ignorance.
 
 As an example of creating an interface "on demand", suppose the interface to
 `cor.test` was lacking in the current version of `intubate` and you want to
@@ -97,10 +97,10 @@ Nothing else is required.
 
 The *only* thing you need to remember is that that the names of all interfaces
 *must* start with `ntbt_` followed by the name of the *interfaced* function
-(`cor.test` in this particular case), no matter which function (well... this of course
-still needs to be *confirmed*, there are thousands of functions to interface, but you
-may agree that if I do not state it this way, how do I convince
-you to adopt `intubate` blindly?)
+(`cor.test` in this particular case), no matter which function you want to
+interface (well... this of course still needs to be *confirmed*, there are
+thousands of functions to interface, but you may agree that if I do not state
+it this way, how do I convince you to adopt `intubate` blindly?)
 
 Now you can use your "still hot" interface in any pipeline. A pipeline
 alternative to the above code may look like this:
@@ -138,7 +138,6 @@ You have been served!
 Have fun (while you can...).
 
 ### Entries by date
-Older entries further below. Some are obsolete.
 
 #### 2016/08/04
 * Core of the interface function (now called `intubate`) should be finished.
@@ -467,48 +466,30 @@ in those well tested packages.
 What if you would like to have an interface to a non pipeline-aware function
 that is not currently implemented by `intubate`?
 
-In a vast majority of cases of R functions that have a formula interface,
-as it is the case in 89 out of 93 of the functions interfaced so far,
-you can create your own interface "on demand".
+In a vast majority of cases of R functions (I would like to say all
+but I still do not know), you can create your own interface "on demand".
 
-To help you in the process,
-`intubate` exposes helper functions to assist you.
+To help you in the process, `intubate` exposes one helper function,
+called `intubate`, to assist you.
 
 (Well... *something* had to do this lazy package...)
-
-The helper functions available so far are:
-
-* `ntbt_function_formula_data`
-* `ntbt_function_x_data`
-* `ntbt_function_object_data`
-* `ntbt_function_model_data`
-* `ntbt_function_fixed_data`
 
 ### Steps to create interfaces "on demand"
 For the sake of argument, suppose `ntbt_lm` (the interface to `lm`)
 is not implemented by `intubate`, and
 you want to create an interface for it.
 
-The first thing you need to do is
-
-#### 1) Find out which helper function to use
-  By looking at the function definition in the documentation of `lm`
-  (hint: type `help(lm)` on the console)
-```{r,eval=FALSE}
-lm(formula, data, subset, weights, na.action,
-   method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
-   singular.ok = TRUE, contrasts = NULL, offset, ...)
+All you need is adding the following **one line** of code
+  somewhere **before** the code that uses it:
+```{r,message=TRUE}
+ntbt_lm <- intubate
 ```
+Hard?
 
-you notice that the function uses `formula` followed by `data`.
-This means that the corresponding helper function to create the
-interface is `ntbt_function_formula_data`.
+(You see, it is not enough that `intubate` is a lazy package. It also
+ promotes laziness).
 
-If the function would
-use `object` followed by `data`, you would use
-`ntbt_function_object_data`, and so on.
-
-Confusing?
+Is it confusing?
 
 No?
 
@@ -521,32 +502,14 @@ OK, let's see how you do in a quiz, under the Honor Code.
             Honor Code Statement:
             
             Question: Which helper function would you use to construct your interface
-            if in the help of the target function its definition states that the
-            first parameter is `x` and the second is `data`? [10 points]
+            for the function `t.test`? [10 points]
 
 (Psst!... here... don't look!... I told you not to look!... yes, yes, play dumb... you don't have to worry... someone told me there
 is a solution manual somewhere in the net...)
 
-Now you can
-
-#### 2) Create the interface
-All you need is adding the following **one line** of code
-  somewhere **before** the code that uses it:
-```{r,message=TRUE}
-ntbt_lm <- ntbt_function_formula_data
-```
-
-Hard?
-
-(You see, it is not enough that `intubate` is a lazy package. It also
- promotes laziness).
- 
 Remember: names of interfaces must start with
        `ntbt_` followed by the name of the function
        (`lm` in this case) you want to interface.
-
-#### 3) ...
-(There is no step 3, That would be too much)
 
 You can now use the interface function in any context
 in which you would use the original function.
