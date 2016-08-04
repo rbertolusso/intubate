@@ -172,7 +172,7 @@ intubate <-
         names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
         ## print(Call)
         ret <- try(eval(Call, envir = parent.frame()),  ## See if it flies
-                   silent = FALSE)
+                   silent = TRUE)
         if (class(ret)[[1]] != "try-error") {          ## Did. We are done
           signal_error <- FALSE
           break

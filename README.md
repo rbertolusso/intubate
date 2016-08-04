@@ -18,7 +18,7 @@ install.packages("intubate")
 ```
 (keep in mind you should use this version only for the interfaces, with
  a number of helper functions to define your interface. The
- newer version, 0.99.3, will need only one helper function, `intubate` for all
+ newer version, 0.99.3, will need only one helper function, `intubate`, for all
  interfaces)
  
 * the latest development version from github with
@@ -62,7 +62,7 @@ The possibilities do not end there, because `intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
 full power of decision regarding which functions to interface. This
 may prove to be particularly welcome in cases you are related to a given
-field that may, in the long run, continue to lack interfaces run due to my
+field that may, in the long run, continue to lack interfaces due to my
 unforgivable, but unavoidable, ignorance.
 
 As an example of creating an interface "on demand", suppose the interface to
@@ -124,13 +124,13 @@ What I will (in fact, have to) tell is that `intubate` features a still
 
 If you find yourself at loss on the legality of this, know that *someone* (I
 cannot tell the name but trust me that he/she is well connected), told me recently that
-to have an *undisclosed evil plan of world domination* is OK (he/she really
-said *acceptable*) as long as you disclose *that you have one*,
+"to have an *undisclosed evil plan of world domination* is OK" (well... he/she really
+said *acceptable*) "as long as you disclose *that you have one*,
 in the spirit that, even if it should be done as much as possible to protect
 the common citizen from abuse, full disclosure would prove counterproductive
 to the successful fulfillment of hidden goals by the evil organization.
 This solution, albeit non perfect, is considered a fair compromise that protects,
-to some extent, the rights of everybody involved.
+to some extent, the rights of everybody involved".
 
 You have been served!
 
