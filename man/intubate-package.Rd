@@ -9,14 +9,12 @@
   
   \code{intubate} allows to use, effortlessly,
   classic rock solid R functions in a consistent
-  "modern" pipeline notation.
+  pipeline notation.
   
   For functions missing interfaces, there is an easy
   (one line) way to to create new interfaces "on demand" 
-  (see \code{\link{ntbt_function_formula_data}}) that should cover
-  the vast majority of functions with formulas
-  (only 4 out of 93 interfaces implemented so far
-  require nonstandard treatment).
+  (see \code{\link{ntbt_function_data}}) that should cover
+  the vast majority of functions with formulas.
   
   Currently, there are interfaces for:
   
@@ -141,10 +139,10 @@ try(ToothGrowth \%>\%
       aggregate(formula=len ~ ., mean))
 
 ## For possible workarounds and further discussion
-## see the examples in ntbt_function_formula_data
+## see the examples in ntbt_function_data
 }
 \seealso{
-  \code{\link{ntbt_function_formula_data}}
+  \code{\link{ntbt_function_data}}
 }
 \keyword{intubate}
 \keyword{magrittr}
