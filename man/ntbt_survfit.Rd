@@ -25,6 +25,7 @@ Roberto Bertolusso
   \code{\link{survfit}}
 }
 \examples{
+\dontrun{
 library(survival)
 
 ## Original function to interface
@@ -41,6 +42,7 @@ aml \%>\%
 aml \%>\%
   ntbt_survfit(Surv(time, status) ~ x) \%>\%
   plot(lty = 2:3)
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

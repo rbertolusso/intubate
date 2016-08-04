@@ -154,7 +154,7 @@ intubate <-
       ## cat("No arguments other than data\n")
       ## print(Call)
       ret <- eval(Call)
-    } else if (are_formulas(preCall$...)) {
+    } else if (there_are_formulas(preCall$...)) {
       ## This special case for formulas is, at least for now, needed because
       ## "Rest of cases" below does not know how to manage cases with "." in
       ## a formula (and the called function neither because only sees the variables
@@ -197,7 +197,7 @@ intubate <-
   }
 
 ## Determine if there is a formula (internal)
-are_formulas <- function(par_list) {
+there_are_formulas <- function(par_list) {
   sum(sapply(par_list,
              function(par) {
                is_formula <- try(inherits(as.formula(as.character(par)),

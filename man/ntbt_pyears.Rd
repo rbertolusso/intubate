@@ -25,6 +25,7 @@ Roberto Bertolusso
   \code{\link{pyears}}
 }
 \examples{
+\dontrun{
 library(survival)
 
 hearta <- by(heart, heart$id,  
@@ -48,6 +49,7 @@ hearta \%>\%
   ntbt_pyears(Surv(stop/365.25, event) ~
                 cut(age + 48, c(0,50,60,70,100)) + surgery,
               scale = 1)
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

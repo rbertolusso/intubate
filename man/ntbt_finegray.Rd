@@ -25,6 +25,7 @@ Roberto Bertolusso
   \code{\link{finegray}}
 }
 \examples{
+\dontrun{
 library(survival)
 
 # Treat time to death and plasma cell malignancy as competing risks
@@ -49,6 +50,7 @@ mgus2 \%>\%
   ntbt_finegray(Surv(etime, event) ~ .) \%>\%
   ntbt_coxph(Surv(fgstart, fgstop, fgstatus) ~ age + sex,
              weight = fgwt)
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

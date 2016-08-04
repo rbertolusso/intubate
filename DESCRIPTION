@@ -26,7 +26,6 @@ Imports:
   randomForest,
   rpart,
   stats,
-  survival,
   tree
 Suggests: knitr,
     rmarkdown

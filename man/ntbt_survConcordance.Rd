@@ -25,6 +25,7 @@ Roberto Bertolusso
   \code{\link{survConcordance}}
 }
 \examples{
+\dontrun{
 library(survival)
 
 ## Original function to interface
@@ -37,6 +38,7 @@ ntbt_survConcordance(data=lung, Surv(time, status) ~ age)
 library(magrittr)
 lung \%>\%
   ntbt_survConcordance(Surv(time, status) ~ age)
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

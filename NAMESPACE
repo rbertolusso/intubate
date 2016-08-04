@@ -14,7 +14,7 @@ importFrom("pls", "cppls", "mvr", "pcr", "plsr")
 importFrom("randomForest", "randomForest")
 importFrom("rpart", "rpart")
 import("stats")
-importFrom("survival", "cch", "coxph", "finegray", "pyears",
-           "survConcordance", "survexp", "survfit", "survSplit")
+#importFrom("survival", "cch", "coxph", "finegray", "pyears",
+#           "survConcordance", "survexp", "survfit", "survSplit")
 importFrom("tree", "tree")
 exportPattern("intubate|^ntbt_[[:alpha:]]+")

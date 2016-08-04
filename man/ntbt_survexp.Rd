@@ -25,6 +25,7 @@ Roberto Bertolusso
   \code{\link{survexp}}
 }
 \examples{
+\dontrun{
 library(survival)
 
 ## Original function to interface
@@ -49,6 +50,7 @@ jasa \%>\%
                       age=(accept.dt-birth.dt)),
             method='conditional') \%>\%
   summary(times=1:10*182.5, scale=365)
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

@@ -25,6 +25,7 @@ Roberto Bertolusso
   \code{\link{survSplit}}
 }
 \examples{
+\dontrun{
 library(survival)
 
 ## Original function to interface
@@ -47,6 +48,7 @@ veteran \%>\%
                  episode = "timegroup") \%>\%
   ntbt_coxph(Surv(tstart, time, status) ~ 
              karno*strata(timegroup) + age + trt)
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

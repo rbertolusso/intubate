@@ -123,12 +123,13 @@ What I will (in fact, have to) tell is that `intubate` features a still
 *undisclosed evil plan of world domination* that will be unveiled in the time to come according to my organization's plans.
 
 If you find yourself at loss on the legality of this, know that *someone* (I
-cannot tell the name but trust me that he/she is well connected), told me recently that
+cannot tell the name but *trust me* that he/she is *very* well connected), 
+informed me recently that
 "to have an *undisclosed evil plan of world domination* is OK" (well... he/she really
 said *acceptable*) "as long as you disclose *that you have one*,
 in the spirit that, even if it should be done as much as possible to protect
 the common citizen from abuse, full disclosure would prove counterproductive
-to the successful fulfillment of hidden goals by the evil organization.
+to the successful fulfillment of hidden goals by an Evil Organization.
 This solution, albeit non perfect, is considered a fair compromise that protects,
 to some extent, the rights of everybody involved".
 

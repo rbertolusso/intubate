@@ -25,6 +25,7 @@ Roberto Bertolusso
   \code{\link{cch}}
 }
 \examples{
+\dontrun{
 library(survival)
 
 subcoh <- nwtco$in.subcohort
@@ -48,6 +49,7 @@ library(magrittr)
 ccoh.data \%>\%
   ntbt_cch(Surv(edrel, rel) ~ stage + histol + age,
     subcoh = ~subcohort, id=~seqno, cohort.size=4028)
+}
 }
 \keyword{intubate}
 \keyword{magrittr}
