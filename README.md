@@ -1,7 +1,7 @@
 ---
 title: "intubate"
 author: "Roberto Bertolusso"
-date: "2016-07-30"
+date: "2016-08-02"
 ---
 
 The aim of `intubate` is to offer a painless way to
@@ -48,7 +48,7 @@ with(USJudgeRatings, cor.test(CONT, INTG))
 USJudgeRatings %>%
    with(cor.test(CONT, INTG))
 ```
-Creation of interface and subsequent use follows:
+You can create your interface "on demand" and use it right away:
 
 ```{r}
 ntbt_cor.test <- ntbt_function_data   ## Create interface
@@ -60,7 +60,7 @@ USJudgeRatings %>%
   ntbt_cor.test(~ CONT + INTG)        ## Also the formula variant
 ```
 
-#### Installation
+### Installation
 
 * the latest released version from CRAN (0.99.2) with
 
@@ -74,7 +74,7 @@ install.packages("intubate")
 # install.packages("devtools")
 devtools::install_github("rbertolusso/intubate")
 ```
-#### See also
+### See also
 
 * The [*setter*](https://bitbucket.org/richierocks/setter)
 package contains mutators to set attributes of variables,
@@ -82,9 +82,12 @@ that work well in a pipe (much like `stats::setNames())`.
 
 * The [*srvyr*](http://www.github.com/gergness/srvyr) package allows for analysis of complex surveys using the pipe-friendly syntax of dplyr.
 
-### 2016/08/02 (older entries, some obsolete, below)
+### Entries by date
+Older entries further below. Some are obsolete.
 
-* Now all interfaces derive from *one* helper function called,
+#### 2016/08/02
+
+* Now all interfaces derive from only *one* helper function called,
   for now, `ntbt_function_data`.
 
 ```{r}
@@ -187,7 +190,7 @@ CO2 %>%
   summary()
 ```
 
-### 2016/07/30
+#### 2016/07/30
 
 ### Pipelines
 Pipelines in R are made possible by the package `magrittr`,
