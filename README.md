@@ -117,7 +117,7 @@ this point you may have an idea if `intubate` is for you or not.
 
 ### Entries by date
 
-#### 2016/08/04
+#### 2016/08/05
 * Core of the interface function (now called `intubate`) should be finished.
 Please torture test with as many cases as possible to see how robust it is.
 I will be out for the rest of the week.
@@ -138,12 +138,12 @@ in three stages (aka *The Stages*):
 1. Set foundations needed for the ones to come later. This
    will be already *World Domination* but nobody will notice it.
 2. Lay *The Bait* to attract you to *The Trap*.
-3. Convert you in our slave, without you being able to do anything
+3. Convert you into our slave, without you being able to do anything
    about it.
 
-If you find yourself at loss regarding the legality of the above and/or of why
+If you find yourself at loss regarding the legality of the above and/or wonder why
 I am disclosing this information, please know that
-*someone* (I cannot tell the name but *trust me* that he/she is *very well
+*someone* (I *cannot* tell the name but *trust me* that he/she is *very well
 connected* and knows *everything* about *these things*), informed me recently that:
 "to have an *Undisclosed Evil Plan of World Domination*" is OK (well... he/she really
 said "is acceptable") "as long as you disclose *that you have one* and clearly
@@ -158,7 +158,7 @@ should protect, to *the full extent of their abilities*, the unaware citizen fro
 full disclosure of *The Evil Plan* could prove unacceptably counterproductive to the
 successful fulfillment of *World Domination* by an *Evil Organization* that, we cannot
 forget, *also pays taxes* and thus is entitled to *some level of protection* to conduct
-its business satisfactorily".
+its business in a satisfactory way".
 
 This solution,
 albeit non perfect, is considered "a fair compromise that protects, to some degree, the
