@@ -172,6 +172,7 @@ intubate <-
   }
 
 
+## (internal)
 process_formula_case <- function(Call, use_envir) {
   ## This special case for formulas is, at least for now, needed because
   ## "Rest of cases" below does not know how to manage cases with "." in

@@ -113,29 +113,7 @@ USJudgeRatings %>%
   ntbt_cor.test(~ CONT + INTG)        ## Also the formula variant
 ```
 There is more that has already been implemented (explained below), but at
-this point you may have an idea if `intubate` is for you or not. Rest assured
-that `intubate` will not change your life (or at least it *shouldn't*).
-Before leaving, please know that there is much more to come about which I will not comment for now, but that will make `intubate` useful *even* if you do not want
-to use it in pipelines.
-
-#### The evil plan
-What I will (in fact, have to) tell is that `intubate` features a still
-*undisclosed evil plan of world domination* that will be unveiled in the time to come according to my organization's plans.
-
-If you find yourself at loss on the legality of this, know that *someone* (I
-cannot tell the name but *trust me* that he/she is *very* well connected), 
-informed me recently that
-"to have an *undisclosed evil plan of world domination* is OK" (well... he/she really
-said *acceptable*) "as long as you disclose *that you have one*,
-in the spirit that, even if it should be done as much as possible to protect
-the common citizen from abuse, full disclosure would prove counterproductive
-to the successful fulfillment of hidden goals by an Evil Organization.
-This solution, albeit non perfect, is considered a fair compromise that protects,
-to some extent, the rights of everybody involved".
-
-You have been served!
-
-Have fun (while you can...).
+this point you may have an idea if `intubate` is for you or not.
 
 ### Entries by date
 
@@ -143,6 +121,44 @@ Have fun (while you can...).
 * Core of the interface function (now called `intubate`) should be finished.
 Please torture test with as many cases as possible to see how robust it is.
 I will be out for the rest of the week.
+
+Please know that there is much more to come about which I will not comment for now, but that should potentially make `intubate` useful *even* if you
+do not want to use it in pipelines (remember that you should not be forced to
+use pipelines if you like other alternatives better). It should also take
+pipelines to a different dimension, in case you like them.
+
+#### The Evil Plan
+What I will (in fact, have to) publicly inform is that `intubate` features an
+*Undisclosed Evil Plan of World Domination* that will be unveiled in the time to come
+according to my Organization's *Evil Master Plans*.
+
+Please also be informed that we are thinking about achieving our goals
+in three stages (aka *The Stages*):
+
+1. Set foundations needed for the ones to come later. This
+   will be already *World Domination* but nobody will notice it.
+2. Lay *The Bait* to attract you to *The Trap*.
+3. Convert you in our slave, without you being able to do anything
+   about it.
+
+If you find yourself at loss regarding the legality of the above and/or of why
+I am disclosing this information, please know that
+*someone* (I cannot tell the name but *trust* me that he/she is *very* well
+connected and knows *everything* about these *things*), informed me recently that
+"to have an *Undisclosed Evil Plan of World Domination*" is OK (well... he/she really
+said "is acceptable") "as long as you disclose *that you have one* and clearly
+specify *The Stages*, which can be non-specific but need to include wording that
+warns about the existence of *The Bait* and *The Trap* in case these *resources* are plan
+to be used". The rationale is that "even if the regulatory agencies understand that they
+should protect the common citizen from being abused to *the full extent of their abilities*,
+full disclosure of *The Evil Plan* could prove unacceptably counterproductive to the
+successful fulfillment of *World Domination* by an *Evil Organization*". This solution,
+albeit non perfect, is considered "a fair compromise that protects, to some extent, the
+rights of everybody involved".
+
+You have been served!
+
+Have fun (while you can...)
 
 #### 2016/08/03
 
