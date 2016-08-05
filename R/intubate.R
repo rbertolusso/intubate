@@ -173,14 +173,39 @@ intubate <-
 
 
 ## (internal)
+## This special case for formulas is, at least for now, needed because
+## "Rest of cases" below does not know how to manage cases with "." in
+## a formula (and the called function neither because only sees the variables
+## inside the data, not the data itself). An alternative could be to have in
+## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
+## not clue how to implement), for *all* the formulas that have a ".", so maybe
+## the end result will be even more involved and this is as good as we can do.
 process_formula_case <- function(Call, use_envir) {
-  ## This special case for formulas is, at least for now, needed because
-  ## "Rest of cases" below does not know how to manage cases with "." in
-  ## a formula (and the called function neither because only sees the variables
-  ## inside the data, not the data itself). An alternative could be to have in
-  ## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
-  ## not clue how to implement), for *all* the formulas that have a ".", so maybe
-  ## the end result will be even more involved and this is as good as we can do.
+  Call[2:3] <- Call[3:2]                       ## Switch parameters
+  names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
+  ## print(Call)
+  result <- try(eval(Call, envir = use_envir), silent = TRUE)
+  if (class(result)[[1]] == "try-error") {     ## Maybe data has other name
+    names(Call)[[3]] <- ""                     ## Leave data unnamed
+    ## print(Call)
+    result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
+    if (class(result)[[1]] == "try-error") {   ## Maybe data is in position 3
+      Call[3:4] <- Call[4:3]                   ## Switch parameters
+      ## print(Call)
+      result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
+    }
+  }
+  result
+}
+
+## This special case for formulas is, at least for now, needed because
+## "Rest of cases" below does not know how to manage cases with "." in
+## a formula (and the called function neither because only sees the variables
+## inside the data, not the data itself). An alternative could be to have in
+## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
+## not clue how to implement), for *all* the formulas that have a ".", so maybe
+## the end result will be even more involved and this is as good as we can do.
+process_formula_case_bak1 <- function(Call, use_envir) {
   signal_error <- TRUE
   ## Let's have "data" take a walk until it finds its place in the world,
   ## as functions are supposed to check if unnamed parameters are sent
@@ -195,6 +220,49 @@ process_formula_case <- function(Call, use_envir) {
       signal_error <- FALSE
       break
     }
+  }
+  if (signal_error) {          ## Parameters exhausted and still error
+    print(Call)                ## Show call of last attempt
+    stop(result)               ## Give up
+  }
+  result
+}
+
+## This special case for formulas is, at least for now, needed because
+## "Rest of cases" below does not know how to manage cases with "." in
+## a formula (and the called function neither because only sees the variables
+## inside the data, not the data itself). An alternative could be to have in
+## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
+## not clue how to implement), for *all* the formulas that have a ".", so maybe
+## the end result will be even more involved and this is as good as we can do.
+process_formula_case_bak2 <- function(Call) {
+  signal_error <- TRUE
+  ## Let's have "data" take a walk until it finds its place in the world,
+  ## as functions are supposed to check if unnamed parameters are sent
+  ## in the wrong order (Right?).
+  for (par in 3:length(names(Call))) {
+    Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
+    names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
+    ## print(Call)
+    result <- try(eval(Call, envir = parent.frame()),  ## See if it flies
+                  silent = TRUE)
+    if (class(result)[[1]] != "try-error") {          ## Did. We are done
+      signal_error <- FALSE
+      break
+    }
+  }
+  if (signal_error) {          ## Parameters exhausted and still error
+    for (data_name in c("design")) {  ## Start assigning other names to data
+      names(Call)[[par]] <- data_name
+      result <- try(eval(Call, envir = parent.frame()),  ## See if it flies
+                    silent = TRUE)
+      if (class(result)[[1]] != "try-error") {          ## Did. We are done
+        signal_error <- FALSE
+        break
+      }
+    }
+    print(Call)                ## Show call of last attempt
+    stop(result)               ## Give up
   }
   if (signal_error) {          ## Parameters exhausted and still error
     print(Call)                ## Show call of last attempt

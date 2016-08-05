@@ -144,20 +144,24 @@ in three stages (aka *The Stages*):
 If you find yourself at loss regarding the legality of the above and/or of why
 I am disclosing this information, please know that
 *someone* (I cannot tell the name but *trust me* that he/she is *very well
-connected* and knows *everything* about *these things*), informed me recently that
+connected* and knows *everything* about *these things*), informed me recently that:
 "to have an *Undisclosed Evil Plan of World Domination*" is OK (well... he/she really
 said "is acceptable") "as long as you disclose *that you have one* and clearly
 specify *The Stages*", which can be non-specific but need to include wording that
 "warns about the existence of *The Bait* and *The Trap* in case these
-*resources* are planned to be utilized at some point". The rationale is that "even if the
+*resources* are planned to be utilized at some point".
+
+The rationale is that "even if the
 *Regulatory Agencies* share the public's
 concern and are fully aware of the common misconception according to which they
 should protect, to *the full extent of their abilities*, the unaware citizen from being abused,
 full disclosure of *The Evil Plan* could prove unacceptably counterproductive to the
-successful fulfillment of *World Domination* by an *Evil Organization*" that, by the way,
-"*also pays taxes* and thus deserves *reasonable protection* to conduct its
-business". This solution,
-albeit non perfect, is considered "a fair compromise that protects, to some extent, the
+successful fulfillment of *World Domination* by an *Evil Organization* that, we cannot
+forget, *also pays taxes* and thus is entitled to *some level of protection* to conduct
+its business satisfactorily".
+
+This solution,
+albeit non perfect, is considered "a fair compromise that protects, to some degree, the
 rights of everybody involved".
 
 You have been served!
