@@ -130,9 +130,9 @@ pipelines to a different dimension, in case you like them.
 #### The Evil Plan
 What I will (in fact, have to) publicly inform is that `intubate` features an
 *Undisclosed Evil Plan of World Domination* that will be unveiled in the time to come
-according to my Organization's *Evil Master Plans*.
+according to my Organization's *Evil Master Plan*.
 
-Please also be informed that we are thinking about achieving our goals
+Please also be notified that we are thinking about achieving our goals
 in three stages (aka *The Stages*):
 
 1. Set foundations needed for the ones to come later. This
@@ -143,16 +143,20 @@ in three stages (aka *The Stages*):
 
 If you find yourself at loss regarding the legality of the above and/or of why
 I am disclosing this information, please know that
-*someone* (I cannot tell the name but *trust* me that he/she is *very* well
-connected and knows *everything* about these *things*), informed me recently that
+*someone* (I cannot tell the name but *trust me* that he/she is *very well
+connected* and knows *everything* about *these things*), informed me recently that
 "to have an *Undisclosed Evil Plan of World Domination*" is OK (well... he/she really
 said "is acceptable") "as long as you disclose *that you have one* and clearly
-specify *The Stages*, which can be non-specific but need to include wording that
-warns about the existence of *The Bait* and *The Trap* in case these *resources* are plan
-to be used". The rationale is that "even if the regulatory agencies understand that they
-should protect the common citizen from being abused to *the full extent of their abilities*,
+specify *The Stages*", which can be non-specific but need to include wording that
+"warns about the existence of *The Bait* and *The Trap* in case these
+*resources* are planned to be utilized at some point". The rationale is that "even if the
+*Regulatory Agencies* share the public's
+concern and are fully aware of the common misconception according to which they
+should protect, to *the full extent of their abilities*, the unaware citizen from being abused,
 full disclosure of *The Evil Plan* could prove unacceptably counterproductive to the
-successful fulfillment of *World Domination* by an *Evil Organization*". This solution,
+successful fulfillment of *World Domination* by an *Evil Organization*" that, by the way,
+"*also pays taxes* and thus deserves *reasonable protection* to conduct its
+business". This solution,
 albeit non perfect, is considered "a fair compromise that protects, to some extent, the
 rights of everybody involved".
 
@@ -517,8 +521,9 @@ OK, let's see how you do in a quiz, under the Honor Code.
             Name:
             Honor Code Statement:
             
-            Question: Which helper function would you use to construct your interface
-            for the function `t.test`? [10 points]
+            Question: Which helper function would you use to construct
+            your interface for the function `t.test`? [5]
+            How should you name your interface? [5]
 
 (Psst!... here... don't look!... I told you not to look!... yes, yes, play dumb... you don't have to worry... someone told me there
 is a solution manual somewhere in the net...)
