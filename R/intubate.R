@@ -150,11 +150,17 @@ intubate <-
     Call <- match.call(expand.dots = TRUE)
     Call[[1]] <- get_calling_name("ntbt", as.character(Call[[1]]))
 
+    xxxx <- scan_XXXX(preCall$...)
+    if (xxxx$found) {
+      preCall$...[[xxxx$pos]] <- NULL
+      Call[[xxxx$pos + 2]] <- NULL
+    }
+
     if (length(preCall$...) == 0)  {
       ## cat("No arguments other than data\n")
       ## print(Call)
       result <- eval(Call)
-    } else if (there_are_formulas(preCall$...)) {
+    } else if (there_are_formulas(preCall$...) || xxxx$use_formula_case) {
       ## cat("Formula\n")
       result <- process_formula_case(Call, use_envir = parent.frame())      
     } else  {
@@ -162,7 +168,17 @@ intubate <-
       ## print(Call)
       result <- with(data, eval(Call[-2]))    ## Remove "data" [-2] before calling
     }
-    if (!is.null(result)) {
+    
+    if (xxxx$found) {
+      if (xxxx$print_result)
+        print(result)
+      if (xxxx$print_summary_result)
+        print(summary(result))
+      if (xxxx$plot_result)
+        plot(result)
+    }
+    
+    if (!is.null(result) && !xxxx$forward_input) {
       if (withVisible(result)$visible)
         return (result)
       else
@@ -170,6 +186,33 @@ intubate <-
     }
     invisible(data)
   }
+
+
+scan_XXXX <- function(par_list) {
+  xxxx <- list()
+  xxxx$found <- FALSE
+  for (pos in 1:length(par_list)) {
+    xxxx$text <- par_list[[pos]]
+    if (is.character(xxxx$text) &&
+        gsub(".*A.*(\\J).*(\\J).*Z.*", "\\1\\2", xxxx$text)[[1]] == "JJ") {
+      xxxx$found <- TRUE
+      xxxx$pos <- pos
+      break
+    }
+  }
+  if (!xxxx$found)
+    xxxx$text <- "AJJZ"
+  
+  xxxx$print_result <- (gsub(".*A.*\\J.*\\J.*(p).*Z.*", "\\1", xxxx$text) == "p")
+  xxxx$plot_result <- (gsub(".*A.*\\J.*\\J.*(P).*Z.*", "\\1", xxxx$text) == "P")
+  xxxx$print_summary_result <- (gsub(".*A.*\\J.*\\J.*(s).*Z.*", "\\1", xxxx$text) == "s")
+  xxxx$use_formula_case <- (gsub(".*A.*\\J.*\\J.*(F).*Z.*", "\\1", xxxx$text) == "F")
+  xxxx$forward_input <- (gsub(".*A.*\\J.*\\J.*(f).*Z.*", "\\1", xxxx$text) == "f")
+  
+#  print(xxxx)
+  xxxx
+}
+
 
 
 ## (internal)
