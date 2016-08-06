@@ -8,13 +8,12 @@
   implemented by \code{magrittr} with the operator \%>\%.
   
   \code{intubate} allows to use, effortlessly,
-  classic rock solid R functions in a consistent
-  pipeline notation.
+  classic R functions in a consistent pipeline notation.
   
   For functions missing interfaces, there is an easy
   (one line) way to to create new interfaces "on demand" 
-  (see \code{\link{intubate}}) that should cover
-  the vast majority of functions with formulas.
+  (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
+  the vast majority of functions.
   
   Currently, there are interfaces for:
   
@@ -53,7 +52,20 @@
   
   The aim is to provide interfaces to most methodologies
   used in data science.
-
+  
+  \code{intubate} itself only needs the \code{base} library.
+  To keep it as lean as possible, \code{intubate} will not
+  install not load any library. You need to make sure that the
+  library containing the functions to be interfaced are loaded
+  (before or after \code{intubate}). Moreover, you can interface
+  the functions of any library directly without the need to
+  create interfaces (see \code{\link{ntbt}}) so perhaps in the
+  future that will be the preferred way of using \code{intubate}.
+  For compatibility purposes, the interfaces implemented so far
+  will be mantained for some time (but please remember that the
+  corresponding libraries will not be installed from this version
+  on)
+  
   \code{intubate} is still a work in progress.
   As such, the implementation may change in future
   versions until stabilization.

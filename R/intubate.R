@@ -133,7 +133,6 @@ intubate <-
   ## survival
   ntbt_cch <-
   ntbt_coxph <-
-  ntbt_finegray <-
   ntbt_pyears <-
   ntbt_survConcordance <-
   ntbt_survexp <-
@@ -146,62 +145,160 @@ intubate <-
   ## intubate function
   function(data, ...) {
     preCall <- match.call(expand.dots = FALSE)
-    
+
     Call <- match.call(expand.dots = TRUE)
     Call[[1]] <- get_calling_name("ntbt", as.character(Call[[1]]))
 
-    io <- scan_intubOrder(preCall$...)
-    if (io$found) {
-      preCall$...[[io$pos]] <- NULL
-      Call[[io$pos + 2]] <- NULL
-    }
+    result <- process_call(data, preCall, Call, parent.frame())
 
-    if (length(preCall$...) == 0)  {
-      ## cat("No arguments other than data\n")
-      ## print(Call)
-      result <- eval(Call)
-    } else if (there_are_formulas(preCall$...) || io$use_formula_case) {
-      ## cat("Formula\n")
-      result <- process_formula_case(Call, use_envir = parent.frame())      
-    } else  {
-      ## cat("Rest of cases\n")
-      ## print(Call)
-      result <- with(data, eval(Call[-2]))    ## Remove "data" [-2] before calling
-    }
-    
-    if (io$found) {
-      if (io$print_result)
-        print(result)
-      if (io$print_summary_result)
-        print(summary(result))
-      if (io$plot_result)
-        plot(result)
-    }
-    
-    if (!is.null(result) && !io$forward_input) {
-      if (withVisible(result)$visible)
-        return (result)
-      else
-        data <- result
-    }
-    invisible(data)
+    if (withVisible(result)$visible)
+      return (result)
+    invisible(result)
   }
 
+function(data, ...) {
+    preCall <- match.call(expand.dots = FALSE)
+    
+    Call <- match.call(expand.dots = TRUE)
+    Call[[length(Call) + 1]] <- ""
+    for (pos in length(Call):3) {
+      Call[[pos]] <- Call[[pos - 1]]
+      names(Call)[[pos]] <- names(Call)[[pos - 1]]
+    }      
+    Call[[3]] <- get_calling_name("ntbt", as.character(Call[[1]]))
+    names(Call)[[3]] <- "fti"
+    Call[[length(Call) + 1]] <- parent.frame()
+    names(Call)[[length(Call)]] <- "use_envir" 
+    Call[[1]] <- quote(intubate::ntbt)
 
-scan_intubOrder <- function(par_list) {
+    print(Call)
+    eval(Call)
+  }
+
+ntbt <- function(data, fti, ...) {
+  preCall <- match.call(expand.dots = FALSE)
+  Call <- match.call(expand.dots = TRUE)
+
+  fti_name <- all.names(Call[[3]])
+  ## For now we ignore the namespace and call the function
+  ## without it.
+  fti_name <- fti_name[length(fti_name)]
+  ## For some reason (unknown to me), if we use instead the code
+  #  if (length(fti_name) == 3)
+  #    fti_name <- paste0(fti_name[2], fti_name[1], fti_name[3])
+  ## that would recreate the original code,
+  ## as.name(fti_name) expands to ´stats::lm´ and I do not know
+  ## for now how to get rid of those ´´ that still are there
+  ## if you check your final Call (with print), and then
+  ## there is an error when you eval().
+  
+  Call[[1]] <- as.name(fti_name)
+  Call[[3]] <- NULL
+
+  result <- process_call(data, preCall, Call, parent.frame())
+  if (withVisible(result)$visible)
+    return (result)
+  invisible(result)
+}
+
+function(data, fti, ..., use_envir = parent.frame()) {
+  preCall <- match.call(expand.dots = FALSE)
+  Call <- match.call(expand.dots = TRUE)
+  Call[[length(Call)]] <- NULL
+  
+  Call[[1]] <- as.name(fti)
+  Call[[3]] <- NULL
+  
+  io <- parse_intubOrder(preCall$...)
+  if (io$found) {
+    preCall$...[[io$pos]] <- NULL
+    Call[[io$pos + 2]] <- NULL
+  }
+  
+  if (length(preCall$...) == 0)  {
+    ## cat("No arguments other than data\n")
+    ## print(Call)
+    result <- eval(Call)
+  } else if (there_are_formulas(preCall$...) || io$use_formula_case) {
+    ## cat("Formula\n")
+    result <- process_formula_case(Call, use_envir = use_envir)
+  } else  {
+    ## cat("Rest of cases\n")
+    ## print(Call)
+    result <- with(data, eval(Call[-2]))    ## Remove "data" [-2] before calling
+  }
+  
+  if (io$found) {
+    if (io$print_result)
+      print(result)
+    if (io$print_summary_result)
+      print(summary(result))
+    if (io$plot_result)
+      plot(result)
+  }
+  
+  if (!is.null(result) && !io$forward_input) {
+    if (withVisible(result)$visible)
+      return (result)
+    else
+      data <- result
+  }
+  invisible(data)
+}
+
+
+process_call <- function(data, preCall, Call, use_envir) {
+##  print(Call)
+  io <- parse_intubOrder(preCall$...)
+##  print(io$found)
+  if (io$found) {
+    preCall$...[[io$pos]] <- NULL
+    Call[[io$pos + 2]] <- NULL
+  }
+##  print(Call)
+  
+  if (length(preCall$...) == 0)  {
+    ## cat("No arguments other than data\n")
+    ## print(Call)
+    result <- eval(Call)
+  } else if (there_are_formulas(preCall$...) || io$use_formula_case) {
+    ## cat("Formula\n")
+    result <- process_formula_case_1(Call, use_envir)      
+  } else  {
+    ## cat("Rest of cases\n")
+    ## print(Call)
+    result <- with(data, eval(Call[-2]))    ## Remove "data" [-2] before calling
+  }
+
+  result_visible <- withVisible(result)$visible
+
+  exec_intubOrder(io, result)
+
+  if (!is.null(result) && !io$forward_input) {
+    if (result_visible)
+      return (result)
+    else
+      data <- result
+  }
+  invisible(data)
+}
+
+## (internal)
+parse_intubOrder <- function(par_list) {
+  intuBorder <- "<||>"
   io <- list()
   io$found <- FALSE
   for (pos in 1:length(par_list)) {
     io$text <- par_list[[pos]]
     if (is.character(io$text) &&
-        gsub(".*<.*(\\|).*(\\|).*>.*", "\\1\\2", io$text)[[1]] == "||") {
+        gsub(".*(<).*(\\|).*(\\|).*(>).*", "\\1\\2\\3\\4", io$text)[[1]] == intuBorder) {
       io$found <- TRUE
       io$pos <- pos
       break
     }
   }
   if (!io$found)
-    io$text <- "<||>"
+    io$text <- intuBorder
   
   io$print_result <- (gsub(".*<.*\\|.*\\|.*(p).*>.*", "\\1", io$text) == "p")
   io$plot_result <- (gsub(".*<.*\\|.*\\|.*(P).*>.*", "\\1", io$text) == "P")
@@ -211,6 +308,19 @@ scan_intubOrder <- function(par_list) {
   
 #  print(io)
   io
+}
+
+## (internal)
+exec_intubOrder <- function(io, result) {
+  if (!io$found)
+    return (FALSE)
+  
+  if (io$print_result)
+    print(result)
+  if (io$print_summary_result)
+    print(summary(result))
+  if (io$plot_result)
+    plot(result)
 }
 
 
@@ -223,7 +333,7 @@ scan_intubOrder <- function(par_list) {
 ## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
 ## not clue how to implement), for *all* the formulas that have a ".", so maybe
 ## the end result will be even more involved and this is as good as we can do.
-process_formula_case <- function(Call, use_envir) {
+process_formula_case_1 <- function(Call, use_envir) {
   Call[2:3] <- Call[3:2]                       ## Switch parameters
   names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
   ## print(Call)
@@ -248,7 +358,7 @@ process_formula_case <- function(Call, use_envir) {
 ## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
 ## not clue how to implement), for *all* the formulas that have a ".", so maybe
 ## the end result will be even more involved and this is as good as we can do.
-process_formula_case_bak1 <- function(Call, use_envir) {
+process_formula_case_2 <- function(Call, use_envir) {
   signal_error <- TRUE
   ## Let's have "data" take a walk until it finds its place in the world,
   ## as functions are supposed to check if unnamed parameters are sent
@@ -278,7 +388,7 @@ process_formula_case_bak1 <- function(Call, use_envir) {
 ## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
 ## not clue how to implement), for *all* the formulas that have a ".", so maybe
 ## the end result will be even more involved and this is as good as we can do.
-process_formula_case_bak2 <- function(Call) {
+process_formula_case_3 <- function(Call) {
   signal_error <- TRUE
   ## Let's have "data" take a walk until it finds its place in the world,
   ## as functions are supposed to check if unnamed parameters are sent
@@ -324,6 +434,7 @@ there_are_formulas <- function(par_list) {
                !(class(is_formula)[[1]] == "try-error")
              }) > 0)
 }
+
 
 ## Name checking (internal)
 get_calling_name <- function(prefix, full_name) {
