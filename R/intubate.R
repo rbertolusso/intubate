@@ -196,10 +196,12 @@ ntbt <- function(data, fti, ...) {
   Call[[3]] <- NULL
 
   result <- process_call(data, preCall, Call, parent.frame())
+
   if (withVisible(result)$visible)
     return (result)
   invisible(result)
 }
+
 
 function(data, fti, ..., use_envir = parent.frame()) {
   preCall <- match.call(expand.dots = FALSE)
@@ -249,62 +251,101 @@ function(data, fti, ..., use_envir = parent.frame()) {
 
 process_call <- function(data, preCall, Call, use_envir) {
 ##  print(Call)
-  io <- parse_intubOrder(preCall$...)
+  io <- parse_intubOrder(preCall$..., data)
 ##  print(io$found)
   if (io$found) {
-    preCall$...[[io$pos]] <- NULL
+    preCall$...[[io$pos]] <- NULL   ## Remove intubOrder
     Call[[io$pos + 2]] <- NULL
   }
+  input_data <- io$input_data
 ##  print(Call)
   
   if (length(preCall$...) == 0)  {
-    ## cat("No arguments other than data\n")
-    ## print(Call)
+    cat("No arguments other than data\n")
+    print(Call)
     result <- eval(Call)
   } else if (there_are_formulas(preCall$...) || io$use_formula_case) {
-    ## cat("Formula\n")
+    cat("Formula\n")
+    if (io$is_intuBag)
+      Call[[2]] <- as.name(io$input[1])
+    print(Call)
     result <- process_formula_case_1(Call, use_envir)      
   } else  {
-    ## cat("Rest of cases\n")
-    ## print(Call)
-    result <- with(data, eval(Call[-2]))    ## Remove "data" [-2] before calling
+    cat("Rest of cases\n")
+    print(Call)
+    if(length(input_data) == 1 && !is_intuBag(input_data))
+      input_data <- input_data[[1]]  ## Need to get the object inside the list.
+    result <- try(with(input_data, eval(Call[-2])), silent = TRUE) ## Remove "data" [-2] then call
+    if (class(result)[[1]] == "try-error") {
+      if (io$is_intuBag)
+        Call[[2]] <- as.name(io$input[1])
+#      if (io$is_intuBag)
+#        Call[2] <- input_data
+      print(Call)
+      result <- with(data, eval(Call[-2])) ## For subset() and such, that already are
+      ## pipe aware.
+    }
   }
 
   result_visible <- withVisible(result)$visible
 
   exec_intubOrder(io, result)
 
-  if (!is.null(result) && !io$forward_input) {
-    if (result_visible)
-      return (result)
-    else
-      data <- result
+  if (!is.null(result) && io$output[1] != "")
+    data[io$output] <- ifelse(is.list(result), result, list(result))
+##  print(io)
+  if (!io$is_intuBag) {
+    if (!is.null(result) && !io$forward_input) {
+      if (result_visible)
+        return (result)
+      else
+        data <- result
+    }
   }
   invisible(data)
 }
 
 ## (internal)
-parse_intubOrder <- function(par_list) {
+parse_intubOrder <- function(par_list, data) {
   intuBorder <- "<||>"
   io <- list()
   io$found <- FALSE
   for (pos in 1:length(par_list)) {
-    io$text <- par_list[[pos]]
-    if (is.character(io$text) &&
-        gsub(".*(<).*(\\|).*(\\|).*(>).*", "\\1\\2\\3\\4", io$text)[[1]] == intuBorder) {
+    io$intubOrder <- par_list[[pos]]
+    if (is.character(io$intubOrder) &&
+        gsub(".*(<).*(\\|).*(\\|).*(>).*", "\\1\\2\\3\\4", io$intubOrder)[[1]] == intuBorder) {
       io$found <- TRUE
       io$pos <- pos
       break
     }
   }
   if (!io$found)
-    io$text <- intuBorder
+    io$intubOrder <- intuBorder
   
-  io$print_result <- (gsub(".*<.*\\|.*\\|.*(p).*>.*", "\\1", io$text) == "p")
-  io$plot_result <- (gsub(".*<.*\\|.*\\|.*(P).*>.*", "\\1", io$text) == "P")
-  io$print_summary_result <- (gsub(".*<.*\\|.*\\|.*(s).*>.*", "\\1", io$text) == "s")
-  io$use_formula_case <- (gsub(".*<.*\\|.*\\|.*(F).*>.*", "\\1", io$text) == "F")
-  io$forward_input <- (gsub(".*<.*\\|.*\\|.*(f).*>.*", "\\1", io$text) == "f")
+  io$print_result <- (gsub(".*<.*\\|.*\\|.*(p).*>.*", "\\1", io$intubOrder) == "p")
+  io$plot_result <- (gsub(".*<.*\\|.*\\|.*(P).*>.*", "\\1", io$intubOrder) == "P")
+  io$print_summary_result <- (gsub(".*<.*\\|.*\\|.*(s).*>.*", "\\1", io$intubOrder) == "s")
+  io$use_formula_case <- (gsub(".*<.*\\|.*\\|.*(F).*>.*", "\\1", io$intubOrder) == "F")
+  io$forward_input <- (gsub(".*<.*\\|.*\\|.*(f).*>.*", "\\1", io$intubOrder) == "f")
+  
+  io$is_intuBag <- is_intuBag(data)
+  input_output <- strsplit(paste0(" ", io$intubOrder, " "), ## Spaces to avoid failure.
+                           "<.*\\|.*\\|.*>")[[1]]
+  if (length(input_output) > 2)             ## For overachievers...
+    stop(paste0("Only one intuBorder, ", intuBorder, ", is currently implemented.\n"))
+
+  ## Get requested inputs.
+  ## cat("Inputs\n")
+  io$input <- trimws(strsplit(input_output[1], ";")[[1]])
+  
+  if (io$input[1] != "") {
+    io$input_data <- as.list(data[io$input])
+  } else
+    io$input_data <- data
+  
+  ## Get names of outputs.
+  ## cat("Outputs\n")
+  io$output <- trimws(strsplit(input_output[2], ";")[[1]])
   
 #  print(io)
   io
@@ -324,6 +365,17 @@ exec_intubOrder <- function(io, result) {
 }
 
 
+intuBag <- function(...) {
+  iBag <- list(...)
+  if (sum(names(iBag) == "") > 0)
+    stop("All elements of an intuBag must be named.")
+  class(iBag) <- c("intuBag")
+  iBag
+}
+
+is_intuBag <- function(object) {
+  sum(class(object) == "intuBag") > 0
+}
 
 ## (internal)
 ## This special case for formulas is, at least for now, needed because
@@ -427,6 +479,18 @@ process_formula_case_3 <- function(Call) {
 
 ## Determine if there is a formula (internal)
 there_are_formulas <- function(par_list) {
+  sum(sapply(par_list,
+             function(par) {
+               is_formula <- try(inherits(as.formula(as.character(par)),
+                                          "formula"), silent = TRUE)
+               if (class(is_formula)[[1]] == "try-error")
+                 return (FALSE)
+               as.character(par)[[1]] == "~"
+             }) > 0)
+}
+
+## Determine if there is a formula (internal)
+function(par_list) {
   sum(sapply(par_list,
              function(par) {
                is_formula <- try(inherits(as.formula(as.character(par)),
