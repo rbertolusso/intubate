@@ -25,6 +25,7 @@ Roberto Bertolusso
   \code{\link{svm}}
 }
 \examples{
+\dontrun{
 library(e1071)
 
 ## Original function to interface
@@ -40,6 +41,7 @@ library(magrittr)
 iris \%>\%
   ntbt_svm(Species ~ .) \%>\%
   summary()
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

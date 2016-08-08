@@ -142,6 +142,7 @@ intubate <-
   ## tree
   ntbt_tree <-
   
+  ## (external)
   ## intubate function
   function(data, ...) {
     preCall <- match.call(expand.dots = FALSE)
@@ -156,6 +157,7 @@ intubate <-
     invisible(result)
   }
 
+## (external)
 function(data, ...) {
     preCall <- match.call(expand.dots = FALSE)
     
@@ -175,6 +177,7 @@ function(data, ...) {
     eval(Call)
   }
 
+## (external)
 ntbt <- function(data, fti, ...) {
   preCall <- match.call(expand.dots = FALSE)
   Call <- match.call(expand.dots = TRUE)
@@ -203,6 +206,7 @@ ntbt <- function(data, fti, ...) {
 }
 
 
+## (internal)
 function(data, fti, ..., use_envir = parent.frame()) {
   preCall <- match.call(expand.dots = FALSE)
   Call <- match.call(expand.dots = TRUE)
@@ -248,7 +252,7 @@ function(data, fti, ..., use_envir = parent.frame()) {
   invisible(data)
 }
 
-
+## (internal)
 process_call <- function(data, preCall, Call, use_envir) {
 ##  print(Call)
   io <- parse_intubOrder(preCall$..., data)
@@ -364,7 +368,7 @@ exec_intubOrder <- function(io, result) {
     plot(result)
 }
 
-
+## (internal)
 intuBag <- function(...) {
   iBag <- list(...)
   if (sum(names(iBag) == "") > 0)
@@ -373,6 +377,7 @@ intuBag <- function(...) {
   iBag
 }
 
+## (internal)
 is_intuBag <- function(object) {
   sum(class(object) == "intuBag") > 0
 }
@@ -403,6 +408,7 @@ process_formula_case_1 <- function(Call, use_envir) {
   result
 }
 
+## (internal)
 ## This special case for formulas is, at least for now, needed because
 ## "Rest of cases" below does not know how to manage cases with "." in
 ## a formula (and the called function neither because only sees the variables
@@ -433,6 +439,7 @@ process_formula_case_2 <- function(Call, use_envir) {
   result
 }
 
+## (internal)
 ## This special case for formulas is, at least for now, needed because
 ## "Rest of cases" below does not know how to manage cases with "." in
 ## a formula (and the called function neither because only sees the variables
@@ -477,7 +484,8 @@ process_formula_case_3 <- function(Call) {
 }
 
 
-## Determine if there is a formula (internal)
+## (internal)
+## Determine if there is a formula
 there_are_formulas <- function(par_list) {
   sum(sapply(par_list,
              function(par) {
@@ -489,7 +497,8 @@ there_are_formulas <- function(par_list) {
              }) > 0)
 }
 
-## Determine if there is a formula (internal)
+## (internal)
+## Determine if there is a formula
 function(par_list) {
   sum(sapply(par_list,
              function(par) {
@@ -500,7 +509,8 @@ function(par_list) {
 }
 
 
-## Name checking (internal)
+## (internal)
+## Name checking
 get_calling_name <- function(prefix, full_name) {
   ## There are two possibilities:
   ## 1) <prefix>_<name>           (1 element  => <prefix>_<name>)

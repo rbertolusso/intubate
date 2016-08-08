@@ -1,7 +1,7 @@
 ---
 title: "intubate"
 author: "Roberto Bertolusso"
-date: "2016-08-05"
+date: "2016-08-07"
 ---
 
 The aim of `intubate` is to offer a painless way to
@@ -19,7 +19,8 @@ install.packages("intubate")
 (keep in mind you should use this version only for the interfaces, with
  a number of helper functions to define your interface. The
  newer version, 0.99.3, will need only one helper function, `intubate`, for all
- interfaces)
+ interfaces, and will also let you call the non-pipe-aware functions without
+ having to define an interface, by using the function `ntbt`.)
  
 * the latest development version from github with
 
@@ -44,24 +45,41 @@ in the following way:
 fit <- lm(sr ~ ., data = LifeCycleSavings)
 summary(fit)
 ```
-`intubate` let's you do it this other way:
+`intubate` let's you do it this other ways:
 
 ```{r}
 library(magrittr)
 library(intubate)
 
+## 1) Using interface (provided by intubate OR user defined)
 LifeCycleSavings %>%
-  ntbt_lm(sr ~ .) %>%
+  ntbt_lm(sr ~ .) %>%    ## ntbt_lm is the interface
+  summary()
+  
+## 2) Calling the non-pipe-aware function directly using ntbt
+LifeCycleSavings %>%
+  ntbt(lm, sr ~ .) %>%   ## ntbt calls lm without need to define interface
   summary()
 ```
 
 `intubate` currently implements close to a 100 interfaces to popular
-statistical functions associated, but not limited, to data science.
+statistical functions associated, but not limited, to data science. More
+interfaces are planned to be included in the future.
 
-The possibilities do not end there, because `intubate` *also* let's
+`intubate` depends only on `base` library, so its implementation is very lean.
+
+To be able to continue to include more interfaces without bloating your system,
+starting from version 0.99.3 (not yet submitted) `intubate` **will not** install the packages
+that include the interfaced functions. You need to install them yourself, and load
+the corresponding libraries before or after loading `intubate` (but before using
+them in your pipelines).
+
+`intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
-full power of decision regarding which functions to interface. This
-may prove to be particularly welcome in case you are related to a given
+full power of decision regarding which functions to interface. It *also*
+let's you **call the non-pipe-aware function directly**, withou the need
+of defining an interface. The choice of extending the scope of `intubate`
+may prove to be particularly welcome in case you are related to a particular
 field that may, in the long run, continue to lack interfaces due to my
 unforgivable, but unavoidable, lack of interest and/or ignorance.
 
@@ -112,8 +130,24 @@ USJudgeRatings %>%
 USJudgeRatings %>%                    
   ntbt_cor.test(~ CONT + INTG)        ## Also the formula variant
 ```
-There is more that has already been implemented (explained below), but at
-this point you may have an idea if `intubate` is for you or not.
+
+A **new feature** is that **you do not have to create an interface** if you do not
+want to. You can **call the non-pipe-aware function directly** with `ntbt`,
+in the following way:
+
+```{r}
+USJudgeRatings %>%
+  ntbt(cor.test, CONT, INTG)           ## Use it right away
+
+USJudgeRatings %>%                    
+  ntbt(cor.test, ~ CONT + INTG)        ## Also the formula variant
+```
+You can use `ntbt` with *any function*, also the ones without interface. In principle,
+the only functions you would like to call are the ones you cannot use directly in
+a pipeline (because `data` is in second place instead of first).
+
+At this point you may have an idea if `intubate` is for you or not. If you elect
+to continue reading, I want to warn you that my style may or not be of your liking. 
 
 ### Entries by date
 
