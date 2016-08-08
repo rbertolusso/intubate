@@ -1,12 +1,9 @@
 \name{gbm}
 \alias{ntbt_gbm}
-\title{Interface to gbm for data science pipelines.}
+\title{Interfaces for gbm package for data science pipelines.}
 \description{
-  \code{ntbt_gbm} is an interface to \code{gbm::gbm}
-  (Generalized Boosted Regression Modeling) that can be used
-  in a pipeline implemented by \code{magrittr}.}
-\usage{
-ntbt_gbm(data, ...)
+  Interfaces to \code{gbm} functions that can be used
+  in a pipeline implemented by \code{magrittr}.
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
@@ -21,12 +18,11 @@ ntbt_gbm(data, ...)
 \author{
 Roberto Bertolusso
 }
-\seealso{
-  \code{gbm}
-}
 \examples{
 \dontrun{
+library(magrittr)
 library(gbm)
+
 # A least squares regression example # create some data
 N <- 1000
 X1 <- runif(N)
@@ -95,7 +91,6 @@ gbm1 <-
 # error-prone, so avoided here)
 
 ## so it can be used easily in a pipeline.
-library(magrittr)
 data \%>\%
   ntbt_gbm(Y~X1+X2+X3+X4+X5+X6,         # formula
            var.monotone=c(0,0,0,0,0,0), # -1: monotone decrease,
@@ -119,5 +114,4 @@ data \%>\%
 }
 \keyword{intubate}
 \keyword{magrittr}
-\keyword{ntbt_gbm}
 \keyword{gbm}

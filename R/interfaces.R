@@ -42,11 +42,11 @@ ntbt_svm <-
   
   ## lattice
   ntbt_barchart <-
-  ntbt_cloud <-
   ntbt_bwplot <-
+  ntbt_cloud <-
   ntbt_contourplot <-
-  ntbt_dotplot <-
   ntbt_densityplot <-
+  ntbt_dotplot <-
   ntbt_histogram <-
   ntbt_levelplot <-
   ntbt_oneway <-
@@ -55,12 +55,12 @@ ntbt_svm <-
   ntbt_qqmath <-
   ntbt_splom <-
   ntbt_stripplot <-
+  ntbt_tmd <-
   ntbt_wireframe <-
   ntbt_xyplot <-
   
   ## leaps
   ntbt_regsubsets <-
-  ntbt_tmd <-
   
   ## lfe
   ntbt_felm <-

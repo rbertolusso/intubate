@@ -1,32 +1,32 @@
-\name{ntbt_rpart}
+\name{rpart}
 \alias{ntbt_rpart}
-\title{Interface to rpart for data science pipelines.}
+\title{Interfaces for rpart package for data science pipelines.}
 \description{
-  \code{ntbt_rpart} is an interface to \code{rpart::\link{rpart}}
-  (Recursive Partitioning and Regression Trees) that can be used
-  in a pipeline implemented by \code{magrittr}.}
+  Interfaces to \code{rpart} functions that can be used
+  in a pipeline implemented by \code{magrittr}.
+}
 \usage{
 ntbt_rpart(data, ...)
 }
 \arguments{
-  \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{\link{rpart}}.}
+  \item{data}{an data frame, tibble, list, ...}
+  \item{...}{Other arguments passed to the corresponding interfaced function.}
 }
 \details{
-  ntbt_rpart calls \code{rpart}.
+  Interfaces call their corresponding interfaced function.
 }
 \value{
-  Object returned by rpart function.
+  Object returned by interfaced function.
 }
 \author{
 Roberto Bertolusso
 }
-\seealso{
-  \code{\link{rpart}}
-}
 \examples{
+\dontrun{
+library(magrittr)
 library(rpart)
 
+## rpart
 ## Original function to interface
 fit <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
 fit2 <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis,
@@ -49,7 +49,6 @@ plot(fit2)
 text(fit2, use.n = TRUE)
 
 ## so it can be used easily in a pipeline.
-library(magrittr)
 par(mfrow = c(1,2), xpd = NA) # otherwise on some devices the text is clipped
 kyphosis \%>\%
   ntbt_rpart(Kyphosis ~ Age + Number + Start) \%T>\%
@@ -61,7 +60,7 @@ kyphosis \%>\%
   plot() \%>\%
   text(use.n = TRUE)
 }
+}
 \keyword{intubate}
 \keyword{magrittr}
-\keyword{ntbt_rpart}
 \keyword{rpart}

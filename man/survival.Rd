@@ -8,8 +8,9 @@
 \alias{ntbt_survSplit}
 \title{Interfaces to survival package for data science pipelines.}
 \description{
-  Interface to \code{survival} functions that can be used
-  in a pipeline implemented by \code{magrittr}.}
+  Interfaces to \code{survival} functions that can be used
+  in a pipeline implemented by \code{magrittr}.
+}
 \usage{
 ntbt_cch(data, ...)
 ntbt_coxph(data, ...)
@@ -20,14 +21,14 @@ ntbt_survfit(data, ...)
 ntbt_survSplit(data, ...)
 }
 \arguments{
-  \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{cch}.}
+  \item{data}{an data frame, tibble, list, ...}
+  \item{...}{Other arguments passed to the corresponding interfaced function.}
 }
 \details{
-  ntbt_cch calls \code{cch}.
+  Interfaces call their corresponding interfaced function.
 }
 \value{
-  Object returned by \code{cch}.
+  Object returned by interfaced function.
 }
 \author{
 Roberto Bertolusso
@@ -170,7 +171,6 @@ veteran \%>\%
                  episode = "timegroup") \%>\%
   ntbt_coxph(Surv(tstart, time, status) ~ 
              karno*strata(timegroup) + age + trt)
-
 }
 }
 \keyword{intubate}

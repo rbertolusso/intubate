@@ -127,32 +127,6 @@ ntbt_xtabs(ag, len ~ .)
 ToothGrowth \%>\%
   ntbt_aggregate(len ~ ., mean) \%>\%
   ntbt_xtabs(len ~ .)
-
-######### Using original functions in data pipelines #########
-## Using lm directly in a data pipeline will raise an error
-try(CO2 \%>\%
-      lm(conc ~ uptake))
-## unless formula= is specified.
-try(CO2 \%>\%
-      lm(formula=conc ~ uptake))
-
-## Using cor.test directly in a data pipeline will raise an error
-try(USJudgeRatings \%>\%
-      cor.test(~ CONT + INTG))
-## regardless of specifying formula=
-try(USJudgeRatings \%>\%
-      cor.test(formula = ~ CONT + INTG))
-
-## Using aggregate directly in a data pipeline will raise an error
-try(ToothGrowth \%>\%
-      aggregate(len ~ ., mean) \%>\%
-      xtabs(len ~ .))
-## regardless of specifying formula=
-try(ToothGrowth \%>\%
-      aggregate(formula=len ~ ., mean))
-
-## For possible workarounds and further discussion
-## see the examples in ntbt_function_data
 }
 }
 \seealso{

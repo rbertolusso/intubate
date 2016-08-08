@@ -1,31 +1,31 @@
-\name{ntbt_tree}
+\name{tree}
 \alias{ntbt_tree}
-\title{Interface to tree for data science pipelines.}
+\title{Interfaces for tree package for data science pipelines.}
 \description{
-  \code{ntbt_tree} is an interface to \code{tree::\link{tree}}
-  (Fit a Classification or Regression Tree) that can be used
-  in a pipeline implemented by \code{magrittr}.}
+  Interfaces to \code{tree} functions that can be used
+  in a pipeline implemented by \code{magrittr}.
+}
 \usage{
 ntbt_tree(data, ...)
 }
 \arguments{
-  \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{\link{tree}}.}
+  \item{data}{an data frame, tibble, list, ...}
+  \item{...}{Other arguments passed to the corresponding interfaced function.}
 }
 \details{
-  ntbt_tree calls \code{tree}.
+  Interfaces call their corresponding interfaced function.
 }
 \value{
-  Object returned by tree function.
+  Object returned by interfaced function.
 }
 \author{
 Roberto Bertolusso
 }
-\seealso{
-  \code{\link{tree}}
-}
 \examples{
+\dontrun{
+library(magrittr)
 library(tree)
+
 data(cpus, package="MASS")
 
 ## Original function to interface
@@ -42,7 +42,6 @@ summary(cpus.ltr)
 plot(cpus.ltr);  text(cpus.ltr)
 
 ## so it can be used easily in a pipeline.
-library(magrittr)
 cpus \%>\%
   ntbt_tree(log10(perf) ~ syct + mmin + mmax + cach + chmin + chmax) \%>\%
   summary()
@@ -56,7 +55,7 @@ iris \%>\%
   ntbt_tree(Species ~.) \%>\%
   summary()
 }
+}
 \keyword{intubate}
 \keyword{magrittr}
-\keyword{ntbt_tree}
 \keyword{tree}

@@ -1,31 +1,34 @@
-\name{ntbt_felm}
+\name{lfe}
 \alias{ntbt_felm}
-\title{Interface to felm for data science pipelines.}
+\title{Interfaces for lfe package for data science pipelines.}
 \description{
-  \code{ntbt_felm} is an interface to \code{MASS::\link{felm}}
-  (Fit a linear model with multiple group fixed effects) that can be used
-  in a pipeline implemented by \code{magrittr}.}
+  Interfaces to \code{lfe} functions that can be used
+  in a pipeline implemented by \code{magrittr}.
+}
 \usage{
 ntbt_felm(data, ...)
 }
 \arguments{
-  \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{\link{felm}}.}
+  \item{data}{an data frame, tibble, list, ...}
+  \item{...}{Other arguments passed to the corresponding interfaced function.}
 }
 \details{
-  ntbt_felm calls \code{\link{felm}}.
+  Interfaces call their corresponding interfaced function.
 }
 \value{
-  Object returned by \code{\link{felm}}.
+  Object returned by interfaced function.
 }
 \author{
 Roberto Bertolusso
 }
 \seealso{
-  \code{\link{lfe}}
+  \code{lfe}
 }
 \examples{
+\dontrun{
+library(magrittr)
 library(lfe)
+
 oldopts <- options(lfe.threads=1)
 
 set.seed(123)
@@ -53,12 +56,12 @@ est <- ntbt_felm(data, y ~ x + x2 | id + firm)
 summary(est)
 
 ## so it can be used easily in a pipeline.
-library(magrittr)
 data \%>\%
   ntbt_felm(y ~ x + x2 | id + firm) \%>\%
   summary()
 }
+}
 \keyword{intubate}
 \keyword{magrittr}
-\keyword{ntbt_felm}
+\keyword{lfe}
 \keyword{felm}

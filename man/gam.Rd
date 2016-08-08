@@ -1,22 +1,22 @@
 \name{gam}
 \alias{ntbt_gam}
-\title{Interface to gam for data science pipelines.}
+\title{Interfaces for gam package for data science pipelines.}
 \description{
-  \code{ntbt_gam} is an interface to \code{gam::gam}
-  (Fitting Generalized Additive Models) that can be used
-  in a pipeline implemented by \code{magrittr}.}
+  Interfaces to \code{gam} functions that can be used
+  in a pipeline implemented by \code{magrittr}.
+}
 \usage{
 ntbt_gam(data, ...)
 }
 \arguments{
-  \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{gam}.}
+  \item{data}{an data frame, tibble, list, ...}
+  \item{...}{Other arguments passed to the corresponding interfaced function.}
 }
 \details{
-  ntbt_gam calls \code{gam}.
+  Interfaces call their corresponding interfaced function.
 }
 \value{
-  Object returned by \code{gam}.
+  Object returned by interfaced function.
 }
 \author{
 Roberto Bertolusso
@@ -71,5 +71,4 @@ airquality \%>\%
 }
 \keyword{intubate}
 \keyword{magrittr}
-\keyword{ntbt_gam}
 \keyword{gam}

@@ -1,12 +1,12 @@
-\name{e1071}
-\alias{ntbt_svm}
-\title{Interfaces for e1071 package for data science pipelines.}
+\name{leaps}
+\alias{ntbt_regsubsets}
+\title{Interfaces for leaps package for data science pipelines.}
 \description{
-  Interfaces to \code{e1071} functions that can be used
+  Interfaces to \code{leaps} functions that can be used
   in a pipeline implemented by \code{magrittr}.
 }
 \usage{
-ntbt_svm(data, ...)
+ntbt_regsubsets(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list, ...}
@@ -21,26 +21,29 @@ ntbt_svm(data, ...)
 \author{
 Roberto Bertolusso
 }
+\seealso{
+  \code{regsubsets}
+}
 \examples{
 \dontrun{
-library(e1071)
+library(magrittr)
+library(leaps)
 
 ## Original function to interface
-model <- svm(Species ~ ., iris)
-summary(model)
+fit <- regsubsets(Fertility ~ ., data = swiss, nbest = 2)
+summary(fit)
 
 ## The interface reverses the order of data and formula
-model <- ntbt_svm(iris, Species ~ .)
-summary(model)
+fit <- ntbt_regsubsets(data = swiss, Fertility ~ ., nbest = 2)
+summary(fit)
 
 ## so it can be used easily in a pipeline.
-library(magrittr)
-iris \%>\%
-  ntbt_svm(Species ~ .) \%>\%
+swiss \%>\%
+  ntbt_regsubsets(Fertility ~ ., nbest = 2) \%>\%
   summary()
 }
 }
 \keyword{intubate}
 \keyword{magrittr}
-\keyword{e1071}
-\keyword{svm}
+\keyword{leaps}
+\keyword{regsubsets}

@@ -11,19 +11,6 @@ Description:
   with the operator %>%.
 License: GPL (>=2)
 Imports:
-  graphics,
-  lattice,
-  leaps,
-  lfe,
-  magrittr,
-  MASS,
-  nlme,
-  nnet,
-  pls,
-  randomForest,
-  rpart,
-  stats,
-  tree
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

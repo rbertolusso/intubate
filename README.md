@@ -3,10 +3,12 @@
 ##### *2016-07-26* - *2016-08-08* (GPL >= 2)
 
 
-The aim of `intubate` is to offer a painless way to
-add R statistical functions that use formula interface
-to pipelines implemented by `magrittr` with the
-operator `%>%`, without having to rely on workarounds.
+The aim of `intubate` (`<||>`) is to offer a painless way to
+add R functions that that are not pipe-aware
+to data science pipelines implemented by `magrittr` with the
+operator `%>%`, without having to rely on workarounds. It also
+offers two extensions (currently in experimental stage), called
+`intubOrders`, and `intuBags`.
 
 #### Installation
 
@@ -189,9 +191,9 @@ CO2 %>%
 
 Of course *you* need to make sure the particular function has the particular methods
 implemented (if not, they will not be considered bugs by `intubate`). In cases like that,
-you should contact directly the authors of the interfaced functions to ask them to
-consider adding those methods (if it makes any sense in each particular case). But in
-general it is safe to assume that if they were not implemented, there was a good reason.
+you should contact the authors of the interfaced functions directly to ask them to
+consider adding those methods (if it makes any sense in each particular case). In
+general it is safe to assume that, if they were not implemented, there was a good reason for it.
 
 * **intuBags** allow to run *one* pipeline containing *several* sources. intuBags can be
 dynamically populated by result(s?) at each step of the pipeline. Results can be, for example, modifications of an original source that can be replaced by the modification or saved as new object. They can also be from a statistical procedure, such as `lm`, or other things.
@@ -199,13 +201,16 @@ Each step of the pipeline can choose which source(s?) to use, and has the choice
 result(s?) to the intuBag, and these added or modified results can be be used downstream,
 or once the pipeline is ended. If you save the end result, you will have a single object
 containing all the sources, their modifications (or replacements of sources by their
-modifications), and results of processing sources by the different steps (if they
-wanted to be saved).
+modifications), and results of processing sources by the different steps (if you
+wanted to save them). You can also stop the pipeline at any point (saving your iBag
+perhaps with a %<>%), do something else, and then restarting your pipeline from the
+point you stopped. 
 This means you could potentially have one object only, the intuBag, containing all the
 objects (sources and products). One possible use of intuBags could be to process a *whole database* (several tables, data.frames, or tibbles) in *one* pipeline. I am not sure yet,
-but maybe it is a good idea to intubate pipe-aware functions too. Maybe not. Of course
-pipe-aware functions can always get the whole intuBag at any point of the pipeline,
-do their magic without being intubated, and then let the pipe continue.
+but maybe it is a good idea to intubate pipe-aware functions too (I have played with
+intubating `subset`). Maybe not. Of course  pipe-aware functions can always get the
+whole intuBag at any point of the pipeline, do their magic without being intubated,
+and then let the pipe continue.
 
 This means `intubate` will have three modes of operations:
 
@@ -235,11 +240,13 @@ like an "integer upper border". There is also an `intLBorder` for the lower bord
 *intuBag(s)*, as of 2016/08/08, seems to be used for a small bag for bikes (InTuBag,
 meaning Inner Tub Bag)
 (https://felvarrom.com/products/intubag-bike-tube-bag-medium-blue-inside?variant=18439367751),
-but not for anything software related.
+but not for anything software related. If `intubate` succeeds, they may even end by selling
+more InTuBags!
 
 *intubate*, as of 2016/08/08, seems to be used related to the medical procedure, perhaps
 also by the oil pipeline industry (at least "entubar" in Spanish is more general than the
-medical procedure), but not for software related projects.
+medical procedure), but not for software related projects. Of course, if `intubate`
+succeeds, I hope the number of intubated people will not increase.
 
 I intend to use "intubate", "<||>", "intuBorder", "intubOrder(s)", "intuBag(s)", and
 other derivations starting with "intu", in relation to the use and promotion of

@@ -31,6 +31,7 @@ ntbt(data, fti, ...)
 Roberto Bertolusso
 }
 \examples{
+\dontrun{
 ## NOTE: intubate implements an interface to
 ##       *xyplot* (in package lattice), called *ntbt_xyplot*.
 ##       For the sake of argument, let's suppose the
@@ -49,7 +50,9 @@ library(magrittr)
 try(iris \%>\%
     xyplot(Sepal.Length + Sepal.Width ~ Petal.Length + Petal.Width | Species,
            scales = "free", layout = c(2, 2),
-           auto.key = list(x = .6, y = .7, corner = c(0, 0))))
+           auto.key = list(x = .6, y = .7, corner = c(0, 0))),
+    silent = TRUE)
+geterrmessage()
 
 ## The error disappears if you create an interface to *xyplot*.
 
@@ -90,6 +93,7 @@ iris \%>\%
   ntbt(xyplot, Sepal.Length + Sepal.Width ~ Petal.Length + Petal.Width | Species,
        scales = "free", layout = c(2, 2),
        auto.key = list(x = .6, y = .7, corner = c(0, 0)))
+}
 }
 \keyword{intubate}
 \keyword{magrittr}
