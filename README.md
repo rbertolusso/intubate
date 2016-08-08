@@ -67,14 +67,17 @@ interfaces are planned to be included in the future.
 
 `intubate` depends only on `base` library, so its implementation is very lean.
 
-To be able to continue to include more interfaces without bloating your system, as
-people tend to use a given subset of packages according to their needs,
+To be able to continue to include more interfaces without bloating your machine, 
 starting from version 0.99.3 (not yet submitted) `intubate` **will not** install the packages
-that include the interfaced functions. You need to install them yourself, and load
+that contain the functions that are interfaced. You will need to install them yourself, and load
 the corresponding libraries before or after loading `intubate` (but before using
-them in your pipelines). This way people oriented only to one of: traditional statistics,
-machine learning, finance, bio-statistics, bio-informatics, ..., will not have to install
-all the packages if they intend to use only a subset of them.
+them in your pipelines), including `magrittr`.
+This way people oriented only to one of: traditional statistics,
+machine learning, finance, bio-statistics, bio-informatics, ...,
+will not have to install
+*all* the packages for which interfaces are provided
+if they intend to use only a subset of them. They only need to install
+the subset of packages they intend to use.
 
 `intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
@@ -144,6 +147,7 @@ USJudgeRatings %>%
 USJudgeRatings %>%                    
   ntbt(cor.test, ~ CONT + INTG)        ## Also the formula variant
 ```
+
 You can use `ntbt` with *any function*, also the ones without interface. In principle,
 the only functions you would like to call are the ones you cannot use directly in
 a pipeline (because `data` is in second place instead of first).
@@ -155,13 +159,13 @@ when interfaced.
 My goal is to make `intubate` each time more robust by
 addressing the peculiarities of newly discovered failing functions.
 
-However, for the time being, I will consider *bugs* only cases where the
+However, for the time being, I will consider as *bugs* only cases where the
 *interfaces provided with* `intubate` *fail*.
 Cases of failing *user defined interfaces* or when using `ntbt` to call functions
-directly that do not have interfaces provided with `intubate`, will be
-considered *feature requests* and not bugs (and I will greatly appreciate, if you
-have some coding skills and can follow my code, if you could provide the proposed *solution*
-together with the request).
+directly that do not have interfaces provided with released versions of `intubate`,
+will be considered *feature requests* and not bugs (and I will greatly appreciate,
+if you have some coding skills and can follow my code, if you could provide the
+proposed *solution*, that *cannot break anything else*, together with the request).
 
 #### Experimental features, not for general or production use
 `intubate` includes two experimental features: **intubOrders**, and **intuBags**.
@@ -169,7 +173,7 @@ together with the request).
 * **intubOrders** allow to forward the input without using %T>%, and to run `print`,
 `summary`, `anova`, `plot`, and such, in place. This may prove to be interesting to non-pipeline
 oriented people too. intubOrders are also needed by `intuBags`. If you want to have an
-idea of what I mean, please run (using the last commited version to github):
+idea of what I mean, please run (using the last version committed to github):
 
 ```{r}
 ## Using interface
@@ -183,12 +187,25 @@ CO2 %>%
   head()
 ```
 
+Of course *you* need to make sure the particular function has the particular methods
+implemented (if not, they will not be considered bugs by `intubate`). In cases like that,
+you should contact directly the authors of the interfaced functions to ask them to
+consider adding those methods (if it makes any sense in each particular case). But in
+general it is safe to assume that if they were not implemented, there was a good reason.
+
 * **intuBags** allow to run *one* pipeline containing *several* sources. intuBags can be
-dynamically populated by results (including, but not limited, to modifications of original
-sources) generated in previous steps of the pipeline. Each step of the pipeline can choose
-which source(s?) to use, and has the choice to add its result(s?) to the intuBag
-to be used downstream, or once the pipeline is ended. This means you could potentially
-have one object only, the intuBag, containing all the objects (sources and products).
+dynamically populated by result(s?) at each step of the pipeline. Results can be, for example, modifications of an original source that can be replaced by the modification or saved as new object. They can also be from a statistical procedure, such as `lm`, or other things.
+Each step of the pipeline can choose which source(s?) to use, and has the choice to add its
+result(s?) to the intuBag, and these added or modified results can be be used downstream,
+or once the pipeline is ended. If you save the end result, you will have a single object
+containing all the sources, their modifications (or replacements of sources by their
+modifications), and results of processing sources by the different steps (if they
+wanted to be saved).
+This means you could potentially have one object only, the intuBag, containing all the
+objects (sources and products). One possible use of intuBags could be to process a *whole database* (several tables, data.frames, or tibbles) in *one* pipeline. I am not sure yet,
+but maybe it is a good idea to intubate pipe-aware functions too. Maybe not. Of course
+pipe-aware functions can always get the whole intuBag at any point of the pipeline,
+do their magic without being intubated, and then let the pipe continue.
 
 This means `intubate` will have three modes of operations:
 
@@ -215,7 +232,9 @@ in any software related project, please let me know, and I will change it.
 in a snippet of code for the name of a variable (`intUBorder`) (http://www.office-loesung.de/ftopic246897_0_0_asc.php) that would mean something
 like an "integer upper border". There is also an `intLBorder` for the lower border.
 
-*intuBag(s)*, as of 2016/08/08, seems to be used for a small bag for bikes (InTuBag) (https://felvarrom.com/products/intubag-bike-tube-bag-medium-blue-inside?variant=18439367751),
+*intuBag(s)*, as of 2016/08/08, seems to be used for a small bag for bikes (InTuBag,
+meaning Inner Tub Bag)
+(https://felvarrom.com/products/intubag-bike-tube-bag-medium-blue-inside?variant=18439367751),
 but not for anything software related.
 
 *intubate*, as of 2016/08/08, seems to be used related to the medical procedure, perhaps
