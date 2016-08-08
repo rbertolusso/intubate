@@ -151,7 +151,7 @@ the only functions you would like to call are the ones you cannot use directly i
 a pipeline (because `data` is in second place instead of first).
 
 At this point you may have an idea if `intubate` is for you or not. If you elect
-to continue reading, please be warned you that my style or writing may or may not be
+to continue reading, please be warned that my style or writing may or may not be
 of your liking. 
 
 #### Experimental features not for general use
@@ -173,12 +173,12 @@ This means `intubate` will have three modes of operations:
 * as interface + intubOrders, and
 * as interface + intubOrders + intuBags.
 
-These features are already in place but are still under developments, are
+These features are already in place but are still under development, are
 **not considered for general use**, and are not documented (yet).
 Before doing so, I want to make sure, to the best of my abilities, that
 they are as general as possible, and that eventual future extensions will be backward
 compatible. You can play with them if you like, but if you use them in production code
-be prepare to have to change it if I decide to modify the architecture while in the
+be prepared to have to change it if I decide to modify the architecture while in the
 experimental phase.
 
 #### Logo of `intubate`

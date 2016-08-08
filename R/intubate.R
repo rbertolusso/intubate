@@ -15,167 +15,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with intubate. If not, see <http://www.gnu.org/licenses/>.
 
-## Interface function
-intubate <-
-  
-  ## e1071
-  ntbt_svm <-
-  
-  ## gam
-  ntbt_gam <-
-  
-  ## gbm
-  ntbt_gbm <-
-  
-  ## graphics
-  ntbt_boxplot <-
-  ntbt_cdplot <-
-  ntbt_coplot <-
-  ntbt_mosaicplot <-
-  ntbt_pairs <-
-  ntbt_plot <-
-  ntbt_spineplot <-
-  ntbt_sunflowerplot <-
-  ntbt_stripchart <-
-  ntbt_text <-
-  
-  ## lattice
-  ntbt_barchart <-
-  ntbt_cloud <-
-  ntbt_bwplot <-
-  ntbt_contourplot <-
-  ntbt_dotplot <-
-  ntbt_densityplot <-
-  ntbt_histogram <-
-  ntbt_levelplot <-
-  ntbt_oneway <-
-  ntbt_parallelplot <-
-  ntbt_qq <-
-  ntbt_qqmath <-
-  ntbt_splom <-
-  ntbt_stripplot <-
-  ntbt_wireframe <-
-  ntbt_xyplot <-
-  
-  ## leaps
-  ntbt_regsubsets <-
-  ntbt_tmd <-
-  
-  ## lfe
-  ntbt_felm <-
-  
-  ## MASS
-  ntbt_corresp <-
-  ntbt_glm.nb <-
-  ntbt_lda <-
-  ntbt_lm.gls <-
-  ntbt_lm.ridge <-
-  ntbt_loglm <-
-  ntbt_logtrans <-
-  ntbt_polr <-
-  ntbt_qda <-
-  ntbt_rlm <-
-  
-  ## nlme
-  ntbt_gls <-
-  ntbt_lme <-
-  ntbt_lmList <-
-  ntbt_nlme <-
-  ntbt_nlsList <-
-  
-  ## nnet
-  ntbt_multinom <-
-  ntbt_nnet <-
-  
-  ## pls
-  ntbt_cppls <-
-  ntbt_mvr <-
-  ntbt_pcr <-
-  ntbt_plsr <-
-  
-  ## randomForest
-  ntbt_randomForest <-
-  
-  ## rpart
-  ntbt_rpart <-
-  
-  ## stats
-  ntbt_aggregate <-
-  ntbt_alias <-
-  ntbt_ansari.test <-
-  ntbt_aov <-
-  ntbt_bartlett.test <-
-  ntbt_cor.test <-
-  ntbt_fligner.test <-
-  ntbt_friedman.test <-
-  ntbt_ftable <-
-  ntbt_getInitial <-
-  ntbt_glm <-
-  ntbt_kruskal.test <-
-  ntbt_lm <-
-  ntbt_loess <-
-  ntbt_lqs <-
-  ntbt_model.frame <-
-  ntbt_model.matrix <-
-  ntbt_mood.test <-
-  ntbt_nls <-
-  ntbt_oneway.test <-
-  ntbt_ppr <-
-  ntbt_prcomp <-
-  ntbt_princomp <-
-  ntbt_quade.test <-
-  ntbt_replications <-
-  ntbt_t.test <-
-  ntbt_var.test <-
-  ntbt_wilcox.test <-
-  ntbt_xtabs <-
-  
-  ## survival
-  ntbt_cch <-
-  ntbt_coxph <-
-  ntbt_pyears <-
-  ntbt_survConcordance <-
-  ntbt_survexp <-
-  ntbt_survfit <-
-  ntbt_survSplit <-
-  
-  ## tree
-  ntbt_tree <-
-  
-  ## (external)
-  ## intubate function
-  function(data, ...) {
-    preCall <- match.call(expand.dots = FALSE)
-
-    Call <- match.call(expand.dots = TRUE)
-    Call[[1]] <- get_calling_name("ntbt", as.character(Call[[1]]))
-
-    result <- process_call(data, preCall, Call, parent.frame())
-
-    if (withVisible(result)$visible)
-      return (result)
-    invisible(result)
-  }
-
-## (external)
-function(data, ...) {
-    preCall <- match.call(expand.dots = FALSE)
-    
-    Call <- match.call(expand.dots = TRUE)
-    Call[[length(Call) + 1]] <- ""
-    for (pos in length(Call):3) {
-      Call[[pos]] <- Call[[pos - 1]]
-      names(Call)[[pos]] <- names(Call)[[pos - 1]]
-    }      
-    Call[[3]] <- get_calling_name("ntbt", as.character(Call[[1]]))
-    names(Call)[[3]] <- "fti"
-    Call[[length(Call) + 1]] <- parent.frame()
-    names(Call)[[length(Call)]] <- "use_envir" 
-    Call[[1]] <- quote(intubate::ntbt)
-
-    print(Call)
-    eval(Call)
-  }
+## External functions
 
 ## (external)
 ntbt <- function(data, fti, ...) {
@@ -205,52 +45,21 @@ ntbt <- function(data, fti, ...) {
   invisible(result)
 }
 
-
-## (internal)
-function(data, fti, ..., use_envir = parent.frame()) {
-  preCall <- match.call(expand.dots = FALSE)
-  Call <- match.call(expand.dots = TRUE)
-  Call[[length(Call)]] <- NULL
-  
-  Call[[1]] <- as.name(fti)
-  Call[[3]] <- NULL
-  
-  io <- parse_intubOrder(preCall$...)
-  if (io$found) {
-    preCall$...[[io$pos]] <- NULL
-    Call[[io$pos + 2]] <- NULL
-  }
-  
-  if (length(preCall$...) == 0)  {
-    ## cat("No arguments other than data\n")
-    ## print(Call)
-    result <- eval(Call)
-  } else if (there_are_formulas(preCall$...) || io$use_formula_case) {
-    ## cat("Formula\n")
-    result <- process_formula_case(Call, use_envir = use_envir)
-  } else  {
-    ## cat("Rest of cases\n")
-    ## print(Call)
-    result <- with(data, eval(Call[-2]))    ## Remove "data" [-2] before calling
-  }
-  
-  if (io$found) {
-    if (io$print_result)
-      print(result)
-    if (io$print_summary_result)
-      print(summary(result))
-    if (io$plot_result)
-      plot(result)
-  }
-  
-  if (!is.null(result) && !io$forward_input) {
-    if (withVisible(result)$visible)
-      return (result)
-    else
-      data <- result
-  }
-  invisible(data)
+## (external)
+intuBag <- function(...) {
+  iBag <- list(...)
+  if (sum(names(iBag) == "") > 0)
+    stop("All elements of an intuBag must be named.")
+  class(iBag) <- c("intuBag")
+  iBag
 }
+
+## (external)
+is_intuBag <- function(object) {
+  sum(class(object) == "intuBag") > 0
+}
+
+## Internal functions
 
 ## (internal)
 process_call <- function(data, preCall, Call, use_envir) {
@@ -273,7 +82,7 @@ process_call <- function(data, preCall, Call, use_envir) {
     if (io$is_intuBag)
       Call[[2]] <- as.name(io$input[1])
     print(Call)
-    result <- process_formula_case_1(Call, use_envir)      
+    result <- process_formula_case(Call, use_envir)      
   } else  {
     cat("Rest of cases\n")
     print(Call)
@@ -376,20 +185,6 @@ exec_intubOrder <- function(io, result) {
 }
 
 ## (internal)
-intuBag <- function(...) {
-  iBag <- list(...)
-  if (sum(names(iBag) == "") > 0)
-    stop("All elements of an intuBag must be named.")
-  class(iBag) <- c("intuBag")
-  iBag
-}
-
-## (internal)
-is_intuBag <- function(object) {
-  sum(class(object) == "intuBag") > 0
-}
-
-## (internal)
 ## This special case for formulas is, at least for now, needed because
 ## "Rest of cases" below does not know how to manage cases with "." in
 ## a formula (and the called function neither because only sees the variables
@@ -397,7 +192,7 @@ is_intuBag <- function(object) {
 ## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
 ## not clue how to implement), for *all* the formulas that have a ".", so maybe
 ## the end result will be even more involved and this is as good as we can do.
-process_formula_case_1 <- function(Call, use_envir) {
+process_formula_case <- function(Call, use_envir) {
   Call[2:3] <- Call[3:2]                       ## Switch parameters
   names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
   ## print(Call)
@@ -415,81 +210,6 @@ process_formula_case_1 <- function(Call, use_envir) {
   result
 }
 
-## (internal)
-## This special case for formulas is, at least for now, needed because
-## "Rest of cases" below does not know how to manage cases with "." in
-## a formula (and the called function neither because only sees the variables
-## inside the data, not the data itself). An alternative could be to have in
-## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
-## not clue how to implement), for *all* the formulas that have a ".", so maybe
-## the end result will be even more involved and this is as good as we can do.
-process_formula_case_2 <- function(Call, use_envir) {
-  signal_error <- TRUE
-  ## Let's have "data" take a walk until it finds its place in the world,
-  ## as functions are supposed to check if unnamed parameters are sent
-  ## in the wrong order (Right?).
-  for (par in 3:length(names(Call))) {
-    Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
-    names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
-    print(Call)
-    result <- try(eval(Call, envir = use_envir),  ## See if it flies
-                  silent = TRUE)
-    if (class(result)[[1]] != "try-error") {          ## Did. We are done
-      signal_error <- FALSE
-      break
-    }
-  }
-  if (signal_error) {          ## Parameters exhausted and still error
-    print(Call)                ## Show call of last attempt
-    stop(result)               ## Give up
-  }
-  result
-}
-
-## (internal)
-## This special case for formulas is, at least for now, needed because
-## "Rest of cases" below does not know how to manage cases with "." in
-## a formula (and the called function neither because only sees the variables
-## inside the data, not the data itself). An alternative could be to have in
-## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
-## not clue how to implement), for *all* the formulas that have a ".", so maybe
-## the end result will be even more involved and this is as good as we can do.
-process_formula_case_3 <- function(Call) {
-  signal_error <- TRUE
-  ## Let's have "data" take a walk until it finds its place in the world,
-  ## as functions are supposed to check if unnamed parameters are sent
-  ## in the wrong order (Right?).
-  for (par in 3:length(names(Call))) {
-    Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
-    names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
-    ## print(Call)
-    result <- try(eval(Call, envir = parent.frame()),  ## See if it flies
-                  silent = TRUE)
-    if (class(result)[[1]] != "try-error") {          ## Did. We are done
-      signal_error <- FALSE
-      break
-    }
-  }
-  if (signal_error) {          ## Parameters exhausted and still error
-    for (data_name in c("design")) {  ## Start assigning other names to data
-      names(Call)[[par]] <- data_name
-      result <- try(eval(Call, envir = parent.frame()),  ## See if it flies
-                    silent = TRUE)
-      if (class(result)[[1]] != "try-error") {          ## Did. We are done
-        signal_error <- FALSE
-        break
-      }
-    }
-    print(Call)                ## Show call of last attempt
-    stop(result)               ## Give up
-  }
-  if (signal_error) {          ## Parameters exhausted and still error
-    print(Call)                ## Show call of last attempt
-    stop(result)                  ## Give up
-  }
-  result
-}
-
 
 ## (internal)
 ## Determine if there is a formula
@@ -503,18 +223,6 @@ there_are_formulas <- function(par_list) {
                as.character(par)[[1]] == "~"
              }) > 0)
 }
-
-## (internal)
-## Determine if there is a formula
-function(par_list) {
-  sum(sapply(par_list,
-             function(par) {
-               is_formula <- try(inherits(as.formula(as.character(par)),
-                                          "formula"), silent = TRUE)
-               !(class(is_formula)[[1]] == "try-error")
-             }) > 0)
-}
-
 
 ## (internal)
 ## Name checking
