@@ -1,8 +1,8 @@
-\name{ntbt_svm}
+\name{e1071}
 \alias{ntbt_svm}
 \title{Interface to svm for data science pipelines.}
 \description{
-  \code{ntbt_svm} is an interface to \code{e1071::\link{svm}}
+  \code{ntbt_svm} is an interface to \code{e1071::svm}
   (Support Vector Machines) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
@@ -10,19 +10,19 @@ ntbt_svm(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{\link{svm}}.}
+  \item{...}{Other arguments passed to \code{svm}.}
 }
 \details{
   ntbt_svm calls \code{svm}.
 }
 \value{
-  Object returned by \code{\link{svm}}.
+  Object returned by \code{svm}.
 }
 \author{
 Roberto Bertolusso
 }
 \seealso{
-  \code{\link{svm}}
+  \code{svm}
 }
 \examples{
 \dontrun{

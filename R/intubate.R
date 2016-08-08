@@ -283,11 +283,10 @@ process_call <- function(data, preCall, Call, use_envir) {
     if (class(result)[[1]] == "try-error") {
       if (io$is_intuBag)
         Call[[2]] <- as.name(io$input[1])
-#      if (io$is_intuBag)
-#        Call[2] <- input_data
+      names(Call)[[2]] <- ""                     ## Leave data unnamed
       print(Call)
-      result <- with(data, eval(Call[-2])) ## For subset() and such, that already are
-      ## pipe aware.
+      result <- eval(Call) ## For subset() and such, that already are
+                           ## pipe aware.
     }
   }
 
@@ -296,7 +295,9 @@ process_call <- function(data, preCall, Call, use_envir) {
   exec_intubOrder(io, result)
 
   if (!is.null(result) && io$output[1] != "")
-    data[io$output] <- ifelse(is.list(result), result, list(result))
+    data[[io$output[1]]] <- result
+#    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
+    
 ##  print(io)
   if (!io$is_intuBag) {
     if (!is.null(result) && !io$forward_input) {
@@ -360,10 +361,16 @@ exec_intubOrder <- function(io, result) {
   if (!io$found)
     return (FALSE)
   
-  if (io$print_result)
+  if (io$print_result) {
+    cat("\n# -------------------\n")
+    cat("intubate <||> print\n")
     print(result)
-  if (io$print_summary_result)
+  }
+  if (io$print_summary_result) {
+    cat("\n# -------------------\n")
+    cat("intubate <||> summary\n")
     print(summary(result))
+  }
   if (io$plot_result)
     plot(result)
 }

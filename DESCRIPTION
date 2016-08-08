@@ -11,9 +11,6 @@ Description:
   with the operator %>%.
 License: GPL (>=2)
 Imports:
-  e1071,
-  gam,
-  gbm,
   graphics,
   lattice,
   leaps,

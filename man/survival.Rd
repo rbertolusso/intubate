@@ -3,6 +3,9 @@
 \alias{ntbt_coxph}
 \alias{ntbt_pyears}
 \alias{ntbt_survConcordance}
+\alias{ntbt_survexp}
+\alias{ntbt_survfit}
+\alias{ntbt_survSplit}
 \title{Interfaces to survival package for data science pipelines.}
 \description{
   Interface to \code{survival} functions that can be used
@@ -12,22 +15,22 @@ ntbt_cch(data, ...)
 ntbt_coxph(data, ...)
 ntbt_pyears(data, ...)
 ntbt_survConcordance(data, ...)
+ntbt_survexp(data, ...)
+ntbt_survfit(data, ...)
+ntbt_survSplit(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{\link{cch}}.}
+  \item{...}{Other arguments passed to \code{cch}.}
 }
 \details{
-  ntbt_cch calls \code{\link{cch}}.
+  ntbt_cch calls \code{cch}.
 }
 \value{
-  Object returned by \code{\link{cch}}.
+  Object returned by \code{cch}.
 }
 \author{
 Roberto Bertolusso
-}
-\seealso{
-  \code{\link{cch}}
 }
 \examples{
 \dontrun{
@@ -109,7 +112,67 @@ ntbt_survConcordance(data=lung, Surv(time, status) ~ age)
 lung \%>\%
   ntbt_survConcordance(Surv(time, status) ~ age)
 
+## survexp
+## Original function to interface
+fit1 <- survexp(futime ~ 1,data=jasa, 
+                rmap=list(sex="male", year=accept.dt,   
+                          age=(accept.dt-birth.dt)),
+                method='conditional')
+summary(fit1, times=1:10*182.5, scale=365)
+
+## The interface reverses the order of data and formula
+fit1 <- ntbt_survexp(data=jasa, futime ~ 1,
+                  rmap=list(sex="male", year=accept.dt,   
+                            age=(accept.dt-birth.dt)),
+                  method='conditional')
+summary(fit1, times=1:10*182.5, scale=365)
+
+## so it can be used easily in a pipeline.
+jasa \%>\%
+  ntbt_survexp(futime ~ 1,
+            rmap=list(sex="male", year=accept.dt,   
+                      age=(accept.dt-birth.dt)),
+            method='conditional') \%>\%
+  summary(times=1:10*182.5, scale=365)
+
+## survfit
+## Original function to interface
+survfit(Surv(time, status) ~ x, data = aml)
+
+## The interface reverses the order of data and formula
+ntbt_survfit(data = aml, Surv(time, status) ~ x)
+
+## so it can be used easily in a pipeline.
+aml \%>\%
+  ntbt_survfit(Surv(time, status) ~ x)
+
+aml \%>\%
+  ntbt_survfit(Surv(time, status) ~ x) \%>\%
+  plot(lty = 2:3)
+
+## survSplit
+## Original function to interface
+vet2 <- survSplit(Surv(time, status) ~., veteran,
+                  cut = c(60, 120), episode = "timegroup")
+coxph(Surv(tstart, time, status) ~ karno*strata(timegroup) +
+                age + trt, data = vet2)
+
+## The interface reverses the order of data and formula
+vet2 <- ntbt_survSplit(veteran, Surv(time, status) ~.,
+                       cut = c(60, 120), episode = "timegroup")
+ntbt_coxph(data = vet2, Surv(tstart, time, status) ~
+           karno*strata(timegroup) + age + trt)
+
+## so it can be used easily in a pipeline.
+veteran \%>\%
+  ntbt_survSplit(Surv(time, status) ~.,
+                 cut = c(60, 120),
+                 episode = "timegroup") \%>\%
+  ntbt_coxph(Surv(tstart, time, status) ~ 
+             karno*strata(timegroup) + age + trt)
+
 }
 }
 \keyword{intubate}
 \keyword{magrittr}
+\keyword{survival}

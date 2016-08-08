@@ -75,7 +75,7 @@
 Package: \tab intubate\cr
 Type: \tab Package\cr
 Version: \tab 0.99.3\cr
-Date: \tab 2016-07-27\cr
+Date: \tab 2016-08-07\cr
 License: \tab GPL (>=2)\cr
 }
 See examples of use below.
@@ -86,6 +86,7 @@ Roberto Bertolusso
 Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
 }
 \examples{
+\dontrun{
 ######### Interface to lm #########
 ## Original function to interface
 lm(conc ~ uptake, CO2)
@@ -152,6 +153,7 @@ try(ToothGrowth \%>\%
 
 ## For possible workarounds and further discussion
 ## see the examples in ntbt_function_data
+}
 }
 \seealso{
   \code{\link{intubate}}

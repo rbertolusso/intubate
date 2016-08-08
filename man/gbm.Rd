@@ -1,8 +1,8 @@
-\name{ntbt_gbm}
+\name{gbm}
 \alias{ntbt_gbm}
 \title{Interface to gbm for data science pipelines.}
 \description{
-  \code{ntbt_gbm} is an interface to \code{gbm::\link{gbm}}
+  \code{ntbt_gbm} is an interface to \code{gbm::gbm}
   (Generalized Boosted Regression Modeling) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
@@ -10,7 +10,7 @@ ntbt_gbm(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{\link{gbm}}.}
+  \item{...}{Other arguments passed to \code{gbm}.}
 }
 \details{
   ntbt_gbm calls \code{gbm}.
@@ -22,9 +22,10 @@ ntbt_gbm(data, ...)
 Roberto Bertolusso
 }
 \seealso{
-  \code{\link{gbm}}
+  \code{gbm}
 }
 \examples{
+\dontrun{
 library(gbm)
 # A least squares regression example # create some data
 N <- 1000
@@ -48,7 +49,6 @@ X4[sample(1:N,size=300)] <- NA
 data <- data.frame(Y = Y, X1 = X1, X2 = X2, X3 = X3,
                    X4 = X4, X5 = X5, X6 = X6)
 
-\dontrun{
 ## Original function to interface
 gbm1 <-
   gbm(Y~X1+X2+X3+X4+X5+X6,         # formula
@@ -93,7 +93,7 @@ gbm1 <-
            verbose=FALSE,               # don't print out progress
            n.cores=1)                   # use only a single core (detecting #cores is
 # error-prone, so avoided here)
-}
+
 ## so it can be used easily in a pipeline.
 library(magrittr)
 data \%>\%
@@ -115,6 +115,7 @@ data \%>\%
            verbose=FALSE,               # don't print out progress
            n.cores=1) \%>\%
   summary()
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

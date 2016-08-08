@@ -1,8 +1,8 @@
-\name{ntbt_gam}
+\name{gam}
 \alias{ntbt_gam}
 \title{Interface to gam for data science pipelines.}
 \description{
-  \code{ntbt_gam} is an interface to \code{gam::\link{gam}}
+  \code{ntbt_gam} is an interface to \code{gam::gam}
   (Fitting Generalized Additive Models) that can be used
   in a pipeline implemented by \code{magrittr}.}
 \usage{
@@ -10,21 +10,22 @@ ntbt_gam(data, ...)
 }
 \arguments{
   \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
-  \item{...}{Other arguments passed to \code{\link{gam}}.}
+  \item{...}{Other arguments passed to \code{gam}.}
 }
 \details{
-  ntbt_gam calls \code{\link{gam}}.
+  ntbt_gam calls \code{gam}.
 }
 \value{
-  Object returned by \code{\link{gam}}.
+  Object returned by \code{gam}.
 }
 \author{
 Roberto Bertolusso
 }
 \seealso{
-  \code{\link{gam}}
+  \code{gam}
 }
 \examples{
+\dontrun{
 library(gam)
 data(kyphosis)
 
@@ -66,6 +67,7 @@ airquality \%>\%
   ntbt_gam(Ozone^(1/3) ~ lo(Solar.R) + lo(Wind, Temp),
            na = na.gam.replace) \%>\%
   summary()
+}
 }
 \keyword{intubate}
 \keyword{magrittr}

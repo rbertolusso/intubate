@@ -1,13 +1,15 @@
 ---
-title: "intubate"
+title: "intubate <||>"
 author: "Roberto Bertolusso"
-date: "2016-08-07"
+date: "2016-08-08"
 ---
 
 The aim of `intubate` is to offer a painless way to
 add R statistical functions that use formula interface
 to pipelines implemented by `magrittr` with the
-operator `%>%`, without having to rely on workarounds.
+operator `%>%`, without having to rely on workarounds. `intubate`
+is released under GPL >= 2 licence.
+
 
 #### Installation
 
@@ -19,8 +21,8 @@ install.packages("intubate")
 (keep in mind you should use this version only for the interfaces, with
  a number of helper functions to define your interface. The
  newer version, 0.99.3, will need only one helper function, `intubate`, for all
- interfaces, and will also let you call the non-pipe-aware functions without
- having to define an interface, by using the function `ntbt`.)
+ interfaces, and will also let you call the non-pipe-aware functions directly,
+ *without* having to define an interface, by using the *new* function `ntbt`.)
  
 * the latest development version from github with
 
@@ -77,8 +79,8 @@ them in your pipelines).
 `intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
 full power of decision regarding which functions to interface. It *also*
-let's you **call the non-pipe-aware function directly**, withou the need
-of defining an interface. The choice of extending the scope of `intubate`
+let's you **call the non-pipe-aware functions directly**, withou the need
+of defining an interface. The possibility of being able to amplify the scope of `intubate`
 may prove to be particularly welcome in case you are related to a particular
 field that may, in the long run, continue to lack interfaces due to my
 unforgivable, but unavoidable, lack of interest and/or ignorance.
@@ -117,8 +119,10 @@ The *only* thing you need to remember is that that the names of all interfaces
 *must* start with `ntbt_` followed by the name of the *interfaced* function
 (`cor.test` in this particular case), no matter which function you want to
 interface (well... this of course still needs to be *confirmed*, there are
-thousands of functions to interface, but you may agree that if I do not state
-it this way, how do I convince you to adopt `intubate` blindly?)
+thousands of functions to interface and certainly some may fail, but you
+may agree that if I do not state it this way, how do I convince you to adopt
+`intubate` blindly? Our goal is to make `intubate` each time more robust by
+addressing the peculiarities of newly discovered failing functions.)
 
 Now you can use your "still hot" interface in any pipeline. A pipeline
 alternative to the above code may look like this:
@@ -147,7 +151,53 @@ the only functions you would like to call are the ones you cannot use directly i
 a pipeline (because `data` is in second place instead of first).
 
 At this point you may have an idea if `intubate` is for you or not. If you elect
-to continue reading, I want to warn you that my style may or not be of your liking. 
+to continue reading, please be warned you that my style or writing may or may not be
+of your liking. 
+
+#### Experimental features not for general use
+`intubate` includes two experimental features: **intubOrders**, and **intuBags**.
+
+* **intubOrders** allow to forward the input without using %T>%, and to run `print`,
+`summary`, `plot`, and such in place. This may prove to be interesting to non-pipeline
+oriented people too. intubOrders are also needed by `intuBags`.
+
+* **intuBags** allow to run *one* pipeline containing several sources. intuBags can be
+dynamically populated by results (including, but not limited, to modifications of original
+sources) generated in previous steps of the pipeline. Each step of the pipeline can choose
+which source(s?) to use, and has the choice to add its result(s?) to the intuBag
+for its use downstream, or once the pipeline is ended.
+
+This means `intubate` will have three modes of operations:
+
+* as interface only,
+* as interface + intubOrders, and
+* as interface + intubOrders + intuBags.
+
+These features are already in place but are still under developments, are
+**not considered for general use**, and are not documented (yet).
+Before doing so, I want to make sure, to the best of my abilities, that
+they are as general as possible, and that eventual future extensions will be backward
+compatible. You can play with them if you like, but if you use them in production code
+be prepare to have to change it if I decide to modify the architecture while in the
+experimental phase.
+
+#### Logo of `intubate`
+The logo of `intubate` is: **`<||>`**. It corresponds to an **intuBorder**. I have not
+found it in a Google search as of 2016/08/08. I intend to use it as a visual
+identification of `intubate`. If you know of it having being in use before, please
+let me know, and I will change it.
+
+#### Names
+intuBorder(s) and intubOrder(s), as of 2016/08/08, only has been found, on Google,
+in a snippet of code for the name of a variable (intUBorder) (http://www.office-loesung.de/ftopic246897_0_0_asc.php).
+
+intuBag(s), as of 2016/08/08, seems to be used for a small bag for bikes (InTuBag) (https://felvarrom.com/products/intubag-bike-tube-bag-medium-blue-inside?variant=18439367751),
+but not for anything software related.
+
+I intend to use "intubate", "<||>", "intuBorder", "intubOrder(s)", "intuBag(s)", and
+other derivations starting with "intu", in relation to the use and promotion of
+"intubate" for software related activities.
+Down the line I intend to register them as trademarks.
 
 ### Entries by date
 
@@ -496,7 +546,7 @@ very suspicious if they would). The *interfaced* functions (those that are alrea
 well tested) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 93 interfaces that can be related to data science methodologies.
+`intubate` currently implements 92 interfaces that can be related to data science methodologies.
 The R packages that have interfaces implemented so far are:
 
 * `e1071`: Support Vector Machines
