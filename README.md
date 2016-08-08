@@ -245,8 +245,7 @@ more InTuBags!
 
 *intubate*, as of 2016/08/08, seems to be used related to the medical procedure, perhaps
 also by the oil pipeline industry (at least "entubar" in Spanish is more general than the
-medical procedure), but not for software related projects. Of course, if `intubate`
-succeeds, I hope the number of intubated people will not increase.
+medical procedure), but not for software related projects.
 
 I intend to use "intubate", "<||>", "intuBorder", "intubOrder(s)", "intuBag(s)", and
 other derivations starting with "intu", in relation to the use and promotion of
