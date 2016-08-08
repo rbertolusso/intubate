@@ -1,15 +1,12 @@
----
-title: "intubate <||>"
-author: "Roberto Bertolusso"
-date: "2016-08-08"
----
+#### intubate <||> *Roberto Bertolusso*
+
+##### *2016-07-26* - *2016-08-08* (GPL >= 2)
+
 
 The aim of `intubate` is to offer a painless way to
 add R statistical functions that use formula interface
 to pipelines implemented by `magrittr` with the
-operator `%>%`, without having to rely on workarounds. `intubate`
-is released under GPL >= 2 licence.
-
+operator `%>%`, without having to rely on workarounds.
 
 #### Installation
 
@@ -70,17 +67,22 @@ interfaces are planned to be included in the future.
 
 `intubate` depends only on `base` library, so its implementation is very lean.
 
-To be able to continue to include more interfaces without bloating your system,
+To be able to continue to include more interfaces without bloating your system, as
+people tend to use a given subset of packages according to their needs,
 starting from version 0.99.3 (not yet submitted) `intubate` **will not** install the packages
 that include the interfaced functions. You need to install them yourself, and load
 the corresponding libraries before or after loading `intubate` (but before using
-them in your pipelines).
+them in your pipelines). This way people oriented only to one of: traditional statistics,
+machine learning, finance, bio-statistics, bio-informatics, ..., will not have to install
+all the packages if they intend to use only a subset of them.
 
 `intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
 full power of decision regarding which functions to interface. It *also*
 let's you **call the non-pipe-aware functions directly**, withou the need
-of defining an interface. The possibility of being able to amplify the scope of `intubate`
+of defining an interface.
+
+The ability of being able to amplify the scope of `intubate`
 may prove to be particularly welcome in case you are related to a particular
 field that may, in the long run, continue to lack interfaces due to my
 unforgivable, but unavoidable, lack of interest and/or ignorance.
@@ -118,11 +120,7 @@ Nothing else is required.
 The *only* thing you need to remember is that that the names of all interfaces
 *must* start with `ntbt_` followed by the name of the *interfaced* function
 (`cor.test` in this particular case), no matter which function you want to
-interface (well... this of course still needs to be *confirmed*, there are
-thousands of functions to interface and certainly some may fail, but you
-may agree that if I do not state it this way, how do I convince you to adopt
-`intubate` blindly? Our goal is to make `intubate` each time more robust by
-addressing the peculiarities of newly discovered failing functions.)
+interface.
 
 Now you can use your "still hot" interface in any pipeline. A pipeline
 alternative to the above code may look like this:
@@ -150,22 +148,47 @@ You can use `ntbt` with *any function*, also the ones without interface. In prin
 the only functions you would like to call are the ones you cannot use directly in
 a pipeline (because `data` is in second place instead of first).
 
-At this point you may have an idea if `intubate` is for you or not. If you elect
-to continue reading, please be warned that my style or writing may or may not be
-of your liking. 
+The generality of the last assertion still needs to be *verified*, as there are
+thousands of potential functions to interface and certainly some are bound to fail
+when interfaced.
 
-#### Experimental features not for general use
+My goal is to make `intubate` each time more robust by
+addressing the peculiarities of newly discovered failing functions.
+
+However, for the time being, I will consider *bugs* only cases where the
+*interfaces provided with* `intubate` *fail*.
+Cases of failing *user defined interfaces* or when using `ntbt` to call functions
+directly that do not have interfaces provided with `intubate`, will be
+considered *feature requests* and not bugs (and I will greatly appreciate, if you
+have some coding skills and can follow my code, if you could provide the proposed *solution*
+together with the request).
+
+#### Experimental features, not for general or production use
 `intubate` includes two experimental features: **intubOrders**, and **intuBags**.
 
 * **intubOrders** allow to forward the input without using %T>%, and to run `print`,
-`summary`, `plot`, and such in place. This may prove to be interesting to non-pipeline
-oriented people too. intubOrders are also needed by `intuBags`.
+`summary`, `anova`, `plot`, and such, in place. This may prove to be interesting to non-pipeline
+oriented people too. intubOrders are also needed by `intuBags`. If you want to have an
+idea of what I mean, please run (using the last commited version to github):
 
-* **intuBags** allow to run *one* pipeline containing several sources. intuBags can be
+```{r}
+## Using interface
+CO2 %>%
+  ntbt_lm(conc ~ uptake, "<||psaPf>") %>%
+  head()
+
+## Calling function directly
+CO2 %>%
+  ntbt(lm, conc ~ uptake, "<||psaPf>") %>%
+  head()
+```
+
+* **intuBags** allow to run *one* pipeline containing *several* sources. intuBags can be
 dynamically populated by results (including, but not limited, to modifications of original
 sources) generated in previous steps of the pipeline. Each step of the pipeline can choose
 which source(s?) to use, and has the choice to add its result(s?) to the intuBag
-for its use downstream, or once the pipeline is ended.
+to be used downstream, or once the pipeline is ended. This means you could potentially
+have one object only, the intuBag, containing all the objects (sources and products).
 
 This means `intubate` will have three modes of operations:
 
@@ -173,9 +196,9 @@ This means `intubate` will have three modes of operations:
 * as interface + intubOrders, and
 * as interface + intubOrders + intuBags.
 
-These features are already in place but are still under development, are
+These experimental features are already in place but are still under development, are
 **not considered for general use**, and are not documented (yet).
-Before doing so, I want to make sure, to the best of my abilities, that
+ I want to make sure first, to the best of my abilities, that
 they are as general as possible, and that eventual future extensions will be backward
 compatible. You can play with them if you like, but if you use them in production code
 be prepared to have to change it if I decide to modify the architecture while in the
@@ -184,22 +207,31 @@ experimental phase.
 #### Logo of `intubate`
 The logo of `intubate` is: **`<||>`**. It corresponds to an **intuBorder**. I have not
 found it in a Google search as of 2016/08/08. I intend to use it as a visual
-identification of `intubate`. If you know of it having being in use before, please
-let me know, and I will change it.
+identification of `intubate`. If you know of it having being in use before this date
+in any software related project, please let me know, and I will change it.
 
-#### Names
-intuBorder(s) and intubOrder(s), as of 2016/08/08, only has been found, on Google,
-in a snippet of code for the name of a variable (intUBorder) (http://www.office-loesung.de/ftopic246897_0_0_asc.php).
+#### Names used
+*intuBorder(s)* and *intubOrder(s)*, as of 2016/08/08, only has been found, on Google,
+in a snippet of code for the name of a variable (`intUBorder`) (http://www.office-loesung.de/ftopic246897_0_0_asc.php) that would mean something
+like an "integer upper border". There is also an `intLBorder` for the lower border.
 
-intuBag(s), as of 2016/08/08, seems to be used for a small bag for bikes (InTuBag) (https://felvarrom.com/products/intubag-bike-tube-bag-medium-blue-inside?variant=18439367751),
+*intuBag(s)*, as of 2016/08/08, seems to be used for a small bag for bikes (InTuBag) (https://felvarrom.com/products/intubag-bike-tube-bag-medium-blue-inside?variant=18439367751),
 but not for anything software related.
+
+*intubate*, as of 2016/08/08, seems to be used related to the medical procedure, perhaps
+also by the oil pipeline industry (at least "entubar" in Spanish is more general than the
+medical procedure), but not for software related projects.
 
 I intend to use "intubate", "<||>", "intuBorder", "intubOrder(s)", "intuBag(s)", and
 other derivations starting with "intu", in relation to the use and promotion of
 "intubate" for software related activities.
-Down the line I intend to register them as trademarks.
+
+Down the line I intend to register the names and logo as trademarks.
 
 ### Entries by date
+At this point you may have an idea if `intubate` is or not for you. If you elect
+to continue reading, please be warned that my style or writing may or may not be
+of your liking. Most of what follows is for my personal amusement.
 
 #### 2016/08/05
 * Core of the interface function (now called `intubate`) should be finished.

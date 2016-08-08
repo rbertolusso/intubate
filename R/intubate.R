@@ -74,18 +74,18 @@ process_call <- function(data, preCall, Call, use_envir) {
 ##  print(Call)
   
   if (length(preCall$...) == 0)  {
-    cat("No arguments other than data\n")
-    print(Call)
+    #cat("No arguments other than data\n")
+    #print(Call)
     result <- eval(Call)
-  } else if (there_are_formulas(preCall$...) || io$use_formula_case) {
-    cat("Formula\n")
+  } else if (there_are_formulas(preCall$...) || io$force_formula_case) {
+    #cat("Formula\n")
     if (io$is_intuBag)
       Call[[2]] <- as.name(io$input[1])
-    print(Call)
+    #print(Call)
     result <- process_formula_case(Call, use_envir)      
   } else  {
-    cat("Rest of cases\n")
-    print(Call)
+    #cat("Rest of cases\n")
+    #print(Call)
     if(length(input_data) == 1 && !is_intuBag(input_data))
       input_data <- input_data[[1]]  ## Need to get the object inside the list.
     result <- try(with(input_data, eval(Call[-2])), silent = TRUE) ## Remove "data" [-2] then call
@@ -93,7 +93,7 @@ process_call <- function(data, preCall, Call, use_envir) {
       if (io$is_intuBag)
         Call[[2]] <- as.name(io$input[1])
       names(Call)[[2]] <- ""                     ## Leave data unnamed
-      print(Call)
+      #print(Call)
       result <- eval(Call) ## For subset() and such, that already are
                            ## pipe aware.
     }
@@ -105,7 +105,7 @@ process_call <- function(data, preCall, Call, use_envir) {
 
   if (!is.null(result) && io$output[1] != "")
     data[[io$output[1]]] <- result
-#    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
+##    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
     
 ##  print(io)
   if (!io$is_intuBag) {
@@ -139,7 +139,8 @@ parse_intubOrder <- function(par_list, data) {
   io$print_result <- (gsub(".*<.*\\|.*\\|.*(p).*>.*", "\\1", io$intubOrder) == "p")
   io$plot_result <- (gsub(".*<.*\\|.*\\|.*(P).*>.*", "\\1", io$intubOrder) == "P")
   io$print_summary_result <- (gsub(".*<.*\\|.*\\|.*(s).*>.*", "\\1", io$intubOrder) == "s")
-  io$use_formula_case <- (gsub(".*<.*\\|.*\\|.*(F).*>.*", "\\1", io$intubOrder) == "F")
+  io$print_anova_result <- (gsub(".*<.*\\|.*\\|.*(a).*>.*", "\\1", io$intubOrder) == "a")
+  io$force_formula_case <- (gsub(".*<.*\\|.*\\|.*(F).*>.*", "\\1", io$intubOrder) == "F")
   io$forward_input <- (gsub(".*<.*\\|.*\\|.*(f).*>.*", "\\1", io$intubOrder) == "f")
   
   io$is_intuBag <- is_intuBag(data)
@@ -171,17 +172,29 @@ exec_intubOrder <- function(io, result) {
     return (FALSE)
   
   if (io$print_result) {
-    cat("\n# -------------------\n")
-    cat("intubate <||> print\n")
+    cat("\n# ---------------------\n")
+    cat("#  intubate <||> print\n")
+    cat("# ---------------------")
     print(result)
   }
   if (io$print_summary_result) {
-    cat("\n# -------------------\n")
-    cat("intubate <||> summary\n")
+    if (!io$print_result)
+      cat("\n")
+    cat("# -----------------------\n")
+    cat("#  intubate <||> summary\n")
+    cat("# -----------------------")
     print(summary(result))
   }
+  if (io$print_anova_result) {
+    if (!io$print_summary_result || !io$print_result)
+      cat("\n")
+    cat("# ---------------------\n")
+    cat("#  intubate <||> anova\n")
+    cat("# ---------------------\n")
+    print(anova(result))
+  }
   if (io$plot_result)
-    plot(result)
+    plot(result, which = 1)
 }
 
 ## (internal)
@@ -209,7 +222,6 @@ process_formula_case <- function(Call, use_envir) {
   }
   result
 }
-
 
 ## (internal)
 ## Determine if there is a formula
