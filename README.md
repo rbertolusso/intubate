@@ -167,10 +167,18 @@ Cases of failing *user defined interfaces* or when using `ntbt` to call function
 directly that do not have interfaces provided with released versions of `intubate`,
 will be considered *feature requests* and not bugs (and I will greatly appreciate,
 if you have some coding skills and can follow my code, if you could provide the
-proposed *solution*, that *cannot break anything else*, together with the request).
+proposed *solution*, that *shouldn't break anything else*, together with the request).
 
 #### Experimental features, not for general or production use
 `intubate` includes two experimental features: **intubOrders**, and **intuBags**.
+
+These experimental features are already in place but are still under development, are
+**not considered for general use**, and are not documented (yet).
+ I want to make sure first, to the best of my abilities, that
+they are as general as possible, and that eventual future extensions will be backward
+compatible. You can play with them if you like, but if you use them in production code
+be prepared to have to change it if I decide to modify the architecture while in the
+experimental phase.
 
 * **intubOrders** allow to forward the input without using %T>%, and to run `print`,
 `summary`, `anova`, `plot`, and such, in place. This may prove to be interesting to non-pipeline
@@ -178,27 +186,30 @@ oriented people too. intubOrders are also needed by `intuBags`. If you want to h
 idea of what I mean, please run (using the last version committed to github):
 
 ```{r}
-## Using interface
-CO2 %>%
-  ntbt_lm(conc ~ uptake, "<||psaPf>") %>%
+## NOTE: this is *only* to demonstrate what you *could* do with intubOrders,
+##       not a suggestion of what you *should* do with them.
+
+## 1) Using interface
+LifeCycleSavings %>%
+  ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi,
+          "< head(n=10); tail(n=3); str; dim; summary; View
+             | frwrd |
+             print; summary; anova; plot(which=1); -par(mfrow=c(2,2)); plot(which=3:6) >") %>%
   head()
 
-## Calling function directly
-CO2 %>%
-  ntbt(lm, conc ~ uptake, "<||psaPf>") %>%
+## 2) Calling function directly
+LifeCycleSavings %>%
+  ntbt(lm, sr ~ pop15 + pop75 + dpi + ddpi,
+       "< head(n=10); tail(n=3); dim; str; summary; View
+          | frwrd |
+          print; summary; anova; plot(which=1); -par(mfrow=c(2,2)); plot(which=3:6) >") %>%
   head()
 ```
-
-Of course *you* need to make sure the particular function has the particular methods
-implemented (if not, they will not be considered bugs by `intubate`). In cases like that,
-you should contact the authors of the interfaced functions directly to ask them to
-consider adding those methods (if it makes any sense in each particular case). In
-general it is safe to assume that, if they were not implemented, there was a good reason for it.
 
 * **intuBags** allow to run *one* pipeline containing *several* sources. intuBags can be
 dynamically populated by result(s?) at each step of the pipeline. Results can be, for example, modifications of an original source that can be replaced by the modification or saved as new object. They can also be from a statistical procedure, such as `lm`, or other things.
 Each step of the pipeline can choose which source(s?) to use, and has the choice to add its
-result(s?) to the intuBag, and these added or modified results can be be used downstream,
+result(s?) to the intuBag, and these added or modified results can be used downstream,
 or once the pipeline is ended. If you save the end result, you will have a single object
 containing all the sources, their modifications (or replacements of sources by their
 modifications), and results of processing sources by the different steps (if you
@@ -218,14 +229,6 @@ This means `intubate` will have three modes of operations:
 * as interface + intubOrders, and
 * as interface + intubOrders + intuBags.
 
-These experimental features are already in place but are still under development, are
-**not considered for general use**, and are not documented (yet).
- I want to make sure first, to the best of my abilities, that
-they are as general as possible, and that eventual future extensions will be backward
-compatible. You can play with them if you like, but if you use them in production code
-be prepared to have to change it if I decide to modify the architecture while in the
-experimental phase.
-
 #### Logo of `intubate`
 The logo of `intubate` is: **`<||>`**. It corresponds to an **intuBorder**. I have not
 found it in a Google search as of 2016/08/08. I intend to use it as a visual
@@ -240,7 +243,7 @@ like an "integer upper border". There is also an `intLBorder` for the lower bord
 *intuBag(s)*, as of 2016/08/08, seems to be used for a small bag for bikes (InTuBag,
 meaning Inner Tub Bag)
 (https://felvarrom.com/products/intubag-bike-tube-bag-medium-blue-inside?variant=18439367751),
-but not for anything software related. If `intubate` succeeds, they may even end by selling
+but not for anything software related. If `intubate` succeeds, they may end selling
 more InTuBags!
 
 *intubate*, as of 2016/08/08, seems to be used related to the medical procedure, perhaps

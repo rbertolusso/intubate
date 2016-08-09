@@ -30,9 +30,10 @@ ntbt <- function(data, fti, ...) {
   #  if (length(fti_name) == 3)
   #    fti_name <- paste0(fti_name[2], fti_name[1], fti_name[3])
   ## that would recreate the original code,
-  ## as.name(fti_name) expands to ´stats::lm´ and I do not know
-  ## for now how to get rid of those ´´ that still are there
-  ## if you check your final Call (with print), and then
+  ## as.name(fti_name) expands to stats::lm enclosed in backsticks
+  ## and I do not know for now how to get rid of those backsticks
+  ## that still are there when you check the
+  ## final Call (with print), and then
   ## there is an error when you eval().
   
   Call[[1]] <- as.name(fti_name)
@@ -72,6 +73,8 @@ process_call <- function(data, preCall, Call, use_envir) {
   }
   input_data <- io$input_data
 ##  print(Call)
+  if (io$found)
+    exec_intubOrder(io$input_functions, "source", input_data)
   
   if (length(preCall$...) == 0)  {
     #cat("No arguments other than data\n")
@@ -101,7 +104,8 @@ process_call <- function(data, preCall, Call, use_envir) {
 
   result_visible <- withVisible(result)$visible
 
-  exec_intubOrder(io, result)
+  if (io$found)
+    exec_intubOrder(io$result_functions, "result", result)
 
   if (!is.null(result) && io$output[1] != "")
     data[[io$output[1]]] <- result
@@ -136,12 +140,18 @@ parse_intubOrder <- function(par_list, data) {
   if (!io$found)
     io$intubOrder <- intuBorder
   
-  io$print_result <- (gsub(".*<.*\\|.*\\|.*(p).*>.*", "\\1", io$intubOrder) == "p")
-  io$plot_result <- (gsub(".*<.*\\|.*\\|.*(P).*>.*", "\\1", io$intubOrder) == "P")
-  io$print_summary_result <- (gsub(".*<.*\\|.*\\|.*(s).*>.*", "\\1", io$intubOrder) == "s")
-  io$print_anova_result <- (gsub(".*<.*\\|.*\\|.*(a).*>.*", "\\1", io$intubOrder) == "a")
-  io$force_formula_case <- (gsub(".*<.*\\|.*\\|.*(F).*>.*", "\\1", io$intubOrder) == "F")
-  io$forward_input <- (gsub(".*<.*\\|.*\\|.*(f).*>.*", "\\1", io$intubOrder) == "f")
+  io$input_functions <- gsub(".*<(.*)\\|.*\\|.*>.*", "\\1", io$intubOrder)
+  io$input_functions <- trimws(strsplit(io$input_functions, ";")[[1]])
+
+  io$result_functions <- gsub(".*<.*\\|.*\\|(.*)>.*", "\\1", io$intubOrder)
+  io$result_functions <- trimws(strsplit(io$result_functions, ";")[[1]])
+
+  io$force_formula_case <- (gsub(".*<.*\\|.*(frml).*\\|.*>.*", "\\1",
+                                 io$intubOrder) == "frml")
+  io$forward_input <- (gsub(".*<.*\\|.*(frwrd).*\\|.*>.*", "\\1",
+                            io$intubOrder) == "frwrd")
+  io$invisible_result <- (gsub(".*<.*\\|.*(nvsbl).*\\|.*>.*", "\\1",
+                               io$intubOrder) == "nvsbl")
   
   io$is_intuBag <- is_intuBag(data)
   input_output <- strsplit(paste0(" ", io$intubOrder, " "), ## Spaces to avoid failure.
@@ -166,35 +176,46 @@ parse_intubOrder <- function(par_list, data) {
   io
 }
 
+
+
 ## (internal)
-exec_intubOrder <- function(io, result) {
-  if (!io$found)
-    return (FALSE)
-  
-  if (io$print_result) {
-    cat("\n# ---------------------\n")
-    cat("#  intubate <||> print\n")
-    cat("# ---------------------")
-    print(result)
-  }
-  if (io$print_summary_result) {
-    if (!io$print_result)
+exec_intubOrder <- function(object_functions, where, object) {
+  oldmfrow <- par()$mfrow    ## Just in case
+
+  for (this_function in object_functions) {
+    include_object <- TRUE
+    if (this_function == "print") {
+      printed <- capture.output(print(object))
+    } else {
+      if (length(strsplit(this_function, "\\(")[[1]]) > 1) {
+        fun_name <- gsub("(.*)\\(.*\\).*", "\\1", this_function)
+        
+        if (gsub("(-).*", "\\1", fun_name) == "-") {
+          fun_name <- gsub("-(.*)", "\\1", fun_name)
+          include_object <- FALSE
+        }
+        fun_par <- gsub(".*\\((.*)\\).*", "\\1", this_function)
+        
+        strCall <- paste0(fun_name, "(", ifelse(include_object,
+                                                "object, ",
+                                                ""), fun_par, ")")
+        printed <- capture.output(print(eval(parse(text = strCall))))
+      } else {
+        printed <- capture.output(print(do.call(this_function, args=list(quote(object)))))
+      }
+    }
+    ## print(str(printed))
+    if (printed[1] != "NULL" && include_object) {
       cat("\n")
-    cat("# -----------------------\n")
-    cat("#  intubate <||> summary\n")
-    cat("# -----------------------")
-    print(summary(result))
+      header <- paste0(" ", this_function, " <||> ", where, " ")
+      sep <- paste0("# ", paste0(rep("-", nchar(header)), collapse = ""), "\n")
+      cat(sep)
+      cat(paste0("# ", header, "\n"))
+      cat(sep)
+      cat(printed[printed != "NULL"], sep = "\n")
+    }
   }
-  if (io$print_anova_result) {
-    if (!io$print_summary_result || !io$print_result)
-      cat("\n")
-    cat("# ---------------------\n")
-    cat("#  intubate <||> anova\n")
-    cat("# ---------------------\n")
-    print(anova(result))
-  }
-  if (io$plot_result)
-    plot(result, which = 1)
+  par(mfrow = oldmfrow)
 }
 
 ## (internal)
