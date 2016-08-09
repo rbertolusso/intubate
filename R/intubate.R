@@ -72,10 +72,7 @@ process_call <- function(data, preCall, Call, use_envir) {
     Call[[io$pos + 2]] <- NULL
   }
   input_data <- io$input_data
-##  print(Call)
-  if (io$found)
-    exec_intubOrder(io$input_functions, "source", input_data)
-  
+
   if (length(preCall$...) == 0)  {
     #cat("No arguments other than data\n")
     #print(Call)
@@ -85,7 +82,9 @@ process_call <- function(data, preCall, Call, use_envir) {
     if (io$is_intuBag)
       Call[[2]] <- as.name(io$input[1])
     #print(Call)
-    result <- process_formula_case(Call, use_envir)      
+    ret <- process_formula_case(Call, use_envir)      
+    result <- ret$result
+    Call <- ret$Call
   } else  {
     #cat("Rest of cases\n")
     #print(Call)
@@ -99,13 +98,22 @@ process_call <- function(data, preCall, Call, use_envir) {
       #print(Call)
       result <- eval(Call) ## For subset() and such, that already are
                            ## pipe aware.
+    } else {
+      Call = Call[-2]
     }
   }
 
   result_visible <- withVisible(result)$visible
 
-  if (io$found)
+#  if (io$verbose) {
+  cat("\n") 
+  print(Call)
+#  }
+  
+  if (io$found) {
+    exec_intubOrder(io$input_functions, "source", input_data)
     exec_intubOrder(io$result_functions, "result", result)
+  }
 
   if (!is.null(result) && io$output[1] != "")
     data[[io$output[1]]] <- result
@@ -146,12 +154,14 @@ parse_intubOrder <- function(par_list, data) {
   io$result_functions <- gsub(".*<.*\\|.*\\|(.*)>.*", "\\1", io$intubOrder)
   io$result_functions <- trimws(strsplit(io$result_functions, ";")[[1]])
 
-  io$force_formula_case <- (gsub(".*<.*\\|.*(frml).*\\|.*>.*", "\\1",
-                                 io$intubOrder) == "frml")
-  io$forward_input <- (gsub(".*<.*\\|.*(frwrd).*\\|.*>.*", "\\1",
-                            io$intubOrder) == "frwrd")
-  io$invisible_result <- (gsub(".*<.*\\|.*(nvsbl).*\\|.*>.*", "\\1",
-                               io$intubOrder) == "nvsbl")
+  io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1",
+                                 io$intubOrder) == "F")
+  io$forward_input <- (gsub(".*<.*\\|.*(f).*\\|.*>.*", "\\1",
+                            io$intubOrder) == "f")
+  io$invisible_result <- (gsub(".*<.*\\|.*(i).*\\|.*>.*", "\\1",
+                               io$intubOrder) == "i")
+  io$verbose <- (gsub(".*<.*\\|.*(v).*\\|.*>.*", "\\1",
+                      io$intubOrder) == "v")
   
   io$is_intuBag <- is_intuBag(data)
   input_output <- strsplit(paste0(" ", io$intubOrder, " "), ## Spaces to avoid failure.
@@ -176,12 +186,39 @@ parse_intubOrder <- function(par_list, data) {
   io
 }
 
-
-
 ## (internal)
 exec_intubOrder <- function(object_functions, where, object) {
   oldmfrow <- par()$mfrow    ## Just in case
 
+  for (this_function in object_functions) {
+    include_object <- TRUE
+    if (this_function == "print") {
+      printed <- capture.output(print(object))
+    } else {
+      if (length(strsplit(this_function, "\\(")[[1]]) > 1) {
+        printed <- capture.output(print(eval(parse(text = gsub("#", "object", this_function)))))
+      } else {
+        printed <- capture.output(print(do.call(this_function, args=list(quote(object)))))
+      }
+    }
+    ## print(str(printed))
+    if (printed[1] != "NULL" && include_object) {
+      cat("\n")
+      header <- paste0(" ", this_function, " <||> ", where, " ")
+      sep <- paste0("# ", paste0(rep("-", nchar(header)), collapse = ""), "\n")
+      cat(sep)
+      cat(paste0("# ", header, "\n"))
+      cat(sep)
+      cat(printed[printed != "NULL"], sep = "\n")
+    }
+  }
+  par(mfrow = oldmfrow)
+}
+
+
+function(object_functions, where, object) {
+  oldmfrow <- par()$mfrow    ## Just in case
+  
   for (this_function in object_functions) {
     include_object <- TRUE
     if (this_function == "print") {
@@ -218,6 +255,7 @@ exec_intubOrder <- function(object_functions, where, object) {
   par(mfrow = oldmfrow)
 }
 
+
 ## (internal)
 ## This special case for formulas is, at least for now, needed because
 ## "Rest of cases" below does not know how to manage cases with "." in
@@ -241,7 +279,7 @@ process_formula_case <- function(Call, use_envir) {
       result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
     }
   }
-  result
+  list(result = result, Call = Call)
 }
 
 ## (internal)

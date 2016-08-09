@@ -186,25 +186,77 @@ oriented people too. intubOrders are also needed by `intuBags`. If you want to h
 idea of what I mean, please run (using the last version committed to github):
 
 ```{r}
-## NOTE: this is *only* to demonstrate what you *could* do with intubOrders,
+## Note: this is *only* to demonstrate what you *can* do with intubOrders,
 ##       not a suggestion of what you *should* do with them.
 
 ## 1) Using interface
 LifeCycleSavings %>%
   ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi,
-          "< head(n=10); tail(n=3); str; dim; summary; View
-             | frwrd |
-             print; summary; anova; plot(which=1); -par(mfrow=c(2,2)); plot(which=3:6) >") %>%
+          "< head(#, n=10); tail(#, n=3); str; dim; summary; View
+             |f|
+             print; summary; anova; plot(#, which=1); plot(#, which=2);
+             par(mfrow=c(2,2)); plot(#, which=3:6) >") %>%
   head()
 
 ## 2) Calling function directly
 LifeCycleSavings %>%
   ntbt(lm, sr ~ pop15 + pop75 + dpi + ddpi,
-       "< head(n=10); tail(n=3); dim; str; summary; View
-          | frwrd |
-          print; summary; anova; plot(which=1); -par(mfrow=c(2,2)); plot(which=3:6) >") %>%
+       "< head(#, n=10); tail(#, n=3); str; dim; summary; View
+         |f|
+         print; summary; anova; plot(#, which=1); plot(#, which=2);
+         par(mfrow=c(2,2)); plot(#, which=3:6) >") %>%
   head()
 ```
+
+Below there is a more involved case, transforming the code in https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf to use
+`intubOrders` (again, I am just trying to see how far I can get,
+not stating that this should be what to do).
+
+```{r}
+library(survey)
+data(api)
+
+vars<-names(apiclus1)[c(12:13,16:23,27:37)] 
+
+## First, the original code from the vignette
+dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
+summary(dclus1)
+svymean(~api00, dclus1)
+svyquantile(~api00, dclus1, quantile=c(0.25,0.5,0.75), ci=TRUE)
+svytotal(~stype, dclus1)
+svytotal(~enroll, dclus1)
+svyratio(~api.stu,~enroll, dclus1)
+svyratio(~api.stu, ~enroll, design=subset(dclus1, stype=="H"))
+svymean(make.formula(vars),dclus1,na.rm=TRUE)
+svyby(~ell+meals, ~stype, design=dclus1, svymean)
+regmodel <- svyglm(api00~ell+meals,design=dclus1)
+logitmodel <- svyglm(I(sch.wide=="Yes")~ell+meals, design=dclus1, family=quasibinomial()) 
+summary(regmodel)
+summary(logitmodel)
+
+## Now, with intubate using intubOrders.
+## Note: I am not defining any interfaces, just calling
+##       svydesign directly with ntbt and, in the intubOrder,
+##       the original functions.
+apiclus1 %>%
+  ntbt(svydesign, id = ~dnum, weights = ~pw, fpc = ~fpc,
+       "<|vf|
+         summary;
+         svymean(~api00, #);
+         svyquantile(~api00, #, quantile = c(0.25, 0.5, 0.75), ci = TRUE);
+         svytotal(~stype, #);
+         svytotal(~enroll, #);
+         svyratio(~api.stu,~enroll, #);
+         svyratio(~api.stu, ~enroll, design = subset(#, stype == 'H'));
+         svymean(make.formula(vars), #, na.rm = TRUE);
+         svyby(~ell+meals, ~stype, #, svymean);
+         summary(svyglm(api00~ell+meals, #));
+         summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >") %>%
+  head()  ## We have forwarded apiclus1, so we can continue the pipe with the original data.
+```
+
+`intubOrders` are under heavy development, so this is just an idea that is searching
+for a final form.
 
 * **intuBags** allow to run *one* pipeline containing *several* sources. intuBags can be
 dynamically populated by result(s?) at each step of the pipeline. Results can be, for example, modifications of an original source that can be replaced by the modification or saved as new object. They can also be from a statistical procedure, such as `lm`, or other things.
