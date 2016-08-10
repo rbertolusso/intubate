@@ -1,6 +1,6 @@
 #### intubate <||> *Roberto Bertolusso*
 
-##### *2016-07-26* - *2016-08-08* (GPL >= 2)
+##### *2016-07-26* - *2016-08-10* (GPL >= 2)
 
 
 The aim of `intubate` (`<||>`) is to offer a painless way to
@@ -208,9 +208,9 @@ LifeCycleSavings %>%
   head()
 ```
 
-Below there is a more involved case, transforming the code in https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf to use
-`intubOrders` (again, I am just trying to see how far I can get,
-not stating that this should be what to do).
+Below there is a more involved case, transforming the code in
+
+https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf
 
 ```{r}
 library(survey)
@@ -234,13 +234,28 @@ logitmodel <- svyglm(I(sch.wide=="Yes")~ell+meals, design=dclus1, family=quasibi
 summary(regmodel)
 summary(logitmodel)
 
-## Now, with intubate using intubOrders.
-## Note: I am not defining any interfaces, just calling
-##       svydesign directly with ntbt and, in the intubOrder,
-##       the original functions.
+## Now using intubOrders. I will use ntbt. Alternatively,
+## the interfaces could be defined and used.
+
+## Strategy 1: long pipeline, light use of intubOrders.
+apiclus1 %>%
+  ntbt(svydesign, id = ~dnum, weights = ~ pw, fpc = ~ fpc, "<|| summary >") %>%
+  ntbt(svymean, ~ api00, "<|f| print >") %>%
+  ntbt(svyquantile, ~ api00, quantile = c(0.25,0.5,0.75), ci = TRUE, "<|f| print >") %>%
+  ntbt(svytotal, ~ stype, "<|f| print >") %>%
+  ntbt(svytotal, ~ enroll, "<|f| print >") %>%
+  ntbt(svyratio, ~ api.stu, ~ enroll, "<|f| print >") %>%
+  ntbt(svyratio, ~ api.stu, ~ enroll, design=subset("#", stype=="H"), "<|f| print >") %>%
+  ntbt(svymean, make.formula(vars), na.rm = TRUE, "<|f| print >") %>%
+  ntbt(svyby, ~ ell + meals, ~ stype, svymean, "<|f| print >") %>%
+  ntbt(svyglm, api00 ~ ell + meals, "<|f| summary >") %>%
+  ntbt(svyglm, I(sch.wide=="Yes") ~ ell + meals, family = quasibinomial(), "<|f| summary >") %>%
+  summary() ## We have forwarded the result from svydesign (line 2), so we could still continue using it.
+
+## Strategy 2: short pipeline, heavy use of *one* intubOrder.
 apiclus1 %>%
   ntbt(svydesign, id = ~dnum, weights = ~pw, fpc = ~fpc,
-       "<|vf|
+       "<|f|
          summary;
          svymean(~api00, #);
          svyquantile(~api00, #, quantile = c(0.25, 0.5, 0.75), ci = TRUE);
@@ -252,7 +267,12 @@ apiclus1 %>%
          svyby(~ell+meals, ~stype, #, svymean);
          summary(svyglm(api00~ell+meals, #));
          summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >") %>%
-  head()  ## We have forwarded apiclus1, so we can continue the pipe with the original data.
+  head()  ## We have forwarded apiclus1, so we could continue using it downstream.
+
+## This is how to create interfaces for the missing functions.
+ntbt_svymean <- ntbt_svyquantile <- ntbt_svytotal <-
+  ntbt_svyratio <- ntbt_svyby <- ntbt_svyglm <-
+  intubate
 ```
 
 `intubOrders` are under heavy development, so this is just an idea that is searching
@@ -658,7 +678,7 @@ very suspicious if they would). The *interfaced* functions (those that are alrea
 well tested) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 92 interfaces that can be related to data science methodologies.
+`intubate` currently implements 94 interfaces that can be related to data science methodologies.
 The R packages that have interfaces implemented so far are:
 
 * `e1071`: Support Vector Machines
@@ -676,6 +696,7 @@ The R packages that have interfaces implemented so far are:
 * `randomForest`: Random Forests for Classification and Regression
 * `rpart`: Recursive Partitioning and Regression Trees
 * `stats`: The R Stats Package
+* `survey`: Analysis of Complex Survey Samples
 * `survival`: Survival Analysis
 * `tree`: Classification and Regression Trees
 

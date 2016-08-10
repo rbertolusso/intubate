@@ -131,6 +131,10 @@ ntbt_svm <-
   ntbt_wilcox.test <-
   ntbt_xtabs <-
   
+  ## survey
+  ntbt_svydesign <-
+  ntbt_twophase <-
+
   ## survival
   ntbt_cch <-
   ntbt_coxph <-

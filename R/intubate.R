@@ -96,8 +96,14 @@ process_call <- function(data, preCall, Call, use_envir) {
         Call[[2]] <- as.name(io$input[1])
       names(Call)[[2]] <- ""                     ## Leave data unnamed
       #print(Call)
-      result <- eval(Call) ## For subset() and such, that already are
-                           ## pipe aware.
+      result <- try(eval(Call), silent = TRUE) ## For subset() and such, that already are
+                                               ## pipe aware.
+      if (class(result)[[1]] == "try-error") {
+        ret <- process_formula_case(Call, use_envir) ## Try formula (formula could be
+                                                     ## result of a function call)
+        result <- ret$result
+        Call <- ret$Call
+      }
     } else {
       Call = Call[-2]
     }
@@ -106,8 +112,8 @@ process_call <- function(data, preCall, Call, use_envir) {
   result_visible <- withVisible(result)$visible
 
 #  if (io$verbose) {
-  cat("\n") 
-  print(Call)
+    cat("\n") 
+    print(Call)
 #  }
   
   if (io$found) {
@@ -204,11 +210,11 @@ exec_intubOrder <- function(object_functions, where, object) {
     ## print(str(printed))
     if (printed[1] != "NULL" && include_object) {
       cat("\n")
-      header <- paste0(" ", this_function, " <||> ", where, " ")
-      sep <- paste0("# ", paste0(rep("-", nchar(header)), collapse = ""), "\n")
-      cat(sep)
-      cat(paste0("# ", header, "\n"))
-      cat(sep)
+      header <- paste0("* ", this_function, " <||> ", where, " *")
+      sep <- paste0(paste0(rep("-", nchar(header)), collapse = ""), "\n")
+      #cat(sep)
+      cat(paste0(header, "\n"))
+      #cat(sep)
       cat(printed[printed != "NULL"], sep = "\n")
     }
   }
@@ -265,6 +271,59 @@ function(object_functions, where, object) {
 ## not clue how to implement), for *all* the formulas that have a ".", so maybe
 ## the end result will be even more involved and this is as good as we can do.
 process_formula_case <- function(Call, use_envir) {
+  ## cat("process_formula_case\n")
+  pos <- which(sapply(charCall <- as.character(Call), function(par) {
+    gsub(".*(#).*", "\\1", par) == "#"
+  }))
+  if (length(pos) > 0) {
+    to_parse <- gsub("[\"']?#[\"']?", charCall[[2]], charCall[[pos]])
+    .res_expr. <- eval(parse(text = to_parse), envir = use_envir)
+    Call[[pos]] <- as.name(".res_expr.")
+    Call <- Call[-2]
+    result <- try(eval(Call), silent = TRUE)
+  } else {
+    Call[2:3] <- Call[3:2]                       ## Switch parameters
+    names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
+    ## print(Call)
+    result <- try(eval(Call, envir = use_envir), silent = TRUE)
+    if (class(result)[[1]] == "try-error") {     ## Maybe data has other name
+      names(Call)[[3]] <- ""                     ## Leave data unnamed
+      ## print(Call)
+      result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
+      if (class(result)[[1]] == "try-error") {   ## Maybe data is in position 3
+        Call[3:4] <- Call[4:3]                   ## Switch parameters
+        ## print(Call)
+        result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
+      }
+    }
+  }
+  list(result = result, Call = Call)
+}
+
+
+function(Call, use_envir) {
+  cat("process_formula_case\n")
+  pos <- which(sapply(charCall <- as.character(Call), function(par) {
+    gsub(".*(<\\|\\|>).*", "\\1", par) == "<||>"
+  }))
+  if (length(pos) > 0) {
+    charCall[[pos]] <- gsub("[\"']<\\|\\|>[\"']", charCall[[2]], charCall[[pos]])
+    . <- eval(parse(text = charCall[[pos]]), envir = use_envir)
+    Call[[pos]] <- quote(.)
+    ## Call[[pos]] <- eval(parse(text = charCall[[pos]]), envir = use_envir)
+    ##    Call[[pos]] <- eval(parse(text = charCall[[pos]]), envir = Call[-2])
+    Call <- Call[-2]
+    #charCall <- charCall[-2]
+    print(Call)
+    #print(names(charCall))
+    #print(charCall)
+    #Call <- Call[-2]
+    
+    #    print(eval(charCall))
+  }
+  #  print(Call[[5]])
+  #  print(pos)
+  
   Call[2:3] <- Call[3:2]                       ## Switch parameters
   names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
   ## print(Call)
@@ -281,6 +340,8 @@ process_formula_case <- function(Call, use_envir) {
   }
   list(result = result, Call = Call)
 }
+
+
 
 ## (internal)
 ## Determine if there is a formula

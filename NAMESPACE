@@ -15,6 +15,7 @@
 #importFrom("rpart", "rpart")
 #import("stats")
 importFrom("stats", "as.formula")
+#importFrom("survey", "svydesign", "twophase")
 #importFrom("survival", "cch", "coxph", "pyears",
 #           "survConcordance", "survexp", "survfit", "survSplit")
 #importFrom("tree", "tree")

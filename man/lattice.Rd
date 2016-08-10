@@ -53,9 +53,6 @@ ntbt_xyplot(data, ...)
 \author{
 Roberto Bertolusso
 }
-\seealso{
-  \code{\link{barchart}}
-}
 \examples{
 \dontrun{
 library(magrittr)

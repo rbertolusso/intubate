@@ -1,4 +1,4 @@
-\name{ntbt_cch}
+\name{survival}
 \alias{ntbt_cch}
 \alias{ntbt_coxph}
 \alias{ntbt_pyears}

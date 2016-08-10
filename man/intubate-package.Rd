@@ -46,6 +46,8 @@
   
   \code{stats}: The R Stats Package
   
+  \code{survey}: Analysis of Complex Survey Samples
+
   \code{survival}: Survival Analysis
   
   \code{tree}: Classification and Regression Trees
