@@ -629,12 +629,12 @@ Why? Because *Everybody* will benefit.
      Everybody sing.
                             Everybody
          We aaaaare the Woooorld - ta ta ta ta taaaa...
-         We aaaare the chiildreeeen - ta ta ta ta taaaa...)
+         We aaaare the chiildreeeen - ta ta ta ta taaaa...
 
-For "traditionalist" users (as I was until a couple of months ago), nothing will have changed. In fact, they will be
-completely unaware of anything different happening at all. Just 
-business as usual and another fantastic
-statistical procedure to add to their bag of resources.
+For "traditionalist" users (as I was until a couple of months ago), nothing will have
+changed. In fact, they will be completely unaware of anything different happening at all.
+Just business as usual and another fantastic statistical procedure to add to their bag of
+resources.
 
 For "modernist" users, `intubate` will do a couple of tricks behind the scenes so
 they will be able to run, right at the end of any required data transformation,
@@ -675,18 +675,37 @@ continue to do all the good things we are used to.
 
 All the interfaces start with `ntbt_` followed by the name of the *interfaced* function.
 
-Just in case, worry not! The *interfaces* do not perform any statistical computations (you should be
-very suspicious if they would). The *interfaced* functions (those that are already
-well tested) are the ones performing the computations.
+Just in case, worry not! The *interfaces* do not perform any statistical computations
+(you should be very suspicious if they would). The *interfaced* functions
+(those that are already well tested, or should be) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 101 interfaces that can be related to data science methodologies.
+`intubate` currently implements 127 interfaces that can be related to data science
+methodologies and other disciplines.
+
+I make no personal judgement about the merit of any interfaced function.
+I have used only a subset of what is provided, and I am happy to include others,
+that I am currently unaware of, down the line.
+
+I do not claim to be a data scientist (I still have no clue of what a data scientist
+is or is not), nor someone entitled to tell you what to use or not.
+
+I will not engage in disputes of what is relevant or not, or,
+if there are competing packages, which to use
+(I will happily include interfaces for all competing packages).
+I will leave that to you to decide. Keep in mind that `intubate`
+will **not** install any packages correponding to the interfaces
+that are provided. You can install *only* those that you need
+(or like) and disregard the rest.
+
 The R packages that have interfaces implemented so far are:
 
 * `e1071`: Support Vector Machines
 * `gam`: Generalized Additive Models
 * `gbm`: Generalized Boosted Regression Models
 * `graphics`: The R Graphics Package
+* `Hmisc`: Harrell Miscellaneous
+* `iRegression`: Regression Methods for Interval-Valued Variables
 * `lattice`: Trellis Graphics for R
 * `leaps`: Regression Subset Selection
 * `lfe`: Linear Group Fixed Effects
@@ -702,8 +721,8 @@ The R packages that have interfaces implemented so far are:
 * `survival`: Survival Analysis
 * `tree`: Classification and Regression Trees
 
-The aim is to continue to add interfaces to most methodologies
-  used in data science.
+The aim is to continue adding interfaces to most methodologies
+  used in data science or other disciplines.
 
 Again, the important and sensitive work is performed by the functions provided
 in those well tested packages.

@@ -9,7 +9,7 @@
 ntbt_svm(data, ...)
 }
 \arguments{
-  \item{data}{an data frame, tibble, list, ...}
+  \item{data}{data frame, tibble, list, ...}
   \item{...}{Other arguments passed to the corresponding interfaced function.}
 }
 \details{

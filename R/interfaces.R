@@ -16,11 +16,12 @@
 ## along with intubate. If not, see <http://www.gnu.org/licenses/>.
 
 ## External functions
-
-## Interface functions
-
-## e1071
-ntbt_svm <-
+intubate <-
+  
+  ## Interface functions
+  
+  ## e1071
+  ntbt_svm <-
   
   ## gam
   ntbt_gam <-
@@ -34,11 +35,46 @@ ntbt_svm <-
   ntbt_coplot <-
   ntbt_mosaicplot <-
   ntbt_pairs <-
+  
   ntbt_plot <-
   ntbt_spineplot <-
   ntbt_sunflowerplot <-
   ntbt_stripchart <-
   ntbt_text <-
+  
+  ## Hmisc
+  ntbt_areg.boot <-
+  ntbt_aregImpute <-
+  ntbt_biVar <-
+  ntbt_bpplotM <-
+  ntbt_dataRep <-
+  
+  ntbt_describe <-
+  ntbt_Dotplot <-
+  ntbt_Ecdf <-
+  ntbt_fit.mult.impute <-
+  ntbt_nobsY <-
+  
+  ntbt_rcorrcens <-
+  ntbt_redun <-
+  ntbt_summary <-
+  ntbt_summaryD <-
+  ntbt_summaryM <-
+  
+  ntbt_summaryP <-
+  ntbt_summaryRc <-
+  ntbt_summaryS <-
+  ntbt_transcan <-
+  ntbt_varclus <-
+  
+  ntbt_xYplot <-
+  
+  ## iRegression
+  ntbt_bivar <-
+  ntbt_ccrm <-
+  ntbt_cm <-
+  ntbt_crm <-
+  ntbt_MinMax <-
   
   ## lattice
   ntbt_barchart <-
@@ -46,16 +82,19 @@ ntbt_svm <-
   ntbt_cloud <-
   ntbt_contourplot <-
   ntbt_densityplot <-
+  
   ntbt_dotplot <-
   ntbt_histogram <-
   ntbt_levelplot <-
   ntbt_oneway <-
   ntbt_parallelplot <-
+  
   ntbt_qq <-
   ntbt_qqmath <-
   ntbt_splom <-
   ntbt_stripplot <-
   ntbt_tmd <-
+  
   ntbt_wireframe <-
   ntbt_xyplot <-
   
@@ -71,6 +110,7 @@ ntbt_svm <-
   ntbt_lda <-
   ntbt_lm.gls <-
   ntbt_lm.ridge <-
+  
   ntbt_loglm <-
   ntbt_logtrans <-
   ntbt_polr <-
@@ -106,26 +146,31 @@ ntbt_svm <-
   ntbt_ansari.test <-
   ntbt_aov <-
   ntbt_bartlett.test <-
+  
   ntbt_cor.test <-
   ntbt_fligner.test <-
   ntbt_friedman.test <-
   ntbt_ftable <-
   ntbt_getInitial <-
+  
   ntbt_glm <-
   ntbt_kruskal.test <-
   ntbt_lm <-
   ntbt_loess <-
   ntbt_lqs <-
+  
   ntbt_model.frame <-
   ntbt_model.matrix <-
   ntbt_mood.test <-
   ntbt_nls <-
   ntbt_oneway.test <-
+  
   ntbt_ppr <-
   ntbt_prcomp <-
   ntbt_princomp <-
   ntbt_quade.test <-
   ntbt_replications <-
+  
   ntbt_t.test <-
   ntbt_var.test <-
   ntbt_wilcox.test <-
@@ -137,6 +182,7 @@ ntbt_svm <-
   ntbt_svydesign <-
   ntbt_svyglm <-
   ntbt_svymean <-
+  
   ntbt_svyquantile <-
   ntbt_svyratio <-
   ntbt_svytotal <-
@@ -148,6 +194,7 @@ ntbt_svm <-
   ntbt_pyears <-
   ntbt_survConcordance <-
   ntbt_survexp <-
+  
   ntbt_survfit <-
   ntbt_survSplit <-
   
@@ -156,7 +203,7 @@ ntbt_svm <-
   
   ## (external)
   ## intubate function
-  intubate <-  function(data, ...) {
+  function(data, ...) {
     preCall <- match.call(expand.dots = FALSE)
     
     Call <- match.call(expand.dots = TRUE)

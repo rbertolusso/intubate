@@ -6,7 +6,7 @@
   in a pipeline implemented by \code{magrittr}.
 }
 \arguments{
-  \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
+  \item{data}{data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
   \item{...}{Other arguments passed to \code{gbm}.}
 }
 \details{

@@ -84,6 +84,7 @@ process_call <- function(data, preCall, Call, use_envir) {
     #print(Call)
     ret <- process_formula_case(Call, use_envir)      
     result <- ret$result
+    result_visible <- ret$result_visible
     Call <- ret$Call
   } else  {
     #cat("Rest of cases\n")
@@ -102,15 +103,16 @@ process_call <- function(data, preCall, Call, use_envir) {
         ret <- process_formula_case(Call, use_envir) ## Try formula (formula could be
                                                      ## result of a function call)
         result <- ret$result
+        result_visible <- ret$result_visible
         Call <- ret$Call
       }
     } else {
       Call = Call[-2]
     }
   }
-
-  result_visible <- withVisible(result)$visible
-
+  if (!exists("result_visible"))
+    result_visible <- withVisible(result)$visible
+  
   if (io$found) {
     cat("\n") 
     print(Call)
@@ -279,22 +281,28 @@ process_formula_case <- function(Call, use_envir) {
     Call <- Call[-2]
     result <- try(eval(Call), silent = TRUE)
   } else {
-    Call[2:3] <- Call[3:2]                       ## Switch parameters
-    names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
-    ## print(Call)
-    result <- try(eval(Call, envir = use_envir), silent = TRUE)
-    if (class(result)[[1]] == "try-error") {     ## Maybe data has other name
-      names(Call)[[3]] <- ""                     ## Leave data unnamed
+    result <- try(eval(Call, envir = use_envir), silent = TRUE) ## Try as it is (data is named)
+    if (class(result)[[1]] == "try-error") {
+      Call[2:3] <- Call[3:2]                       ## Switch parameters
+      names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
       ## print(Call)
-      result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
-      if (class(result)[[1]] == "try-error") {   ## Maybe data is in position 3
-        Call[3:4] <- Call[4:3]                   ## Switch parameters
+      result <- try(eval(Call, envir = use_envir), silent = TRUE)
+      if (class(result)[[1]] == "try-error") {     ## Maybe data has other name
+        names(Call)[[3]] <- ""                     ## Leave data unnamed
         ## print(Call)
-        result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
+        result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
+        if (class(result)[[1]] == "try-error") {   ## Maybe data is in position 3
+          Call[3:4] <- Call[4:3]                   ## Switch parameters
+          names(Call)[3:4] <- names(Call)[4:3]     ## Switch names
+          ## print(Call)
+          result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
+        }
       }
     }
   }
-  list(result = result, Call = Call)
+  list(result = result,
+       result_visible = withVisible(result)$visible,
+       Call = Call)
 }
 
 

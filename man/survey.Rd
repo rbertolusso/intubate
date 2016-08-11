@@ -25,7 +25,7 @@ ntbt_svytotal(data, ...)      ## data <-> design
 ntbt_twophase(data, ...)
 }
 \arguments{
-  \item{data}{an data frame, tibble, list, ...}
+  \item{data}{data frame, tibble, list, ...}
   \item{...}{Other arguments passed to the corresponding interfaced function.}
 }
 \details{

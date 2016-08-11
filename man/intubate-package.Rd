@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are interfaces for:
+  Currently, there are 127 interfaces for:
   
   \code{e1071}: Support Vector Machines
 
@@ -24,6 +24,10 @@
   \code{gbm}: Generalized Boosted Regression Models
   
   \code{graphics}: The R Graphics Package
+
+  \code{Hmisc}: Harrell Miscellaneous
+
+  \code{iRegression}: Regression Methods for Interval-Valued Variables
   
   \code{lattice}: Trellis Graphics for R
   

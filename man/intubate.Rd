@@ -19,7 +19,7 @@ intubate(data, ...)
 ntbt(data, fti, ...)
 }
 \arguments{
-  \item{data}{an data frame, tibble, list (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
+  \item{data}{data frame, tibble, list, ...}
   \item{fti}{function to interface.}
   \item{...}{Other arguments passed to interfaced function.}
 }

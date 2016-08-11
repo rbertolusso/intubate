@@ -2,6 +2,12 @@
 #importFrom("gam", "gam")
 #importFrom("gbm", "gbm")
 #import("graphics")
+#importFrom("Hmisc", "areg.boot", "aregImpute", "biVar", "bpplotM", "dataRep",
+##          "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
+##          "rcorrcens", "redun", "summary", "summaryD", "summaryM",
+##          "summaryP", "summaryRc", "summaryS", "transcan", "varclus",
+##          "xYplot")
+#importFrom("iRegression", "bivar", "ccrm", "cm", "crm", "MinMax")
 #import("lattice")
 #importFrom("leaps", "regsubsets")
 #importFrom("lfe", "felm")
