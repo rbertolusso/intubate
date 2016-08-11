@@ -18,6 +18,8 @@
 #importFrom("nnet", "multinom", "nnet")
 #importFrom("pls", "cppls", "mvr", "pcr", "plsr")
 #importFrom("randomForest", "randomForest")
+#importFrom("rms", "bj", "cph", "Glm", "lrm", "npsurv",
+#           "ols", "orm", "psm")
 #importFrom("rpart", "rpart")
 #import("stats")
 importFrom("stats", "as.formula")

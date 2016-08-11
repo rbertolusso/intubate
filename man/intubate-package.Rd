@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 127 interfaces for:
+  Currently, there are 135 interfaces for:
   
   \code{e1071}: Support Vector Machines
 
@@ -45,6 +45,8 @@
   \code{pls}: Partial Least Squares and Principal Component Regression
   
   \code{randomForest}: Random Forests for Classification and Regression
+  
+  \code{rms}: Regression Modeling Strategies
   
   \code{rpart}: Recursive Partitioning and Regression Trees
   

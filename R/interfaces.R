@@ -136,7 +136,18 @@ intubate <-
   
   ## randomForest
   ntbt_randomForest <-
+
+  ## rms  
+  ntbt_bj <-
+  ntbt_cph <-
+  ntbt_Glm <-
+  ntbt_lrm <-
+  ntbt_npsurv <-
   
+  ntbt_ols <-
+  ntbt_orm <-
+  ntbt_psm <-
+
   ## rpart
   ntbt_rpart <-
   

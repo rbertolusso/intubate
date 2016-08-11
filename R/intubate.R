@@ -192,22 +192,22 @@ parse_intubOrder <- function(par_list, data) {
 }
 
 ## (internal)
-exec_intubOrder <- function(object_functions, where, object) {
+exec_intubOrder <- function(..object_functions.., where, ..object..) {
   oldmfrow <- par()$mfrow    ## Just in case
 
-  for (this_function in object_functions) {
+  for (this_function in ..object_functions..) {
     include_object <- TRUE
     if (this_function == "print") {
-      printed <- capture.output(print(object))
+      printed <- capture.output(print(..object..))
     } else {
       if (length(strsplit(this_function, "\\(")[[1]]) > 1) {
-        printed <- capture.output(print(eval(parse(text = gsub("#", "object", this_function)))))
+        printed <- capture.output(print(eval(parse(text = gsub("#", "..object..", this_function)))))
       } else {
-        printed <- capture.output(print(do.call(this_function, args=list(quote(object)))))
+        printed <- capture.output(print(do.call(this_function, args=list(quote(..object..)))))
       }
     }
     ## print(str(printed))
-    if (printed[1] != "NULL" && include_object) {
+    if (length(printed) > 0 && printed[1] != "NULL" && include_object) {
       cat("\n")
       header <- paste0("* ", this_function, " <||> ", where, " *")
       sep <- paste0(paste0(rep("-", nchar(header)), collapse = ""), "\n")
