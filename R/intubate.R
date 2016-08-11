@@ -111,12 +111,9 @@ process_call <- function(data, preCall, Call, use_envir) {
 
   result_visible <- withVisible(result)$visible
 
-#  if (io$verbose) {
+  if (io$found) {
     cat("\n") 
     print(Call)
-#  }
-  
-  if (io$found) {
     exec_intubOrder(io$input_functions, "source", input_data)
     exec_intubOrder(io$result_functions, "result", result)
   }

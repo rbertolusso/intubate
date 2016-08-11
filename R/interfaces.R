@@ -132,7 +132,14 @@ ntbt_svm <-
   ntbt_xtabs <-
   
   ## survey
+  ntbt_svyby <-
+  ntbt_svycoxph <-
   ntbt_svydesign <-
+  ntbt_svyglm <-
+  ntbt_svymean <-
+  ntbt_svyquantile <-
+  ntbt_svyratio <-
+  ntbt_svytotal <-
   ntbt_twophase <-
 
   ## survival

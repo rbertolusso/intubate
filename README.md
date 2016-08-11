@@ -250,7 +250,8 @@ apiclus1 %>%
   ntbt(svyby, ~ ell + meals, ~ stype, svymean, "<|f| print >") %>%
   ntbt(svyglm, api00 ~ ell + meals, "<|f| summary >") %>%
   ntbt(svyglm, I(sch.wide=="Yes") ~ ell + meals, family = quasibinomial(), "<|f| summary >") %>%
-  summary() ## We have forwarded the result from svydesign (line 2), so we could still continue using it.
+  summary() ## We have forwarded the result from svydesign (line 2),
+            ## so we could still continue using it downstream.
 
 ## Strategy 2: short pipeline, heavy use of *one* intubOrder.
 apiclus1 %>%
@@ -267,7 +268,8 @@ apiclus1 %>%
          svyby(~ell+meals, ~stype, #, svymean);
          summary(svyglm(api00~ell+meals, #));
          summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >") %>%
-  head()  ## We have forwarded apiclus1, so we could continue using it downstream.
+  head()  ## We have forwarded the original dataset,
+          ## so we could continue using it downstream.
 
 ## This is how to create interfaces for the missing functions.
 ntbt_svymean <- ntbt_svyquantile <- ntbt_svytotal <-
@@ -678,7 +680,7 @@ very suspicious if they would). The *interfaced* functions (those that are alrea
 well tested) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 94 interfaces that can be related to data science methodologies.
+`intubate` currently implements 101 interfaces that can be related to data science methodologies.
 The R packages that have interfaces implemented so far are:
 
 * `e1071`: Support Vector Machines

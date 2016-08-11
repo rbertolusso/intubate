@@ -63,11 +63,7 @@
   the functions of any library directly without the need to
   create interfaces (see \code{\link{ntbt}}) so perhaps in the
   future that will be the preferred way of using \code{intubate}.
-  For compatibility purposes, the interfaces implemented so far
-  will be mantained for some time (but please remember that the
-  corresponding libraries will not be installed from this version
-  on)
-  
+
   \code{intubate} is still a work in progress.
   As such, the implementation may change in future
   versions until stabilization.
