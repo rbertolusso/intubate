@@ -22,6 +22,7 @@
 #                   "loglm", "logtrans", "lqs", "polr", "qda", "rlm")
 #importFrom("nlme", "gls", "lme", "nlme", "nlsList")
 #importFrom("nnet", "multinom", "nnet")
+#importFrom("party", "cforest", "ctree", "mob")
 #importFrom("pls", "cppls", "mvr", "pcr", "plsr")
 #importFrom("randomForest", "randomForest")
 #importFrom("rms", "bj", "cph", "Glm", "lrm", "npsurv",

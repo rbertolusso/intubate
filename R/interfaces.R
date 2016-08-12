@@ -158,6 +158,11 @@ intubate <-
   ntbt_multinom <-
   ntbt_nnet <-
   
+  ## party
+  ntbt_cforest <-
+  ntbt_ctree <-
+  ntbt_mob <-
+
   ## pls
   ntbt_cppls <-
   ntbt_mvr <-
