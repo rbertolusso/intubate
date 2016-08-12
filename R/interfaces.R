@@ -226,6 +226,15 @@ intubate <-
   ntbt_wilcox.test <-
   ntbt_xtabs <-
   
+  ## strucchange
+  ntbt_breakpoints <-
+  ntbt_efp <-
+  ntbt_Fstats <-
+  ntbt_mefp <-
+  ntbt_recresid <-
+  
+  ntbt_sctest <-
+  
   ## survey
   ntbt_svyby <-
   ntbt_svycoxph <-

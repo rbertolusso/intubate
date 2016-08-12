@@ -31,6 +31,8 @@
 #importFrom("rpart", "rpart")
 #import("stats")
 importFrom("stats", "as.formula")
+#importFrom("strucchange", "breakpoints", "efp", "Fstats", "mefp", "recresid",
+#                          "sctest")
 #importFrom("survey", "svydesign", "twophase")
 #importFrom("survival", "cch", "coxph", "pyears", "survConcordance", "survexp",
 #                       "survfit", "survSplit")
