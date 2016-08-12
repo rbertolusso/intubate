@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 160 interfaces for:
+  Currently, there are 162 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -41,6 +41,8 @@
 
   \code{MASS}: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
+               
+  \code{modeltools}: Tools and Classes for Statistical Models
   
   \code{nlme}: Linear and Nonlinear Mixed Effects Models
   
