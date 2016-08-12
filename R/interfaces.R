@@ -91,6 +91,21 @@ intubate <-
   ntbt_crm <-
   ntbt_MinMax <-
   
+  ## kernlab
+  ntbt_gausspr <-
+  ntbt_kfa <-
+  ntbt_kha <-
+  ntbt_kkmeans <-
+  ntbt_kpca <-
+  
+  ntbt_kqr <-
+  ntbt_ksvm <-
+  ntbt_lssvm <-
+  ntbt_rvm <-
+  ntbt_sigest <-
+  
+  ntbt_specc <-
+  
   ## lattice
   ntbt_barchart <-
   ntbt_bwplot <-
