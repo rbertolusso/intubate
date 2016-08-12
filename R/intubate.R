@@ -40,10 +40,10 @@ ntbt <- function(data, fti, ...) {
   Call[[3]] <- NULL
 
   result <- process_call(data, preCall, Call, parent.frame())
-
-  if (withVisible(result)$visible)
-    return (result)
-  invisible(result)
+  
+  if (result$result_visible)
+    return (result$result)
+  invisible(result$result)
 }
 
 ## (external)
@@ -127,13 +127,15 @@ process_call <- function(data, preCall, Call, use_envir) {
 ##  print(io)
   if (!io$is_intuBag) {
     if (!is.null(result) && !io$forward_input) {
-      if (result_visible)
-        return (result)
-      else
+      if (result_visible) {
+        ## cat("visible\n")
+        return (list(result = result, result_visible = TRUE))
+      } else
         data <- result
     }
   }
-  invisible(data)
+  ## cat("invisible\n")
+  list(result = data, result_visible = FALSE)
 }
 
 ## (internal)

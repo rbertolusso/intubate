@@ -438,14 +438,12 @@ summaryRc(y ~ age + bp + stratify(sex), data,
 
 ## The interface puts data as first parameter
 ntbt_summaryRc(data, y ~ age + bp + stratify(sex),
-               label.curves = list(keys = 'lines'), nloc = list(x = .1, y = .05)) \%>\%
-  invisible()  ## Have to improve this, so invisible is not needed
+               label.curves = list(keys = 'lines'), nloc = list(x = .1, y = .05))
 
 ## so it can be used easily in a pipeline.
 data \%>\%
   ntbt_summaryRc(y ~ age + bp + stratify(sex),
-                 label.curves = list(keys = 'lines'), nloc = list(x = .1, y = .05)) \%>\%
-  invisible()
+                 label.curves = list(keys = 'lines'), nloc = list(x = .1, y = .05))
 
 
 ## ntbt_summaryS

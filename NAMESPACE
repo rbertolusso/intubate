@@ -1,30 +1,33 @@
+#importFrom("caret", "avNNet", "bagEarth", "bagFDA", "calibration", "dummyVars",
+#                    "icr", "knn3", "lift", "pcaNNet", "sbf",
+#                    "train")
 #importFrom("e1071", "svm")
 #importFrom("gam", "gam")
 #importFrom("gbm", "gbm")
 #import("graphics")
 #importFrom("Hmisc", "areg.boot", "aregImpute", "biVar", "bpplotM", "dataRep",
-##          "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
-##          "rcorrcens", "redun", "summary", "summaryD", "summaryM",
-##          "summaryP", "summaryRc", "summaryS", "transcan", "varclus",
-##          "xYplot")
+##                   "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
+##                   "rcorrcens", "redun", "summary", "summaryD", "summaryM",
+##                   "summaryP", "summaryRc", "summaryS", "transcan", "varclus",
+##                   "xYplot")
 #importFrom("iRegression", "bivar", "ccrm", "cm", "crm", "MinMax")
 #import("lattice")
 #importFrom("leaps", "regsubsets")
 #importFrom("lfe", "felm")
 #import("magrittr")
 #importFrom("MASS", "corresp", "glm.nb", "lda", "lm.gls", "lm.ridge",
-#           "loglm", "logtrans", "lqs", "polr", "qda", "rlm")
+#                   "loglm", "logtrans", "lqs", "polr", "qda", "rlm")
 #importFrom("nlme", "gls", "lme", "nlme", "nlsList")
 #importFrom("nnet", "multinom", "nnet")
 #importFrom("pls", "cppls", "mvr", "pcr", "plsr")
 #importFrom("randomForest", "randomForest")
 #importFrom("rms", "bj", "cph", "Glm", "lrm", "npsurv",
-#           "ols", "orm", "psm")
+#                  "ols", "orm", "psm")
 #importFrom("rpart", "rpart")
 #import("stats")
 importFrom("stats", "as.formula")
 #importFrom("survey", "svydesign", "twophase")
-#importFrom("survival", "cch", "coxph", "pyears",
-#           "survConcordance", "survexp", "survfit", "survSplit")
+#importFrom("survival", "cch", "coxph", "pyears", "survConcordance", "survexp",
+#                       "survfit", "survSplit")
 #importFrom("tree", "tree")
 exportPattern("intubate|ntbt|intuBag|is_intuBag|^ntbt_[[:alpha:]]+")

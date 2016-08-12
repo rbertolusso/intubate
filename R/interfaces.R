@@ -20,6 +20,21 @@ intubate <-
   
   ## Interface functions
   
+  ## caret
+  ntbt_avNNet <-
+  ntbt_bagEarth <-
+  ntbt_bagFDA <-
+  ntbt_calibration <-
+  ntbt_dummyVars <-
+  
+  ntbt_icr <-
+  ntbt_knn3 <-
+  ntbt_lift <-
+  ntbt_pcaNNet <-
+  ntbt_sbf <-
+  
+  ntbt_train <-
+
   ## e1071
   ntbt_svm <-
   
@@ -222,7 +237,7 @@ intubate <-
     
     result <- process_call(data, preCall, Call, parent.frame())
     
-    if (withVisible(result)$visible)
-      return (result)
-    invisible(result)
+    if (result$result_visible)
+      return (result$result)
+    invisible(result$result)
   }
