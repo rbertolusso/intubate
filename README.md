@@ -680,7 +680,7 @@ Just in case, worry not! The *interfaces* do not perform any statistical computa
 (those that are already well tested, or should be) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 168 interfaces that can be related to data science
+`intubate` currently implements 196 interfaces that can be related to data science
 methodologies and other disciplines.
 
 I make no personal judgement about the merit of any interfaced function.
@@ -701,6 +701,7 @@ that are provided. You can install *only* those that you need
 The R packages that have interfaces implemented so far are:
 
 * `caret`: Classification and Regression Training
+* `coin`: Conditional Inference Procedures in a Permutation Test Framework
 * `e1071`: Support Vector Machines
 * `gam`: Generalized Additive Models
 * `gbm`: Generalized Boosted Regression Models

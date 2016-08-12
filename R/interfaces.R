@@ -35,6 +35,41 @@ intubate <-
   
   ntbt_train <-
 
+  ## coin
+  ntbt_ansari_test <-
+  ntbt_chisq_test <-
+  ntbt_cmh_test <-
+  ntbt_conover_test <-
+  ntbt_fisyat_test <-
+  
+  ntbt_fligner_test <-
+  ntbt_friedman_test <-
+  ntbt_independence_test <-
+  ntbt_klotz_test <-
+  ntbt_koziol_test <-
+  
+  ntbt_kruskal_test <-
+  ntbt_lbl_test <-
+  ntbt_logrank_test <-
+  ntbt_maxstat_test <-
+  ntbt_median_test <-
+  
+  ntbt_mh_test <-
+  ntbt_mood_test <-
+  ntbt_normal_test <-
+  ntbt_oneway_test <-
+  ntbt_quade_test <-
+  
+  ntbt_quadrant_test <-
+  ntbt_sign_test <-
+  ntbt_symmetry_test <-
+  ntbt_taha_test <-
+  ntbt_savage_test <-
+  
+  ntbt_spearman_test <-
+  ntbt_wilcox_test <-
+  ntbt_wilcoxsign_test <- 
+  
   ## e1071
   ntbt_svm <-
   
