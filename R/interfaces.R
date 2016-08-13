@@ -277,6 +277,15 @@ intubate <-
   ntbt_pcr <-
   ntbt_plsr <-
   
+  ## quantreg
+  ntbt_dynrq <-
+  ntbt_KhmaladzeTest <-
+  ntbt_nlrq <-
+  ntbt_rq <-
+  ntbt_rqProcess <-
+  
+  ntbt_rqss <-
+  
   ## randomForest
   ntbt_randomForest <-
 

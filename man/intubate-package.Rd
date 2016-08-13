@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 267 interfaces for:
+  Currently, there are 273 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -71,6 +71,8 @@
   \code{pls}: Partial Least Squares and Principal Component Regression
   
   \code{plotrix}: Various Plotting Functions
+
+  \code{quantreg}: Quantile Regression
 
   \code{randomForest}: Random Forests for Classification and Regression
   

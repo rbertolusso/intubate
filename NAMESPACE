@@ -42,6 +42,8 @@
 #importFrom("party", "cforest", "ctree", "mob")
 #importFrom("pls", "cppls", "mvr", "pcr", "plsr")
 #importFrom("plotrix", "barNest", "brkdn.plot", "brkdnNest", "histStack", "plotH")
+#importFrom("quantreg", "dynrq", "KhmaladzeTest", "nlrq", "rq", "rqProcess",
+#                       "rqss")
 #importFrom("randomForest", "randomForest")
 #importFrom("rms", "bj", "cph", "Glm", "lrm", "npsurv",
 #                  "ols", "orm", "psm")
