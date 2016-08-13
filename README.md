@@ -680,7 +680,7 @@ Just in case, worry not! The *interfaces* do not perform any statistical computa
 (those that are already well tested, or should be) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 239 interfaces that can be related to data science
+`intubate` currently implements 244 interfaces that can be related to data science
 methodologies and other disciplines.
 
 I make no personal judgement about the merit of any interfaced function.
@@ -722,6 +722,7 @@ The R packages that have interfaces implemented so far are:
 * `nnet`: Feed-Forward Neural Networks and Multinomial Log-Linear Models
 * `party`: A Laboratory for Recursive Partytioning
 * `pls`: Partial Least Squares and Principal Component Regression
+* `plotrix`: Various Plotting Functions
 * `randomForest`: Random Forests for Classification and Regression
 * `rms`: Regression Modeling Strategies
 * `rpart`: Recursive Partitioning and Regression Trees

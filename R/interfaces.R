@@ -230,6 +230,13 @@ intubate <-
   ntbt_ctree <-
   ntbt_mob <-
 
+  ## plotrix
+  ntbt_barNest <-
+  ntbt_brkdn.plot <-
+  ntbt_brkdnNest <-
+  ntbt_histStack <-
+  ntbt_plotH <-
+  
   ## pls
   ntbt_cppls <-
   ntbt_mvr <-
