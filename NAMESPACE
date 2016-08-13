@@ -55,5 +55,6 @@ importFrom("stats", "as.formula")
 #importFrom("survey", "svydesign", "twophase")
 #importFrom("survival", "cch", "coxph", "pyears", "survConcordance", "survexp",
 #                       "survfit", "survSplit")
+#importFrom("SwarmSVM", "alphasvm")
 #importFrom("tree", "tree")
 exportPattern("intubate|ntbt|intuBag|is_intuBag|^ntbt_[[:alpha:]]+")

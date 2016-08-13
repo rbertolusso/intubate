@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 250 interfaces for:
+  Currently, there are 251 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -74,13 +74,15 @@
   
   \code{RWeka}: R/Weka Interface
   
-  \code{stats}: The R Stats Package
+  \code{stats}: The R Stats Package (glm, lm, loess, lqs, nls, ...)
   
   \code{strucchange}: Testing, Monitoring, and Dating Structural Changes
 
   \code{survey}: Analysis of Complex Survey Samples
 
   \code{survival}: Survival Analysis
+  
+  \code{SwarmSVM}: Ensemble Learning Algorithms Based on Support Vector Machines
   
   \code{tree}: Classification and Regression Trees
   

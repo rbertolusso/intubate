@@ -63,17 +63,16 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements close to a 100 interfaces to popular
-statistical functions associated, but not limited, to data science. More
-interfaces are planned to be included in the future.
+`intubate` currently implements 251 interfaces that can be related to data science
+methodologies and other disciplines. The important and sensitive work is performed by the interfaced functions provided in the packages (listed below).
+`intubate` is simply a middleman that takes credit for other people's honest work.
 
 `intubate` depends only on `base` library, so its implementation is very lean.
-
 To be able to continue to include more interfaces without bloating your machine, 
-starting from version 0.99.3 (not yet submitted) `intubate` **will not** install the packages
-that contain the functions that are interfaced. You will need to install them yourself, and load
-the corresponding libraries before or after loading `intubate` (but before using
-them in your pipelines), including `magrittr`.
+starting from version 0.99.3 `intubate` **will not** install the packages
+that contain the functions that are interfaced. *You will need to install them yourself*,
+and load the corresponding libraries before using them in your pipelines. This
+also applies to `magrittr` (you could use `intubate` without pipelines too).
 This way people oriented only to one of: traditional statistics,
 machine learning, finance, bio-statistics, bio-informatics, ...,
 will not have to install
@@ -169,6 +168,64 @@ will be considered *feature requests* and not bugs (and I will greatly appreciat
 if you have some coding skills and can follow my code, if you could provide the
 proposed *solution*, that *shouldn't break anything else*, together with the request).
 
+#### Interfaced libraries
+The R packages that have interfaces implemented so far are:
+
+* `caret`: Classification and Regression Training
+* `coin`: Conditional Inference Procedures in a Permutation Test Framework
+* `CORElearn`: Classification, Regression and Feature Evaluation
+* `e1071`: Support Vector Machines
+* `earth`: Multivariate Adaptive Regression Splines
+* `gam`: Generalized Additive Models
+* `gbm`: Generalized Boosted Regression Models
+* `graphics`: The R Graphics Package
+* `Hmisc`: Harrell Miscellaneous
+* `ipred`: Improved Predictors
+* `iRegression`: Regression Methods for Interval-Valued Variables
+* `kernlab`: Kernel-Based Machine Learning Lab
+* `klaR`: Classification and Visualization
+* `lattice`: Trellis Graphics for R
+* `leaps`: Regression Subset Selection
+* `lfe`: Linear Group Fixed Effects
+* `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
+               Probit Regression, ...
+* `mda`: Mixture and Flexible Discriminant Analysis
+* `modeltools`: Tools and Classes for Statistical Models
+* `nlme`: Linear and Nonlinear Mixed Effects Models
+* `nnet`: Feed-Forward Neural Networks and Multinomial Log-Linear Models
+* `party`: A Laboratory for Recursive Partytioning
+* `pls`: Partial Least Squares and Principal Component Regression
+* `plotrix`: Various Plotting Functions
+* `randomForest`: Random Forests for Classification and Regression
+* `rms`: Regression Modeling Strategies
+* `rpart`: Recursive Partitioning and Regression Trees
+* `RWeka`: R/Weka Interface
+* `stats`: The R Stats Package (glm, lm, loess, lqs, nls, ...)
+* `strucchange`: Testing, Monitoring, and Dating Structural Changes
+* `survey`: Analysis of Complex Survey Samples
+* `survival`: Survival Analysis
+* `SwarmSVM`: Ensemble Learning Algorithms Based on Support Vector Machines
+* `tree`: Classification and Regression Trees
+
+The aim is to continue adding interfaces to most methodologies
+  used in data science or other disciplines.
+I make no personal judgement (mostly due to personal ignorance)
+about the merit of any interfaced function.
+I have used only a subset of what is provided, and I am happy to include others,
+that I am currently unaware of, down the line.
+
+I do not claim to be a data scientist (I still have almost no clue of what a data scientist
+is or is not, and my confusion about the subject only increases),
+nor someone entitled to tell you what to use or not.
+
+As such, I am not capable of engaging in disputes of what is relevant or not, or,
+if there are competing packages, which to use.
+I will leave that to you to decide. Keep in mind that `intubate`
+will **not** install any packages correponding to the interfaces
+that are provided. You can install *only* those that you need
+(or like) and disregard the rest. Also remember you can create your
+own interfaces, or call non-pipe-aware functions directly.
+
 #### Experimental features, not for general or production use
 `intubate` includes two experimental features: **intubOrders**, and **intuBags**.
 
@@ -176,7 +233,8 @@ These experimental features are already in place but are still under development
 **not considered for general use**, and are not documented (yet).
  I want to make sure first, to the best of my abilities, that
 they are as general as possible, and that eventual future extensions will be backward
-compatible. You can play with them if you like, but if you use them in production code
+compatible. You can play with them if you like (I need to play with them more...),
+but if you use them in production code
 be prepared to have to change it if I decide to modify the architecture while in the
 experimental phase.
 
@@ -678,70 +736,6 @@ All the interfaces start with `ntbt_` followed by the name of the *interfaced* f
 Just in case, worry not! The *interfaces* do not perform any statistical computations
 (you should be very suspicious if they would). The *interfaced* functions
 (those that are already well tested, or should be) are the ones performing the computations.
-
-### Interfaced libraries
-`intubate` currently implements 250 interfaces that can be related to data science
-methodologies and other disciplines.
-
-I make no personal judgement about the merit of any interfaced function.
-I have used only a subset of what is provided, and I am happy to include others,
-that I am currently unaware of, down the line.
-
-I do not claim to be a data scientist (I still have no clue of what a data scientist
-is or is not), nor someone entitled to tell you what to use or not.
-
-I will not engage in disputes of what is relevant or not, or,
-if there are competing packages, which to use
-(I will happily include interfaces for all competing packages).
-I will leave that to you to decide. Keep in mind that `intubate`
-will **not** install any packages correponding to the interfaces
-that are provided. You can install *only* those that you need
-(or like) and disregard the rest.
-
-The R packages that have interfaces implemented so far are:
-
-* `caret`: Classification and Regression Training
-* `coin`: Conditional Inference Procedures in a Permutation Test Framework
-* `CORElearn`: Classification, Regression and Feature Evaluation
-* `e1071`: Support Vector Machines
-* `earth`: Multivariate Adaptive Regression Splines
-* `gam`: Generalized Additive Models
-* `gbm`: Generalized Boosted Regression Models
-* `graphics`: The R Graphics Package
-* `Hmisc`: Harrell Miscellaneous
-* `ipred`: Improved Predictors
-* `iRegression`: Regression Methods for Interval-Valued Variables
-* `kernlab`: Kernel-Based Machine Learning Lab
-* `klaR`: Classification and Visualization
-* `lattice`: Trellis Graphics for R
-* `leaps`: Regression Subset Selection
-* `lfe`: Linear Group Fixed Effects
-* `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
-               Probit Regression, ...
-* `mda`: Mixture and Flexible Discriminant Analysis
-* `modeltools`: Tools and Classes for Statistical Models
-* `nlme`: Linear and Nonlinear Mixed Effects Models
-* `nnet`: Feed-Forward Neural Networks and Multinomial Log-Linear Models
-* `party`: A Laboratory for Recursive Partytioning
-* `pls`: Partial Least Squares and Principal Component Regression
-* `plotrix`: Various Plotting Functions
-* `randomForest`: Random Forests for Classification and Regression
-* `rms`: Regression Modeling Strategies
-* `rpart`: Recursive Partitioning and Regression Trees
-* `RWeka`: R/Weka Interface
-* `stats`: The R Stats Package
-* `strucchange`: Testing, Monitoring, and Dating Structural Changes
-* `survey`: Analysis of Complex Survey Samples
-* `survival`: Survival Analysis
-* `tree`: Classification and Regression Trees
-
-The aim is to continue adding interfaces to most methodologies
-  used in data science or other disciplines.
-
-Again, the important and sensitive work is performed by the functions provided
-in those well tested packages.
-
-`intubate` is simply a middleman that takes credit for other people's honest work.
 
 ### Interfaces "on demand"
 
