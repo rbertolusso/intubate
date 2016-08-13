@@ -19,6 +19,8 @@ is_intuBag(object)
 Roberto Bertolusso
 }
 \examples{
+library(intubate)
+
 ## None yet
 }
 \keyword{intubate}

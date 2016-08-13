@@ -23,6 +23,8 @@ Roberto Bertolusso
 }
 \examples{
 \dontrun{
+library(intubate)
+library(magrittr)
 library(e1071)
 
 ## Original function to interface
@@ -34,7 +36,6 @@ model <- ntbt_svm(iris, Species ~ .)
 summary(model)
 
 ## so it can be used easily in a pipeline.
-library(magrittr)
 iris \%>\%
   ntbt_svm(Species ~ .) \%>\%
   summary()

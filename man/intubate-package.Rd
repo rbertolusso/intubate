@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 233 interfaces for:
+  Currently, there are 238 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -30,6 +30,8 @@
   \code{graphics}: The R Graphics Package
 
   \code{Hmisc}: Harrell Miscellaneous
+
+  \code{ipred}: Improved Predictors
 
   \code{iRegression}: Regression Methods for Interval-Valued Variables
   
@@ -107,6 +109,9 @@ Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
 }
 \examples{
 \dontrun{
+library(intubate)
+library(magrittr)
+
 ######### Interface to lm #########
 ## Original function to interface
 lm(conc ~ uptake, CO2)
@@ -115,7 +120,6 @@ lm(conc ~ uptake, CO2)
 ntbt_lm(CO2, conc ~ uptake)
 
 ## so it can be used easily in a pipeline.
-library(magrittr)
 CO2 \%>\%
   ntbt_lm(conc ~ uptake)
 

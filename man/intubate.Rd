@@ -32,6 +32,8 @@ Roberto Bertolusso
 }
 \examples{
 \dontrun{
+library(intubate)
+
 ## NOTE: intubate implements an interface to
 ##       *xyplot* (in package lattice), called *ntbt_xyplot*.
 ##       For the sake of argument, let's suppose the

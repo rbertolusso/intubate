@@ -27,9 +27,9 @@ Roberto Bertolusso
 }
 \examples{
 \dontrun{
+library(intubate)
 library(magrittr)
 library(party)
-
 
 ## ntbt_cforest: Random Forest
 

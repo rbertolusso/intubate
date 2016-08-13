@@ -16,6 +16,7 @@
 ##                   "rcorrcens", "redun", "summary", "summaryD", "summaryM",
 ##                   "summaryP", "summaryRc", "summaryS", "transcan", "varclus",
 ##                   "xYplot")
+#importFrom("ipred", "bagging", "errorest", "inbagg", "inclass", "slda")
 #importFrom("iRegression", "bivar", "ccrm", "cm", "crm", "MinMax")
 #importFrom("kernlab", "gausspr", "kfa", "kha", "kkmeans", "kpca",
 ##                     "kqr", "ksvm", "lssvm", "rvm", "sigest",

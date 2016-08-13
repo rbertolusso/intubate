@@ -26,6 +26,7 @@ Roberto Bertolusso
 }
 \examples{
 \dontrun{
+library(intubate)
 library(gam)
 data(kyphosis)
 

@@ -63,6 +63,7 @@ Roberto Bertolusso
 }
 \examples{
 \dontrun{
+library(intubate)
 library(magrittr)
 library(Hmisc)
 

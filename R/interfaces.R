@@ -119,6 +119,13 @@ intubate <-
   
   ntbt_xYplot <-
   
+  ## ipred
+  ntbt_bagging <-
+  ntbt_errorest <-
+  ntbt_inbagg <-
+  ntbt_inclass <-
+  ntbt_slda <-
+  
   ## iRegression
   ntbt_bivar <-
   ntbt_ccrm <-
