@@ -1,6 +1,5 @@
 \name{mgcv}
 \alias{ntbt_bam}
-\alias{ntbt_gam}
 \alias{ntbt_gamm}
 \title{Interfaces for mgcv package for data science pipelines.}
 \description{
@@ -9,7 +8,6 @@
 }
 \usage{
 ntbt_bam(data, ...)
-ntbt_gam(data, ...)
 ntbt_gamm(data, ...)
 }
 \arguments{

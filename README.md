@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 266 interfaces that can be related to data science
+`intubate` currently implements 267 interfaces that can be related to data science
 methodologies and other disciplines.
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
@@ -175,6 +175,7 @@ The R packages that have interfaces implemented so far are:
 * `CORElearn`: Classification, Regression and Feature Evaluation
 * `e1071`: Support Vector Machines
 * `earth`: Multivariate Adaptive Regression Splines
+* `forecast`: Forecasting Functions for Time Series and Linear Models
 * `gam`: Generalized Additive Models
 * `gbm`: Generalized Boosted Regression Models
 * `graphics`: The R Graphics Package

@@ -82,6 +82,9 @@ intubate <-
   ## earth
   ntbt_earth <-
 
+  ## forecast
+  ntbt_tslm <-
+  
   ## gam
   ntbt_gam <-
   
@@ -231,15 +234,15 @@ intubate <-
   ntbt_polr <-
   ntbt_qda <-
   ntbt_rlm <-
+
+  ## mda
+  ntbt_fda <-
+  ntbt_mda <-
   
   ## mgcv
   ntbt_bam <-
   ntbt_gam <-
   ntbt_gamm <-
-
-  ## mda
-  ntbt_fda <-
-  ntbt_mda <-
   
   ## modeltools
   ntbt_ModelEnvFormula <-
