@@ -1,22 +1,37 @@
 \name{intubate}
 \alias{intubate}
 \alias{ntbt}
-\title{Interfaces "on demand" for data science pipelines.}
+\alias{ntbt_function_formula_data}
+\alias{ntbt_function_model_data}
+\alias{ntbt_function_object_data}
+\alias{ntbt_function_x_data}
+\title{1) Interfaces "on demand" and 2) calling of non-pipe-aware functions directly.}
 \description{
   \code{intubate} is a helper function used to implement "on demand" interfaces
   to functions you want to use in pipelines implemented by \code{magrittr}.
   Suppose intubate does not implement an interface to a fantasy function
-  (such as \code{fantasy(?, data, ...)}). In a vast
-  majority of cases, the only needed implementation to create such interface
-  is the line of code
-  \code{ntbt_fantasy <- intubate}, 
+  (such as \code{fantasy(formula, data, ...)}) that is non-pipe-aware (because
+  \code{data} is not its first parameter).
+  To create an interface
+  you only need the line of code  \code{ntbt_fantasy <- intubate}, 
   after which \code{ntbt_fantasy(data, ...)} can be used in a data
   science pipeline. See examples for details and discussion.
-  \code{ntbt} lets you interface the function directly without need of creating first
-  an interface.}
+  
+  \code{ntbt} lets you interface the non-pipe-aware function directly
+  without creating an interface.}
 \usage{
+## Helper function to define interfaces
 intubate(data, ...)
+
+## Function to call non-pipe-aware functions directly
 ntbt(data, fti, ...)
+
+## Deprecated helper functions
+## (for compatibility with 0.99.2. Will be removed at some point)
+ntbt_function_formula_data(data, ...)
+ntbt_function_model_data(data, ...)
+ntbt_function_object_data(data, ...)
+ntbt_function_x_data(data, ...)
 }
 \arguments{
   \item{data}{data frame, tibble, list, ...}
@@ -58,14 +73,13 @@ geterrmessage()
 
 ## The error disappears if you create an interface to *xyplot*.
 
-## Steps that are needed to create an interface to *xyplot*.
+## Step needed to create an interface to *xyplot*.
 
 ntbt_xyplot <- intubate
 
 ## NOTE: names of interfaces must start with
 ##       *ntbt_* followed by the name of the function
 ##       (*xyplot* in this case) you want to interface.
-
 
 ## Now you can use the interface instead of the original
 ## function. Just remember to switch the order of
@@ -75,14 +89,14 @@ ntbt_xyplot(iris,
             scales = "free", layout = c(2, 2),
             auto.key = list(x = .6, y = .7, corner = c(0, 0)))
 
-## The newly created interface can be used easily in a pipeline
-## without having to name the parameter assigned to formula.
+## The newly created interface can be used easily in a pipeline.
 library(magrittr)
 iris \%>\%
   ntbt_xyplot(Sepal.Length + Sepal.Width ~ Petal.Length + Petal.Width | Species,
               scales = "free", layout = c(2, 2),
               auto.key = list(x = .6, y = .7, corner = c(0, 0)))
 
+## Alternative: call non-pipe-aware function directly.
 ## You can also avoid creating an interface, by calling ntbt with the name of
 ## the function to interface.
 ntbt(iris, xyplot,
@@ -99,4 +113,4 @@ iris \%>\%
 }
 \keyword{intubate}
 \keyword{magrittr}
-\keyword{ntbt_function_data}
+\keyword{ntbt}

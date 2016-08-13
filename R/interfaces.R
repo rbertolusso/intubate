@@ -16,7 +16,16 @@
 ## along with intubate. If not, see <http://www.gnu.org/licenses/>.
 
 ## External functions
+
+## Helper function to define interfaces
 intubate <-
+  
+  ## Deprecated helper functions
+  ## (for compatibility with 0.99.2. Will be removed at some point)
+  ntbt_function_formula_data <-
+  ntbt_function_model_data <-
+  ntbt_function_object_data <-
+  ntbt_function_x_data <-
   
   ## Interface functions
   
