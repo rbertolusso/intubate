@@ -232,6 +232,11 @@ intubate <-
   ntbt_qda <-
   ntbt_rlm <-
   
+  ## mgcv
+  ntbt_bam <-
+  ntbt_gam <-
+  ntbt_gamm <-
+
   ## mda
   ntbt_fda <-
   ntbt_mda <-

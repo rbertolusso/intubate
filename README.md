@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 263 interfaces that can be related to data science
+`intubate` currently implements 266 interfaces that can be related to data science
 methodologies and other disciplines.
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
@@ -190,6 +190,7 @@ The R packages that have interfaces implemented so far are:
 * `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
 * `mda`: Mixture and Flexible Discriminant Analysis
+* `mgcv`: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation
 * `modeltools`: Tools and Classes for Statistical Models
 * `nlme`: Linear and Nonlinear Mixed Effects Models
 * `nnet`: Feed-Forward Neural Networks and Multinomial Log-Linear Models

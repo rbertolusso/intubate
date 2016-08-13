@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 263 interfaces for:
+  Currently, there are 266 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -55,6 +55,8 @@
                Probit Regression, ...
                
   \code{mda}: Mixture and Flexible Discriminant Analysis
+
+  \code{mgcv}: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation
 
   \code{modeltools}: Tools and Classes for Statistical Models
   
