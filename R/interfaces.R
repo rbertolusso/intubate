@@ -243,6 +243,35 @@ intubate <-
   ## rpart
   ntbt_rpart <-
   
+  #RWeka
+  ntbt_AdaBoostM1 <-
+  ntbt_Bagging <-
+  ntbt_CostSensitiveClassifier <-
+  ntbt_DecisionStump <-
+  ntbt_Discretize <-
+  
+  ntbt_GainRatioAttributeEval <-
+  ntbt_IBk <-
+  ntbt_InfoGainAttributeEval <-
+  ntbt_J48 <-
+  ntbt_JRip <-
+  
+  ntbt_LBR <-
+  ntbt_LogitBoost <-
+  ntbt_LinearRegression <-
+  ntbt_LMT <-
+  ntbt_Logistic <-
+  
+  ntbt_M5P <-
+  ntbt_M5Rules <-
+  ntbt_MultiBoostAB <-
+  ntbt_Normalize <-
+  ntbt_OneR <-
+  
+  ntbt_PART <-
+  ntbt_SMO <-
+  ntbt_Stacking <- 
+  
   ## stats
   ntbt_aggregate <-
   ntbt_alias <-

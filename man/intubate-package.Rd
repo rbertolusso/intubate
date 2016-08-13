@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 210 interfaces for:
+  Currently, there are 233 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -61,6 +61,8 @@
   \code{rms}: Regression Modeling Strategies
   
   \code{rpart}: Recursive Partitioning and Regression Trees
+  
+  \code{RWeka}: R/Weka Interface
   
   \code{stats}: The R Stats Package
   

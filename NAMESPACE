@@ -38,6 +38,11 @@
 #importFrom("rms", "bj", "cph", "Glm", "lrm", "npsurv",
 #                  "ols", "orm", "psm")
 #importFrom("rpart", "rpart")
+#importFrom("RWeka", "AdaBoostM1", "Bagging", "CostSensitiveClassifier", "DecisionStump", "Discretize",
+#           "GainRatioAttributeEval", "IBk", "InfoGainAttributeEval", "J48", "JRip",
+#           "LBR", "LogitBoost", "LinearRegression", "LMT", "Logistic",
+#           "M5P", "M5Rules", "MultiBoostAB", "Normalize", "OneR",
+#           "PART", "SMO", "Stacking")
 #import("stats")
 importFrom("stats", "as.formula")
 #importFrom("strucchange", "breakpoints", "efp", "Fstats", "mefp", "recresid",
