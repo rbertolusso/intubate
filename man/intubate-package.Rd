@@ -15,13 +15,15 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 238 interfaces for:
+  Currently, there are 239 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
   \code{coin}: Conditional Inference Procedures in a Permutation Test Framework
   
   \code{e1071}: Support Vector Machines
+
+  \code{earth}: Multivariate Adaptive Regression Splines
 
   \code{gam}: Generalized Additive Models
   

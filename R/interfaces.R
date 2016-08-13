@@ -73,6 +73,9 @@ intubate <-
   ## e1071
   ntbt_svm <-
   
+  ## earth
+  ntbt_earth <-
+
   ## gam
   ntbt_gam <-
   
