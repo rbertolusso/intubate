@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 251 interfaces for:
+  Currently, there are 263 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -48,6 +48,8 @@
   \code{leaps}: Regression Subset Selection
   
   \code{lfe}: Linear Group Fixed Effects
+
+  \code{lmtest}: Testing Linear Regression Models
 
   \code{MASS}: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
@@ -89,7 +91,7 @@
   The aim is to provide interfaces to most methodologies
   used in data science.
   
-  \code{intubate} itself only needs the \code{base} library.
+  \code{intubate} core depends only on \code{base} and \code{stats} libraries.
   To keep it as lean as possible, \code{intubate} will not
   install not load any library. You need to make sure that the
   library containing the functions to be interfaced are loaded

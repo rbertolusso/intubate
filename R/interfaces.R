@@ -203,6 +203,22 @@ intubate <-
   ## lfe
   ntbt_felm <-
   
+  ## lmtest
+  ntbt_bgtest <-
+  ntbt_bptest <-
+  ntbt_coxtest <-
+  ntbt_dwtest <-
+  ntbt_encomptest <-
+  
+  ntbt_gqtest <-
+  ntbt_grangertest <-
+  ntbt_harvtest <-
+  ntbt_hmctest <-
+  ntbt_jtest <-
+  
+  ntbt_raintest <-
+  ntbt_resettest <-
+
   ## MASS
   ntbt_corresp <-
   ntbt_glm.nb <-

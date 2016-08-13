@@ -63,12 +63,11 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 251 interfaces that can be related to data science
-methodologies and other disciplines. The important and sensitive work is performed by the interfaced functions provided in the packages (listed below).
-`intubate` is simply a middleman that takes credit for other people's honest work.
+`intubate` currently implements 263 interfaces that can be related to data science
+methodologies and other disciplines.
 
-`intubate` depends only on `base` library, so its implementation is very lean.
-To be able to continue to include more interfaces without bloating your machine, 
+`intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
+possible, and to be able to continue to include more interfaces without bloating your machine, 
 starting from version 0.99.3 `intubate` **will not** install the packages
 that contain the functions that are interfaced. *You will need to install them yourself*,
 and load the corresponding libraries before using them in your pipelines. This
@@ -187,6 +186,7 @@ The R packages that have interfaces implemented so far are:
 * `lattice`: Trellis Graphics for R
 * `leaps`: Regression Subset Selection
 * `lfe`: Linear Group Fixed Effects
+* `lmtest`: Testing Linear Regression Models
 * `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
 * `mda`: Mixture and Flexible Discriminant Analysis

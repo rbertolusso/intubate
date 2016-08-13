@@ -28,7 +28,9 @@
 #                   "rda", "sknn", "stepclass", "woe")
 #import("lattice")
 #importFrom("leaps", "regsubsets")
-#importFrom("lfe", "felm")
+#importFrom("lmtest", "bgtest", "bptest", "coxtest", "dwtest", "encomptest",
+#           "gqtest", "grangertest", "harvtest", "hmctest", "jtest",
+#           "raintest", "resettest")
 #import("magrittr")
 #importFrom("MASS", "corresp", "glm.nb", "lda", "lm.gls", "lm.ridge",
 #                   "loglm", "logtrans", "lqs", "polr", "qda", "rlm")
