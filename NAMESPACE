@@ -20,6 +20,9 @@
 #importFrom("kernlab", "gausspr", "kfa", "kha", "kkmeans", "kpca",
 ##                     "kqr", "ksvm", "lssvm", "rvm", "sigest",
 ##                     "specc")
+#importFrom("klaR", "classscatter", "cond.index", "greedy.wilks", "loclda", "meclight",
+#                   "NaiveBayes", "nm", "partimat", "plineplot", "pvs",
+#                   "rda", "sknn", "stepclass", "woe")
 #import("lattice")
 #importFrom("leaps", "regsubsets")
 #importFrom("lfe", "felm")

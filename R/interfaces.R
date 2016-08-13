@@ -126,6 +126,24 @@ intubate <-
   ntbt_crm <-
   ntbt_MinMax <-
   
+  ## klaR
+  ntbt_classscatter <-
+  ntbt_cond.index <-
+  ntbt_greedy.wilks <-
+  ntbt_loclda <-
+  ntbt_meclight <-
+  
+  ntbt_NaiveBayes <-
+  ntbt_nm <-
+  ntbt_partimat <-
+  ntbt_plineplot <-
+  ntbt_pvs <-
+  
+  ntbt_rda <-
+  ntbt_sknn <-
+  ntbt_stepclass <-
+  ntbt_woe <-
+
   ## kernlab
   ntbt_gausspr <-
   ntbt_kfa <-

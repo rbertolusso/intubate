@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 196 interfaces for:
+  Currently, there are 210 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -34,6 +34,8 @@
   \code{iRegression}: Regression Methods for Interval-Valued Variables
   
   \code{kernlab}: Kernel-Based Machine Learning Lab
+
+  \code{klaR}: Classification and Visualization
 
   \code{lattice}: Trellis Graphics for R
   

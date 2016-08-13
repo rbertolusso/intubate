@@ -680,7 +680,7 @@ Just in case, worry not! The *interfaces* do not perform any statistical computa
 (those that are already well tested, or should be) are the ones performing the computations.
 
 ### Interfaced libraries
-`intubate` currently implements 196 interfaces that can be related to data science
+`intubate` currently implements 210 interfaces that can be related to data science
 methodologies and other disciplines.
 
 I make no personal judgement about the merit of any interfaced function.
@@ -709,6 +709,7 @@ The R packages that have interfaces implemented so far are:
 * `Hmisc`: Harrell Miscellaneous
 * `iRegression`: Regression Methods for Interval-Valued Variables
 * `kernlab`: Kernel-Based Machine Learning Lab
+* `klaR`: Classification and Visualization
 * `lattice`: Trellis Graphics for R
 * `leaps`: Regression Subset Selection
 * `lfe`: Linear Group Fixed Effects
