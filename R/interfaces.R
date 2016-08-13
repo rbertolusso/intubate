@@ -216,6 +216,10 @@ intubate <-
   ntbt_qda <-
   ntbt_rlm <-
   
+  ## mda
+  ntbt_fda <-
+  ntbt_mda <-
+  
   ## modeltools
   ntbt_ModelEnvFormula <-
   ntbt_ParseFormula <- 
