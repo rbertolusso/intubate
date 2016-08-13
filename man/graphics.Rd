@@ -39,9 +39,6 @@ ntbt_text(data, ...)
 \author{
 Roberto Bertolusso
 }
-\seealso{
-  \code{\link{boxplot}}
-}
 \examples{
 \dontrun{
 library(intubate)

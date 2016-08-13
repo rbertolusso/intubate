@@ -47,6 +47,7 @@
 #importFrom("randomForest", "randomForest")
 #importFrom("rms", "bj", "cph", "Glm", "lrm", "npsurv",
 #                  "ols", "orm", "psm")
+#importFrom("robustbase", "adjbox", "glmrob", "lmrob", "ltsReg", "nlrob")
 #importFrom("rpart", "rpart")
 #importFrom("RWeka", "AdaBoostM1", "Bagging", "CostSensitiveClassifier", "DecisionStump", "Discretize",
 #           "GainRatioAttributeEval", "IBk", "InfoGainAttributeEval", "J48", "JRip",

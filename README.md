@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 273 interfaces that can be related to data science
+`intubate` currently implements 278 interfaces that can be related to data science
 methodologies and other disciplines.
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
@@ -201,6 +201,7 @@ The R packages that have interfaces implemented so far are:
 * `quantreg`: Quantile Regression
 * `randomForest`: Random Forests for Classification and Regression
 * `rms`: Regression Modeling Strategies
+* `robustbase`: Basic Robust Statistics
 * `rpart`: Recursive Partitioning and Regression Trees
 * `RWeka`: R/Weka Interface
 * `stats`: The R Stats Package (glm, lm, loess, lqs, nls, ...)

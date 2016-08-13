@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 273 interfaces for:
+  Currently, there are 278 interfaces for:
   
   \code{caret}: Classification and Regression Training
   
@@ -77,6 +77,8 @@
   \code{randomForest}: Random Forests for Classification and Regression
   
   \code{rms}: Regression Modeling Strategies
+  
+  \code{robustbase}: Basic Robust Statistics
   
   \code{rpart}: Recursive Partitioning and Regression Trees
   

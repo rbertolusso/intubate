@@ -10,7 +10,6 @@ Description:
   can be included painlessly in data science pipelines implemented by 'magrittr'
   with the operator %>%.
 License: GPL (>=2)
-Imports:
-Suggests: knitr,
-    rmarkdown
+ByteCompile: no
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr

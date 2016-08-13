@@ -299,6 +299,13 @@ intubate <-
   ntbt_ols <-
   ntbt_orm <-
   ntbt_psm <-
+  
+  ## robustbase
+  ntbt_adjbox <-
+  ntbt_glmrob <-
+  ntbt_lmrob <-
+  ntbt_ltsReg <-
+  ntbt_nlrob <-
 
   ## rpart
   ntbt_rpart <-
