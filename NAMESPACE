@@ -7,6 +7,7 @@
 #                   "mh_test", "mood_test", "normal_test", "oneway_test", "quade_test",
 #                   "quadrant_test", "sign_test", "symmetry_test", "taha_test", "savage_test",
 #                   "spearman_test", "wilcox_test", "wilcoxsign_test")
+#importFrom("CORElearn", "attrEval", "CoreModel", "discretize", "ordEval")
 #importFrom("e1071", "svm")
 #importFrom("earth", "earth")
 #importFrom("gam", "gam")

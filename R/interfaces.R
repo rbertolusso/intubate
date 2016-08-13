@@ -68,7 +68,13 @@ intubate <-
   
   ntbt_spearman_test <-
   ntbt_wilcox_test <-
-  ntbt_wilcoxsign_test <- 
+  ntbt_wilcoxsign_test <-
+  
+  ## CORElearn
+  ntbt_attrEval <-
+  ntbt_CoreModel <-
+  ntbt_discretize <-
+  ntbt_ordEval <-
   
   ## e1071
   ntbt_svm <-
