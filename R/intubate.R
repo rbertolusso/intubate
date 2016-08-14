@@ -346,9 +346,10 @@ process_formula_case <- function(Call, use_envir, data) {
   ## working with local variables. It would be better if the authors of EnvStats
   ## improve the data management.
   ## Remove "data" (now at the end of Call) then call.
-  print(Call[-length(Call)])
+  Call <- Call[-length(Call)]
+  ## print(Call)
   attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
-  result <- try(eval(Call[-length(Call)]), silent = TRUE)  ## Use try as we use attach()
+  result <- try(eval(Call), silent = TRUE)  ## Use try as we use attach()
   detach()
   if (class(result)[[1]] == "try-error")
     stop(result)          ## We have run out of sorts... Admit defeat.
