@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 311 interfaces for:
+  Currently, there are 313 interfaces for:
   
   \code{ape}: Analyses of Phylogenetics and Evolution
 
@@ -40,6 +40,8 @@
   \code{gam}: Generalized Additive Models
   
   \code{gbm}: Generalized Boosted Regression Models
+  
+  \code{glmx}: Generalized Linear Models Extended
   
   \code{graphics}: The R Graphics Package
 

@@ -134,6 +134,10 @@ intubate <-
   ## gam
   ntbt_gam <-
   
+  ## glmx
+  ntbt_glmx <-
+  ntbt_hetglm <-
+
   ## gbm
   ntbt_gbm <-
   

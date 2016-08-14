@@ -17,6 +17,7 @@
 #                       "stripChart", "summaryFull", "summaryStats", "varGroupTest")
 #importFrom("gam", "gam")
 #importFrom("gbm", "gbm")
+#importFrom("glmx", "glmx", "hetglm")
 #import("graphics")
 #importFrom("Hmisc", "areg.boot", "aregImpute", "biVar", "bpplotM", "dataRep",
 ##                   "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
@@ -72,4 +73,4 @@ importFrom("stats", "as.formula")
 #                       "survfit", "survSplit")
 #importFrom("SwarmSVM", "alphasvm")
 #importFrom("tree", "tree")
-exportPattern("intubate|ntbt|intuBag|is_intuBag|^ntbt_[[:alpha:]]+")
+exportPattern("intubate.*|ntbt|intuBag|is_intuBag|^ntbt_[[:alpha:]]+")
