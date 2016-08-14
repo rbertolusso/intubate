@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 310 interfaces for:
+  Currently, there are 311 interfaces for:
   
   \code{ape}: Analyses of Phylogenetics and Evolution
 
@@ -87,6 +87,8 @@
   \code{quantreg}: Quantile Regression
 
   \code{randomForest}: Random Forests for Classification and Regression
+  
+  \code{Rchoice}: Discrete Choice (Binary, Poisson and Ordered) Models with Random Parameters
 
   \code{rminer}: Data Mining Classification and Regression Methods 
   

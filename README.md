@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 310 interfaces that can be related to data science
+`intubate` currently implements 311 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -222,6 +222,7 @@ The R packages that have interfaces implemented so far are:
 * `pscl`: Political Science Computational Laboratory, Stanford University
 * `quantreg`: Quantile Regression
 * `randomForest`: Random Forests for Classification and Regression
+* `Rchoice`: Discrete Choice (Binary, Poisson and Ordered) Models with Random Parameters
 * `rminer`: Data Mining Classification and Regression Methods 
 * `rms`: Regression Modeling Strategies
 * `robustbase`: Basic Robust Statistics

@@ -342,6 +342,9 @@ intubate <-
   
   ## randomForest
   ntbt_randomForest <-
+  
+  ## Rchoice
+  ntbt_Rchoice <-
 
   ## rminer
   ntbt_fit <-
