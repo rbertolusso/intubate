@@ -449,9 +449,9 @@ get_calling_name <- function(prefix, full_name) {
 }
 
 
-intubate_interfaces <- function() {
-  ls("package:intubate")
-  unlockBinding("intuBag", as.environment("package:intubate"))
-  rm(intuBag, envir = as.environment("package:intubate"))
-  ls("package:intubate")
-}
+#intubate_interfaces <- function() {
+#  ls("package:intubate")
+#  unlockBinding("intuBag", as.environment("package:intubate"))
+#  rm(intuBag, envir = as.environment("package:intubate"))
+#  ls("package:intubate")
+#}

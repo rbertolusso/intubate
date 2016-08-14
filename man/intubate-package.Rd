@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 313 interfaces for:
+  Currently, there are 327 interfaces for:
   
   \code{ape}: Analyses of Phylogenetics and Evolution
 
@@ -41,8 +41,7 @@
   
   \code{gbm}: Generalized Boosted Regression Models
   
-  \code{glmx}: Generalized Linear Models Extended
-  
+(data, ...)  
   \code{graphics}: The R Graphics Package
 
   \code{Hmisc}: Harrell Miscellaneous
@@ -113,6 +112,8 @@
   \code{SwarmSVM}: Ensemble Learning Algorithms Based on Support Vector Machines
   
   \code{tree}: Classification and Regression Trees
+  
+  \code{vegan}: Community Ecology Package
   
   The aim is to provide interfaces to most methodologies
   used in data science.

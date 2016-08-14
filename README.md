@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 313 interfaces that can be related to data science
+`intubate` currently implements 327 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -77,12 +77,13 @@ also applies to `magrittr` (in case you want to use `intubate` without pipelines
 Then, if you are only interested in a given field, say:
 bio-statistics,
 bio-informatics,
-ecology and environment,
+environmetrics,
 econometrics,
 finance,
 machine learning,
 meta-analysis,
 phylogenetics,
+psychometrics, 
 ..., you will not have to install *all* the packages for which interfaces are provided
 if you intend to use only a subset of them. You only need to install
 the subset of packages you intend to use (which are probably already installed).
@@ -235,6 +236,7 @@ The R packages that have interfaces implemented so far are:
 * `survival`: Survival Analysis
 * `SwarmSVM`: Ensemble Learning Algorithms Based on Support Vector Machines
 * `tree`: Classification and Regression Trees
+* `vegan`: Community Ecology Package
 
 The aim is to continue adding interfaces to most methodologies
   used in data science or other disciplines.

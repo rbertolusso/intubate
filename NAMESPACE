@@ -73,4 +73,7 @@ importFrom("stats", "as.formula")
 #                       "survfit", "survSplit")
 #importFrom("SwarmSVM", "alphasvm")
 #importFrom("tree", "tree")
+#importFrom("vegan", "adipart", "adonis", "adonis2", "bioenv", "capscale",
+#                    "cca", "dbrda", "envfit", "gdispweight", "multipart",
+#                    "ordicloud", "ordisplom", "ordisurf", "ordixyplot")
 exportPattern("intubate.*|ntbt|intuBag|is_intuBag|^ntbt_[[:alpha:]]+")

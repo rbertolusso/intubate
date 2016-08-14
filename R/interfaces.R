@@ -477,6 +477,24 @@ intubate <-
   ## tree
   ntbt_tree <-
   
+  ## vegan
+  ntbt_adipart <-
+  ntbt_adonis <-
+  ntbt_adonis2 <-
+  ntbt_bioenv <-
+  ntbt_capscale <-
+  
+  ntbt_cca <-
+  ntbt_dbrda <-
+  ntbt_envfit <-
+  ntbt_gdispweight <-
+  ntbt_multipart <-
+  
+  ntbt_ordicloud <-
+  ntbt_ordisplom <-
+  ntbt_ordisurf <-
+  ntbt_ordixyplot <-
+
   ## (external)
   ## intubate function
   function(data, ...) {
