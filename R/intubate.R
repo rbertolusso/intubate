@@ -295,46 +295,39 @@ process_formula_case <- function(Call, use_envir, data) {
         print(Call)
         result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
         if (class(result)[[1]] == "try-error") {
-          ## Try attaching data and call, It will fail if there is a . in the formula,
-          ## but at this point there is no much else to do.
-          ## This is needed to accomodate at least calibrate() in EnvStats,
-          ## that seem to not accept "." as name of data when called in a pipeline
-          ## (the interface called directly with the name of the data works fine).
-          ## So let's make it believe we are just in the global environment working
-          ## with variables defined there. It would be better if the authors of EnvStats
-          ## improve the data management.
-          
-          ## Remove "data" (now in [-3]) then call.
-          attach(data)
-          result <- try(eval(Call[-3]), silent = TRUE)
-          detach()
-          if (class(result)[[1]] == "try-error" && length(Call) == 3)
-            stop(result)
-          
-          ## Let's have "data" take a walk until it finds its place in the world,
-          ## as functions are supposed to check if unnamed parameters are sent
-          ## in the right order (you hope, at least).
           signal_error <- TRUE
-          for (par in 4:length(names(Call))) {
-            Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
-            names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
-            print(Call)
-            result <- try(eval(Call, envir = use_envir),    ## See if it flies
-                          silent = TRUE)
-            if (class(result)[[1]] != "try-error") {       ## Did. We are done
-              signal_error <- FALSE
-              break
+          if (length(Call) > 3) { ## Maybe data is still far right
+            ## Let's have "data" take a walk until it finds its place in the world,
+            ## as functions are supposed to check if unnamed parameters are sent
+            ## in the right order (you hope, at least).
+            for (par in 4:length(names(Call))) {
+              Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
+              names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
+              print(Call)
+              result <- try(eval(Call, envir = use_envir),    ## See if it flies
+                            silent = TRUE)
+              if (class(result)[[1]] != "try-error") {       ## Did. We are done
+                signal_error <- FALSE
+                break
+              }
             }
           }
           if (signal_error) {          ## Parameters exhausted and still error
-            print(Call)                ## Show call of last attempt
-            stop(result)               ## Give up
+            ## Try attaching data and call, It will fail if there is a . in the formula,
+            ## but at this point there is no much else to do.
+            ## This is needed to accomodate at least calibrate() in EnvStats,
+            ## that seem to not accept "." as name of data when called in a pipeline
+            ## (the interface called directly with the name of the data works fine).
+            ## So let's make it believe we are just in some sort of "global environment"
+            ## working with local variables. It would be better if the authors of EnvStats
+            ## improve the data management.
+            ## Remove "data" (now in [-3]) then call.
+            attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
+            result <- try(eval(Call[-3]), silent = TRUE)
+            detach()
+            if (class(result)[[1]] == "try-error")
+              stop(result)          ## We run out of sorts... Admit defeat.
           }
-          ## Maybe data is in position 3
-#          Call[3:4] <- Call[4:3]                   ## Switch parameters
-#          names(Call)[3:4] <- names(Call)[4:3]     ## Switch names
-#          print(Call)
-#          result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
         }
       }
     }
