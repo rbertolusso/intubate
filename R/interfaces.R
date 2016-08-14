@@ -313,6 +313,10 @@ intubate <-
   ## randomForest
   ntbt_randomForest <-
 
+  ## rminer
+  ntbt_fit <-
+  ntbt_mining <-
+  
   ## rms  
   ntbt_bj <-
   ntbt_cph <-

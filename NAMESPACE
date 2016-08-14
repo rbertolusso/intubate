@@ -48,6 +48,7 @@
 #importFrom("quantreg", "dynrq", "KhmaladzeTest", "nlrq", "rq", "rqProcess",
 #                       "rqss")
 #importFrom("randomForest", "randomForest")
+#importFrom("rminer", "fit", "mining")
 #importFrom("rms", "bj", "cph", "Glm", "lrm", "npsurv",
 #                  "ols", "orm", "psm")
 #importFrom("robustbase", "adjbox", "glmrob", "lmrob", "ltsReg", "nlrob")

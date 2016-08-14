@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 289 interfaces for:
+  Currently, there are 291 interfaces for:
   
   \code{car}: Companion to Applied Regression
 
@@ -77,6 +77,8 @@
   \code{quantreg}: Quantile Regression
 
   \code{randomForest}: Random Forests for Classification and Regression
+
+  \code{rminer}: Data Mining Classification and Regression Methods 
   
   \code{rms}: Regression Modeling Strategies
   
