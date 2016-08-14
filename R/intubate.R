@@ -82,7 +82,7 @@ process_call <- function(data, preCall, Call, use_envir) {
     if (io$is_intuBag)
       Call[[2]] <- as.name(io$input[1])
     #print(Call)
-    ret <- process_formula_case(Call, use_envir)      
+    ret <- process_formula_case(Call, use_envir, data)      
     result <- ret$result
     result_visible <- ret$result_visible
     Call <- ret$Call
@@ -100,7 +100,7 @@ process_call <- function(data, preCall, Call, use_envir) {
       result <- try(eval(Call), silent = TRUE) ## For subset() and such, that already are
                                                ## pipe aware.
       if (class(result)[[1]] == "try-error") {
-        ret <- process_formula_case(Call, use_envir) ## Try formula (formula could be
+        ret <- process_formula_case(Call, use_envir, data) ## Try formula (formula could be
                                                      ## result of a function call)
         result <- ret$result
         result_visible <- ret$result_visible
@@ -271,7 +271,7 @@ function(object_functions, where, object) {
 ## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
 ## not clue how to implement), for *all* the formulas that have a ".", so maybe
 ## the end result will be even more involved and this is as good as we can do.
-process_formula_case <- function(Call, use_envir) {
+process_formula_case <- function(Call, use_envir, data) {
   ## cat("process_formula_case\n")
   pos <- which(sapply(charCall <- as.character(Call), function(par) {
     gsub(".*(#).*", "\\1", par) == "#"
@@ -283,21 +283,58 @@ process_formula_case <- function(Call, use_envir) {
     Call <- Call[-2]
     result <- try(eval(Call), silent = TRUE)
   } else {
+    print(Call)
     result <- try(eval(Call, envir = use_envir), silent = TRUE) ## Try as it is (data is named)
     if (class(result)[[1]] == "try-error") {
       Call[2:3] <- Call[3:2]                       ## Switch parameters
       names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
-      ## print(Call)
+      print(Call)
       result <- try(eval(Call, envir = use_envir), silent = TRUE)
       if (class(result)[[1]] == "try-error") {     ## Maybe data has other name
         names(Call)[[3]] <- ""                     ## Leave data unnamed
-        ## print(Call)
+        print(Call)
         result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
-        if (class(result)[[1]] == "try-error") {   ## Maybe data is in position 3
-          Call[3:4] <- Call[4:3]                   ## Switch parameters
-          names(Call)[3:4] <- names(Call)[4:3]     ## Switch names
-          ## print(Call)
-          result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
+        if (class(result)[[1]] == "try-error") {
+          ## Try attaching data and call, It will fail if there is a . in the formula,
+          ## but at this point there is no much else to do.
+          ## This is needed to accomodate at least calibrate() in EnvStats,
+          ## that seem to not accept "." as name of data when called in a pipeline
+          ## (the interface called directly with the name of the data works fine).
+          ## So let's make it believe we are just in the global environment working
+          ## with variables defined there. It would be better if the authors of EnvStats
+          ## improve the data management.
+          
+          ## Remove "data" (now in [-3]) then call.
+          attach(data)
+          result <- try(eval(Call[-3]), silent = TRUE)
+          detach()
+          if (class(result)[[1]] == "try-error" && length(Call) == 3)
+            stop(result)
+          
+          ## Let's have "data" take a walk until it finds its place in the world,
+          ## as functions are supposed to check if unnamed parameters are sent
+          ## in the right order (you hope, at least).
+          signal_error <- TRUE
+          for (par in 4:length(names(Call))) {
+            Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
+            names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
+            print(Call)
+            result <- try(eval(Call, envir = use_envir),    ## See if it flies
+                          silent = TRUE)
+            if (class(result)[[1]] != "try-error") {       ## Did. We are done
+              signal_error <- FALSE
+              break
+            }
+          }
+          if (signal_error) {          ## Parameters exhausted and still error
+            print(Call)                ## Show call of last attempt
+            stop(result)               ## Give up
+          }
+          ## Maybe data is in position 3
+#          Call[3:4] <- Call[4:3]                   ## Switch parameters
+#          names(Call)[3:4] <- names(Call)[4:3]     ## Switch names
+#          print(Call)
+#          result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
         }
       }
     }
