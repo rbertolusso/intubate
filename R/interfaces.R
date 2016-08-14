@@ -110,6 +110,9 @@ intubate <-
   ntbt_discretize <-
   ntbt_ordEval <-
   
+  ## drc
+  ntbt_drm <-
+
   ## e1071
   ntbt_svm <-
   
@@ -469,6 +472,7 @@ intubate <-
   ntbt_survexp <-
   
   ntbt_survfit <-
+  ntbt_survreg <-
   ntbt_survSplit <-
   
   ## SwarmSVM

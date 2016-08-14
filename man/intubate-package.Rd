@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 327 interfaces for:
+  Currently, there are 329 interfaces for:
   
   \code{ape}: Analyses of Phylogenetics and Evolution
 
@@ -28,6 +28,8 @@
   \code{coin}: Conditional Inference Procedures in a Permutation Test Framework
   
   \code{CORElearn}: Classification, Regression and Feature Evaluation
+  
+  \code{drc}: Analysis of Dose-Response Curves
 
   \code{e1071}: Support Vector Machines
 
@@ -41,7 +43,6 @@
   
   \code{gbm}: Generalized Boosted Regression Models
   
-(data, ...)  
   \code{graphics}: The R Graphics Package
 
   \code{Hmisc}: Harrell Miscellaneous

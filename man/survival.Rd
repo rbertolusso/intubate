@@ -5,6 +5,7 @@
 \alias{ntbt_survConcordance}
 \alias{ntbt_survexp}
 \alias{ntbt_survfit}
+\alias{ntbt_survreg}
 \alias{ntbt_survSplit}
 \title{Interfaces to survival package for data science pipelines.}
 \description{
@@ -18,6 +19,7 @@ ntbt_pyears(data, ...)
 ntbt_survConcordance(data, ...)
 ntbt_survexp(data, ...)
 ntbt_survfit(data, ...)
+ntbt_survreg(data, ...)
 ntbt_survSplit(data, ...)
 }
 \arguments{
@@ -152,6 +154,18 @@ aml \%>\%
   ntbt_survfit(Surv(time, status) ~ x) \%>\%
   plot(lty = 2:3)
 
+
+## survreg
+## Original function to interface
+survreg(Surv(time, status) ~ ph.ecog + age + strata(sex), lung)
+
+## The interface reverses the order of data and formula
+ntbt_survreg(lung, Surv(time, status) ~ ph.ecog + age + strata(sex))
+
+## so it can be used easily in a pipeline.
+lung \%>\%
+  ntbt_survreg(Surv(time, status) ~ ph.ecog + age + strata(sex))
+
 ## survSplit
 ## Original function to interface
 vet2 <- survSplit(Surv(time, status) ~., veteran,
@@ -177,3 +191,11 @@ veteran \%>\%
 \keyword{intubate}
 \keyword{magrittr}
 \keyword{survival}
+\keyword{cch}
+\keyword{coxph}
+\keyword{pyears}
+\keyword{survConcordance}
+\keyword{survexp}
+\keyword{survfit}
+\keyword{survreg}
+\keyword{survSplit}

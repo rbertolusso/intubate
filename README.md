@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 327 interfaces that can be related to data science
+`intubate` currently implements 329 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -82,8 +82,10 @@ econometrics,
 finance,
 machine learning,
 meta-analysis,
+pharmacokinetics,
 phylogenetics,
-psychometrics, 
+psychometrics,
+surveys,
 ..., you will not have to install *all* the packages for which interfaces are provided
 if you intend to use only a subset of them. You only need to install
 the subset of packages you intend to use (which are probably already installed).
@@ -193,6 +195,7 @@ The R packages that have interfaces implemented so far are:
 * `caret`: Classification and Regression Training
 * `coin`: Conditional Inference Procedures in a Permutation Test Framework
 * `CORElearn`: Classification, Regression and Feature Evaluation
+* `drc`: Analysis of Dose-Response Curves
 * `e1071`: Support Vector Machines
 * `earth`: Multivariate Adaptive Regression Splines
 * `EnvStats`: Environmental Statistics, Including US EPA Guidance
