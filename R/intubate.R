@@ -281,57 +281,78 @@ process_formula_case <- function(Call, use_envir, data) {
     .res_expr. <- eval(parse(text = to_parse), envir = use_envir)
     Call[[pos]] <- as.name(".res_expr.")
     Call <- Call[-2]
-    result <- try(eval(Call), silent = TRUE)
-  } else {
-    print(Call)
-    result <- try(eval(Call, envir = use_envir), silent = TRUE) ## Try as it is (data is named)
-    if (class(result)[[1]] == "try-error") {
-      Call[2:3] <- Call[3:2]                       ## Switch parameters
-      names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
-      print(Call)
-      result <- try(eval(Call, envir = use_envir), silent = TRUE)
-      if (class(result)[[1]] == "try-error") {     ## Maybe data has other name
-        names(Call)[[3]] <- ""                     ## Leave data unnamed
-        print(Call)
-        result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
-        if (class(result)[[1]] == "try-error") {
-          signal_error <- TRUE
-          if (length(Call) > 3) { ## Maybe data is still far right
-            ## Let's have "data" take a walk until it finds its place in the world,
-            ## as functions are supposed to check if unnamed parameters are sent
-            ## in the right order (you hope, at least).
-            for (par in 4:length(names(Call))) {
-              Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
-              names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
-              print(Call)
-              result <- try(eval(Call, envir = use_envir),    ## See if it flies
-                            silent = TRUE)
-              if (class(result)[[1]] != "try-error") {       ## Did. We are done
-                signal_error <- FALSE
-                break
-              }
-            }
-          }
-          if (signal_error) {          ## Parameters exhausted and still error
-            ## Try attaching data and call, It will fail if there is a . in the formula,
-            ## but at this point there is no much else to do.
-            ## This is needed to accomodate at least calibrate() in EnvStats,
-            ## that seem to not accept "." as name of data when called in a pipeline
-            ## (the interface called directly with the name of the data works fine).
-            ## So let's make it believe we are just in some sort of "global environment"
-            ## working with local variables. It would be better if the authors of EnvStats
-            ## improve the data management.
-            ## Remove "data" (now in [-3]) then call.
-            attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
-            result <- try(eval(Call[-3]), silent = TRUE)
-            detach()
-            if (class(result)[[1]] == "try-error")
-              stop(result)          ## We run out of sorts... Admit defeat.
-          }
-        }
+    result <- eval(Call)    ## If you specify position, you better know what you are doing.
+    return(list(result = result,
+                result_visible = withVisible(result)$visible,
+                Call = Call))
+  }
+
+  #print(Call)
+  ## Try as it is (data is named)
+  result <- try(eval(Call, envir = use_envir), silent = TRUE)
+  if (class(result)[[1]] != "try-error") {
+    return(list(result = result,
+                result_visible = withVisible(result)$visible,
+                Call = Call))
+  }
+  
+  Call[2:3] <- Call[3:2]                       ## Switch parameters
+  names(Call)[2:3] <- names(Call)[3:2]         ## and names
+  ## names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
+  #print(Call)
+  result <- try(eval(Call, envir = use_envir), silent = TRUE)
+  if (class(result)[[1]] != "try-error") {
+    return(list(result = result,
+                result_visible = withVisible(result)$visible,
+                Call = Call))
+  }
+  
+  ## Maybe data has other name. Remove parameter name for "data"
+  names(Call)[[3]] <- ""
+  #print(Call)
+  result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
+  if (class(result)[[1]] != "try-error") {
+    return(list(result = result,
+                result_visible = withVisible(result)$visible,
+                Call = Call))
+  }
+  
+  ## Maybe "data" position is still to the right
+  if (length(Call) > 3) {     ## Are there more parameters to the right?
+    ## Let's have "data" take a walk until it finds its place in the world,
+    ## as functions are supposed to check if unnamed parameters are sent
+    ## in the right order (you hope, at least).
+    for (par in 4:length(names(Call))) {
+      Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
+      names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
+      #print(Call)
+      result <- try(eval(Call, envir = use_envir),    ## See if it flies
+                    silent = TRUE)
+      if (class(result)[[1]] != "try-error") {
+        return(list(result = result,
+                    result_visible = withVisible(result)$visible,
+                    Call = Call))
       }
     }
   }
+  
+  ## Parameters exhausted and still error
+  ## Try attaching data and call, It will fail if there is a . in the formula,
+  ## but at this point there is no much else to do.
+  ## This is needed to accomodate at least calibrate() in EnvStats,
+  ## that seem to not accept "." as name of data when called in a pipeline
+  ## (the interface called directly with the name of the data works fine).
+  ## So let's make it believe we are just in some sort of "global environment"
+  ## working with local variables. It would be better if the authors of EnvStats
+  ## improve the data management.
+  ## Remove "data" (now at the end of Call) then call.
+  print(Call[-length(Call)])
+  attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
+  result <- try(eval(Call[-length(Call)]), silent = TRUE)  ## Use try as we use attach()
+  detach()
+  if (class(result)[[1]] == "try-error")
+    stop(result)          ## We have run out of sorts... Admit defeat.
+
   list(result = result,
        result_visible = withVisible(result)$visible,
        Call = Call)
