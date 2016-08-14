@@ -1,4 +1,5 @@
 #importFrom("ape", "binaryPGLMM", "compar.gee", "correlogram.formula", "lmorigin", "yule.cov")
+#importFrom("brglm", "brglm")
 #importFrom("caret", "avNNet", "bagEarth", "bagFDA", "calibration", "dummyVars",
 #                    "icr", "knn3", "lift", "pcaNNet", "sbf",
 #                    "train")

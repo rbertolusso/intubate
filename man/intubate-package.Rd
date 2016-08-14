@@ -15,9 +15,11 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 309 interfaces for:
+  Currently, there are 310 interfaces for:
   
   \code{ape}: Analyses of Phylogenetics and Evolution
+
+  \code{brglm}: Bias reduction in binomial-response generalized linear models
 
   \code{car}: Companion to Applied Regression
 

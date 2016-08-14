@@ -17,7 +17,7 @@
 
 ## External functions
 
-## Helper function to define interfaces
+## Helper function
 intubate <-
   
   ## Deprecated helper functions
@@ -35,6 +35,9 @@ intubate <-
   ntbt_correlogram.formula <-
   ntbt_lmorigin <-
   ntbt_yule.cov <-
+  
+  ## brglm
+  ntbt_brglm <-
 
   ## car
   ntbt_Boxplot <-
