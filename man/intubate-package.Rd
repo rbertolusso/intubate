@@ -15,8 +15,10 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 278 interfaces for:
+  Currently, there are 289 interfaces for:
   
+  \code{car}: Companion to Applied Regression
+
   \code{caret}: Classification and Regression Training
   
   \code{coin}: Conditional Inference Procedures in a Permutation Test Framework

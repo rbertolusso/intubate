@@ -29,6 +29,21 @@ intubate <-
   
   ## Interface functions
   
+  ## car
+  ntbt_Boxplot <-
+  ntbt_boxTidwell <-
+  ntbt_densityPlot <-
+  ntbt_invTranPlot <-
+  ntbt_leveneTest <-
+  
+  ntbt_powerTransform <-
+  ntbt_scatter3d <-
+  ntbt_scatterplot <-
+  ntbt_scatterplotMatrix <-
+  ntbt_spreadLevelPlot <-
+  
+  ntbt_symbox <-
+  
   ## caret
   ntbt_avNNet <-
   ntbt_bagEarth <-

@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 278 interfaces that can be related to data science
+`intubate` currently implements 289 interfaces that can be related to data science
 methodologies and other disciplines.
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
@@ -170,6 +170,7 @@ proposed *solution*, that *shouldn't break anything else*, together with the req
 #### Interfaced libraries
 The R packages that have interfaces implemented so far are:
 
+* `car`: Companion to Applied Regression
 * `caret`: Classification and Regression Training
 * `coin`: Conditional Inference Procedures in a Permutation Test Framework
 * `CORElearn`: Classification, Regression and Feature Evaluation
