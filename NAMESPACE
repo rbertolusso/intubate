@@ -1,6 +1,4 @@
-#importFrom("car", "Boxplot", "boxTidwell", "densityPlot", "invTranPlot", "leveneTest",
-#                  "powerTransform", "scatter3d", "scatterplot", "scatterplotMatrix", "spreadLevelPlot",
-#                  "symbox")
+#importFrom("ape", "binaryPGLMM", "compar.gee", "correlogram.formula", "lmorigin", "yule.cov")
 #importFrom("caret", "avNNet", "bagEarth", "bagFDA", "calibration", "dummyVars",
 #                    "icr", "knn3", "lift", "pcaNNet", "sbf",
 #                    "train")

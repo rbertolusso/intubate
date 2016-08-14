@@ -29,6 +29,13 @@ intubate <-
   
   ## Interface functions
   
+  ## ape
+  ntbt_binaryPGLMM <-
+  ntbt_compar.gee <-
+  ntbt_correlogram.formula <-
+  ntbt_lmorigin <-
+  ntbt_yule.cov <-
+
   ## car
   ntbt_Boxplot <-
   ntbt_boxTidwell <-
