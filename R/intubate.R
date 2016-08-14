@@ -116,7 +116,9 @@ process_call <- function(data, preCall, Call, use_envir) {
   if (io$found) {
     cat("\n") 
     print(Call)
+    #print(io$input_functions)
     exec_intubOrder(io$input_functions, "source", input_data)
+    #print(io$result_functions)
     exec_intubOrder(io$result_functions, "result", result)
   }
 
@@ -155,12 +157,16 @@ parse_intubOrder <- function(par_list, data) {
   if (!io$found)
     io$intubOrder <- intuBorder
   
-  io$input_functions <- gsub(".*<(.*)\\|.*\\|.*>.*", "\\1", io$intubOrder)
+  io$input_functions <- gsub(".*<([^|]*)\\|[^|]*\\|.*>.*", "\\1", io$intubOrder)
+  #print(io$input_functions)
   io$input_functions <- trimws(strsplit(io$input_functions, ";")[[1]])
-
-  io$result_functions <- gsub(".*<.*\\|.*\\|(.*)>.*", "\\1", io$intubOrder)
+  #print(io$input_functions)
+  
+  io$result_functions <- gsub(".*<[^|]*\\|[^|]*\\|(.*)>.*", "\\1", io$intubOrder)
+  #print(io$result_functions)
   io$result_functions <- trimws(strsplit(io$result_functions, ";")[[1]])
-
+  #print(io$result_functions)
+  
   io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1",
                                  io$intubOrder) == "F")
   io$forward_input <- (gsub(".*<.*\\|.*(f).*\\|.*>.*", "\\1",
@@ -194,18 +200,17 @@ parse_intubOrder <- function(par_list, data) {
 }
 
 ## (internal)
-exec_intubOrder <- function(..object_functions.., where, ..object..) {
+exec_intubOrder <- function(..object_functions.., where, ..object_value..) {
   oldmfrow <- par()$mfrow    ## Just in case
-
   for (this_function in ..object_functions..) {
     include_object <- TRUE
     if (this_function == "print") {
-      printed <- capture.output(print(..object..))
+      printed <- capture.output(print(..object_value..))
     } else {
       if (length(strsplit(this_function, "\\(")[[1]]) > 1) {
-        printed <- capture.output(print(eval(parse(text = gsub("#", "..object..", this_function)))))
+        printed <- capture.output(print(eval(parse(text = gsub("#", "..object_value..", this_function)))))
       } else {
-        printed <- capture.output(print(do.call(this_function, args=list(quote(..object..)))))
+        printed <- capture.output(print(do.call(this_function, args=list(quote(..object_value..)))))
       }
     }
     ## print(str(printed))
@@ -431,5 +436,14 @@ get_calling_name <- function(prefix, full_name) {
                 " is an invalid name.\n", 
                 "The interface should be named ", prefix, "_<name>\n",
                 "where <name> is the name of the function to be interfaced."))
-  as.name(gsub(paste0(prefix, "_(.+)"), "\\1", full_name))
+  func_name <- gsub(paste0(prefix, "_(.+)"), "\\1", full_name)
+  if (!exists(func_name)) {
+    stop(paste0("The function <| ", func_name, " |> does not seem to be defined.\n",
+                "Did you install the package where <| ", func_name, " |> is included?\n",
+                "If not, please run: install.packages(\"package_name\")\n",
+                "Did you load the corresponding library?\n",
+                "If not, please run: library(package_name)\n",
+                "To keep system resources low, intubate does not install, nor loads, packages."))
+  }
+  as.name(func_name)
 }

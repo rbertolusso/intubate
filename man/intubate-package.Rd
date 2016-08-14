@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 307 interfaces for:
+  Currently, there are 309 interfaces for:
   
   \code{ape}: Analyses of Phylogenetics and Evolution
 
@@ -63,7 +63,9 @@
                Probit Regression, ...
                
   \code{mda}: Mixture and Flexible Discriminant Analysis
-
+  
+  \code{metafor}: Meta-Analysis Package for R
+  
   \code{mgcv}: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation
 
   \code{modeltools}: Tools and Classes for Statistical Models

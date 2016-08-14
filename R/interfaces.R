@@ -282,6 +282,10 @@ intubate <-
   ntbt_fda <-
   ntbt_mda <-
   
+  ## metafor
+  ntbt_escalc <-
+  ntbt_rma <-
+
   ## mgcv
   ntbt_bam <-
   ntbt_gam <-

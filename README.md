@@ -63,16 +63,18 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 307 interfaces that can be related to data science
-methodologies and other disciplines.
+`intubate` currently implements 309 interfaces that can be related to data science
+methodologies and other disciplines. For now I am concentrating in functions having
+"formula" and "data", but the "x" "y" versions (or others) should also work.
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
 possible, and to be able to continue to include more interfaces without bloating your machine, 
 starting from version 0.99.3 `intubate` **will not** install the packages
 that contain the functions that are interfaced. *You will need to install them yourself*,
 and load the corresponding libraries before using them in your pipelines. This
-also applies to `magrittr` (you could use `intubate` without pipelines).
-This way people interested only on some of:
+also applies to `magrittr` (in case you want to use `intubate` without pipelines).
+
+Then, if you are only interested in a given field, say:
 bio-statistics,
 bio-informatics,
 ecology and environment,
@@ -81,16 +83,15 @@ finance,
 machine learning,
 meta-analysis,
 phylogenetics,
-..., will not have to install *all* the packages for which interfaces are provided
-if they intend to use only a subset of them. They only need to install
-the subset of packages they intend to use.
+..., you will not have to install *all* the packages for which interfaces are provided
+if you intend to use only a subset of them. You only need to install
+the subset of packages you intend to use (which are probably already installed).
 
-Also, some packages may be in conflict if loaded simultaneously, leading
+Also, there are cases where some packages are in conflict if loaded simultaneously, leading
 to a segmentation fault (for example, kernlab functions fail when testing the whole
 examples provided with `intubate`, but not when testing kernlab only examples
 in a clean environment. I ignore which is/are the other(s) package(s) conflicting with it.
-The only thing I know is that has to have a name that is alphabetically ordered
-before kernlab. Pick your guess from the list of packages below)
+The only thing I know is that the package name is alphabetically ordered prior to kernlab)
 
 #### Interfaces "on demand", or by calling non-pipe-aware functions directly
 `intubate` *also* let's
@@ -209,6 +210,7 @@ The R packages that have interfaces implemented so far are:
 * `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
 * `mda`: Mixture and Flexible Discriminant Analysis
+* `metafor`: Meta-Analysis Package for R
 * `mgcv`: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation
 * `modeltools`: Tools and Classes for Statistical Models
 * `nlme`: Linear and Nonlinear Mixed Effects Models

@@ -39,6 +39,7 @@
 #importFrom("MASS", "corresp", "glm.nb", "lda", "lm.gls", "lm.ridge",
 #                   "loglm", "logtrans", "lqs", "polr", "qda", "rlm")
 #importFrom("mda", "fda", "mda")
+#importFrom("metafor", "escalc", "rma")
 #importFrom("mgcv", "bam", "gam", "gamm")
 #importFrom("modeltools", "ModelEnvFormula", "ParseFormula")
 #importFrom("nlme", "gls", "lme", "nlme", "nlsList")
