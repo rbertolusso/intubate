@@ -11,6 +11,9 @@
 #importFrom("CORElearn", "attrEval", "CoreModel", "discretize", "ordEval")
 #importFrom("e1071", "svm")
 #importFrom("earth", "earth")
+#importFrom("EnvStats", "calibrate", "gofTest", "gofGroupTest", "kendallSeasonalTrendTest",
+#                       "kendallTrendTest",
+#                       "stripChart", "summaryFull", "summaryStats", "varGroupTest")
 #importFrom("gam", "gam")
 #importFrom("gbm", "gbm")
 #import("graphics")

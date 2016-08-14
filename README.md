@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 296 interfaces that can be related to data science
+`intubate` currently implements 305 interfaces that can be related to data science
 methodologies and other disciplines.
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
@@ -72,12 +72,26 @@ starting from version 0.99.3 `intubate` **will not** install the packages
 that contain the functions that are interfaced. *You will need to install them yourself*,
 and load the corresponding libraries before using them in your pipelines. This
 also applies to `magrittr` (you could use `intubate` without pipelines too).
-This way people oriented only to one of: traditional statistics,
-machine learning, finance, bio-statistics, bio-informatics, ...,
-will not have to install
-*all* the packages for which interfaces are provided
+This way people interested only on some of:
+bio-statistics,
+bio-informatics,
+clinical trials,
+ecology and environment,
+econometrics,
+finance,
+machine learning,
+meta-analysis,
+phylogenetics,
+..., will not have to install *all* the packages for which interfaces are provided
 if they intend to use only a subset of them. They only need to install
 the subset of packages they intend to use.
+
+Also, many packages may be in conflict if loaded simultaneously, and
+can even lead to a segmentation fault if they are loaded simultaneously
+(for example, kernlab functions fail when testing the whole examples provided
+with `intubate`, but not when testing kernlab only examples in a clean environment. I
+ignore which is/are the other(s) package(s) conflicting with it)
+
 
 `intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
@@ -177,6 +191,7 @@ The R packages that have interfaces implemented so far are:
 * `CORElearn`: Classification, Regression and Feature Evaluation
 * `e1071`: Support Vector Machines
 * `earth`: Multivariate Adaptive Regression Splines
+* `EnvStats`: Environmental Statistics, Including US EPA Guidance
 * `forecast`: Forecasting Functions for Time Series and Linear Models
 * `gam`: Generalized Additive Models
 * `gbm`: Generalized Boosted Regression Models

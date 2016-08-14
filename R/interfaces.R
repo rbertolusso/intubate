@@ -113,6 +113,18 @@ intubate <-
   ## earth
   ntbt_earth <-
 
+  ## EnvStats
+  ntbt_calibrate <-
+  ntbt_gofTest <-
+  ntbt_gofGroupTest <-
+  ntbt_kendallSeasonalTrendTest <-
+  ntbt_kendallTrendTest <-
+  
+  ntbt_stripChart <-
+  ntbt_summaryFull <-
+  ntbt_summaryStats <-
+  ntbt_varGroupTest <-
+
   ## forecast
   ntbt_tslm <-
   

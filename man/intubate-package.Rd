@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 296 interfaces for:
+  Currently, there are 305 interfaces for:
   
   \code{ape}: Analyses of Phylogenetics and Evolution
 
@@ -30,6 +30,8 @@
   \code{e1071}: Support Vector Machines
 
   \code{earth}: Multivariate Adaptive Regression Splines
+  
+  \code{EnvStats}: Environmental Statistics, Including US EPA Guidance
 
   \code{forecast}: Forecasting Functions for Time Series and Linear Models
   
