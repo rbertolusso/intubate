@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 305 interfaces for:
+  Currently, there are 307 interfaces for:
   
   \code{ape}: Analyses of Phylogenetics and Evolution
 
@@ -77,7 +77,9 @@
   \code{pls}: Partial Least Squares and Principal Component Regression
   
   \code{plotrix}: Various Plotting Functions
-
+  
+  \code{pscl}: Political Science Computational Laboratory, Stanford University
+  
   \code{quantreg}: Quantile Regression
 
   \code{randomForest}: Random Forests for Classification and Regression

@@ -320,6 +320,10 @@ intubate <-
   ntbt_pcr <-
   ntbt_plsr <-
   
+  ## pscl
+  ntbt_hurdle <-
+  ntbt_zeroinfl <-
+
   ## quantreg
   ntbt_dynrq <-
   ntbt_KhmaladzeTest <-

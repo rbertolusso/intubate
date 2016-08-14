@@ -1,6 +1,6 @@
 #### intubate <||> *Roberto Bertolusso*
 
-##### *2016-07-26* - *2016-08-13* (GPL >= 2)
+##### *2016-07-26* - *2016-08-14* (GPL >= 2)
 
 
 The aim of `intubate` (`<||>`) is to offer a painless way to
@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 305 interfaces that can be related to data science
+`intubate` currently implements 307 interfaces that can be related to data science
 methodologies and other disciplines.
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
@@ -71,11 +71,10 @@ possible, and to be able to continue to include more interfaces without bloating
 starting from version 0.99.3 `intubate` **will not** install the packages
 that contain the functions that are interfaced. *You will need to install them yourself*,
 and load the corresponding libraries before using them in your pipelines. This
-also applies to `magrittr` (you could use `intubate` without pipelines too).
+also applies to `magrittr` (you could use `intubate` without pipelines).
 This way people interested only on some of:
 bio-statistics,
 bio-informatics,
-clinical trials,
 ecology and environment,
 econometrics,
 finance,
@@ -86,13 +85,14 @@ phylogenetics,
 if they intend to use only a subset of them. They only need to install
 the subset of packages they intend to use.
 
-Also, many packages may be in conflict if loaded simultaneously, and
-can even lead to a segmentation fault if they are loaded simultaneously
-(for example, kernlab functions fail when testing the whole examples provided
-with `intubate`, but not when testing kernlab only examples in a clean environment. I
-ignore which is/are the other(s) package(s) conflicting with it)
+Also, some packages may be in conflict if loaded simultaneously, leading
+to a segmentation fault (for example, kernlab functions fail when testing the whole
+examples provided with `intubate`, but not when testing kernlab only examples
+in a clean environment. I ignore which is/are the other(s) package(s) conflicting with it.
+The only thing I know is that has to have a name that is alphabetically ordered
+before kernlab. Pick your guess from the list of packages below)
 
-
+#### Interfaces "on demand", or by calling non-pipe-aware functions directly
 `intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
 full power of decision regarding which functions to interface. It *also*
@@ -150,7 +150,7 @@ USJudgeRatings %>%
   ntbt_cor.test(~ CONT + INTG)        ## Also the formula variant
 ```
 
-A **new feature** is that **you do not have to create an interface** if you do not
+You **do not have to create an interface** if you do not
 want to. You can **call the non-pipe-aware function directly** with `ntbt`,
 in the following way:
 
@@ -162,7 +162,8 @@ USJudgeRatings %>%
   ntbt(cor.test, ~ CONT + INTG)        ## Also the formula variant
 ```
 
-You can use `ntbt` with *any function*, also the ones without interface. In principle,
+You can use `ntbt` with *any function*, also the ones without an interface
+provided by `intubate`. In principle,
 the only functions you would like to call are the ones you cannot use directly in
 a pipeline (because `data` is in second place instead of first).
 
@@ -215,6 +216,7 @@ The R packages that have interfaces implemented so far are:
 * `party`: A Laboratory for Recursive Partytioning
 * `pls`: Partial Least Squares and Principal Component Regression
 * `plotrix`: Various Plotting Functions
+* `pscl`: Political Science Computational Laboratory, Stanford University
 * `quantreg`: Quantile Regression
 * `randomForest`: Random Forests for Classification and Regression
 * `rminer`: Data Mining Classification and Regression Methods 
