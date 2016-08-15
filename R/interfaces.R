@@ -36,6 +36,16 @@ intubate <-
   ntbt_lmorigin <-
   ntbt_yule.cov <-
   
+  ## aov
+  ntbt_betabin <-
+  ntbt_donner <-
+  ntbt_negbin <-
+  ntbt_quasibin <-
+  ntbt_quasipois <-
+  
+  ntbt_raoscott <-
+  ntbt_splitbin <-
+
   ## arm
   ntbt_bayesglm <-
   ntbt_bayespolr <-
