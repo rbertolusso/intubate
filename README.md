@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 339 interfaces that can be related to data science
+`intubate` currently implements 343 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -194,6 +194,7 @@ The R packages that have interfaces implemented so far are:
 * `ape`: Analyses of Phylogenetics and Evolution
 * `arm`: Data Analysis Using Regression and Multilevel/Hierarchical Models
 * `brglm`: Bias reduction in binomial-response generalized linear models
+* `caper`: Comparative Analyses of Phylogenetics and Evolution in R
 * `car`: Companion to Applied Regression
 * `caret`: Classification and Regression Training
 * `coin`: Conditional Inference Procedures in a Permutation Test Framework

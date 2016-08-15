@@ -52,6 +52,12 @@ intubate <-
   
   ## brglm
   ntbt_brglm <-
+  
+  ## caper
+  ntbt_brunch <-
+  ntbt_crunch <-
+  ntbt_macrocaic <-
+  ntbt_pgls <-
 
   ## car
   ntbt_Boxplot <-
