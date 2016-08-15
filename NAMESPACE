@@ -21,6 +21,7 @@
 #                       "stripChart", "summaryFull", "summaryStats", "varGroupTest")
 #importFrom("gam", "gam")
 #importFrom("gbm", "gbm")
+#importFrom("gee", "gee")
 #importFrom("glmx", "glmx", "hetglm")
 #import("graphics")
 #importFrom("Hmisc", "areg.boot", "aregImpute", "biVar", "bpplotM", "dataRep",

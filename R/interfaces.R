@@ -151,12 +151,15 @@ intubate <-
   ## gam
   ntbt_gam <-
   
+  ## gbm
+  ntbt_gbm <-
+  
+  ## gee
+  ntbt_gee <-
+  
   ## glmx
   ntbt_glmx <-
   ntbt_hetglm <-
-
-  ## gbm
-  ntbt_gbm <-
   
   ## graphics
   ntbt_boxplot <-
