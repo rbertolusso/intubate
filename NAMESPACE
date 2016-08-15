@@ -43,6 +43,9 @@
 #import("lattice")
 #importFrom("latticeExtra" , "ecdfplot", "mapplot", "rootogram", "segplot", "tileplot")
 #importFrom("leaps", "regsubsets")
+#importFrom("lfe", "felm")
+#importFrom("lme4", "glmer", "glmer.nb", "glFormula", "lFormula", "lmer",
+##                  "lmList", "nlmer")
 #importFrom("lmtest", "bgtest", "bptest", "coxtest", "dwtest", "encomptest",
 #           "gqtest", "grangertest", "harvtest", "hmctest", "jtest",
 #           "raintest", "resettest")

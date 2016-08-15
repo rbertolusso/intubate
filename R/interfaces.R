@@ -302,6 +302,16 @@ intubate <-
   ## lfe
   ntbt_felm <-
   
+  ## lme4
+  ntbt_glmer <-
+  ntbt_glmer.nb <-
+  ntbt_glFormula <-
+  ntbt_lFormula <-
+  ntbt_lmer <-
+  
+  ntbt_lmList <-
+  ntbt_nlmer <-
+
   ## lmtest
   ntbt_bgtest <-
   ntbt_bptest <-

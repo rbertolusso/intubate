@@ -63,9 +63,9 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 387 interfaces that can be related to data science
+`intubate` currently implements 394 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
-"formula" and "data", but the "x" "y" versions (or others) should also work.
+"formula" and "data", but the non-formula variants should also work.
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
 possible, and to be able to continue to include more interfaces without bloating your machine, 
@@ -229,10 +229,13 @@ lack of inclusion of your favorite package for the time being:
 (truth is that by implementing the supplied interfaces I realized how little
 I knew, and still know, about a field in which I am supposed to be an expert),
 and I apologize for that.
+3. I got to the point I need to take a rest (this reason is competing with 2.
+with increasing strength as time passes by. If something looks odd,
+you can refer to the Spanish Inquisition)
 
-Also, remember you have a good chance you can create your own interfaces
-(with helper function `intubate`), or
-call the non-pipe-aware functions directly (with `ntbt`).
+Also, please keep in mind you have a very good chance you can create your own interfaces
+(with the helper function `intubate`), or call the non-pipe-aware functions
+directly (with `ntbt`).
 
 The R packages that have interfaces implemented so far are:
 
@@ -266,6 +269,7 @@ The R packages that have interfaces implemented so far are:
 * `latticeExtra`: Extra Graphical Utilities Based on Lattice
 * `leaps`: Regression Subset Selection
 * `lfe`: Linear Group Fixed Effects
+* `lme4`: Linear Mixed-Effects Models using 'Eigen' and S4
 * `lmtest`: Testing Linear Regression Models
 * `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
           Probit Regression, ...
@@ -281,8 +285,8 @@ The R packages that have interfaces implemented so far are:
 * `nnet`: Feed-Forward Neural Networks and Multinomial Log-Linear Models
 * `ordinal`: Regression Models for Ordinal Data
 * `party`: A Laboratory for Recursive Partytioning
-* `pls`: Partial Least Squares and Principal Component Regression
 * `plotrix`: Various Plotting Functions
+* `pls`: Partial Least Squares and Principal Component Regression
 * `pROC`: Display and Analyze ROC Curves
 * `pscl`: Political Science Computational Laboratory, Stanford University
 * `quantreg`: Quantile Regression

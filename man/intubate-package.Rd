@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 387 interfaces for:
+  Currently, there are 394 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -77,6 +77,8 @@
   
   \code{lfe}: Linear Group Fixed Effects
 
+  \code{lme4}: Linear Mixed-Effects Models using 'Eigen' and S4
+  
   \code{lmtest}: Testing Linear Regression Models
 
   \code{MASS}: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
@@ -105,9 +107,9 @@
   
   \code{party}: A Laboratory for Recursive Partytioning
 
-  \code{pls}: Partial Least Squares and Principal Component Regression
-  
   \code{plotrix}: Various Plotting Functions
+  
+  \code{pls}: Partial Least Squares and Principal Component Regression
   
   \code{pROC}: Display and Analyze ROC Curves
   
@@ -127,9 +129,9 @@
   
   \code{rpart}: Recursive Partitioning and Regression Trees
   
-  \code{RWeka}: R/Weka Interface
-  
   \code{RRF}: Regularized Random Forest
+  
+  \code{RWeka}: R/Weka Interface
   
   \code{sem}: Structural Equation Models
   
