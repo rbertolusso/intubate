@@ -21,6 +21,7 @@
 #importFrom("EnvStats", "calibrate", "gofTest", "gofGroupTest", "kendallSeasonalTrendTest",
 #                       "kendallTrendTest",
 #                       "stripChart", "summaryFull", "summaryStats", "varGroupTest")
+#importFrom("fGarch", "garchFit")
 #importFrom("gam", "gam")
 #importFrom("gbm", "gbm")
 #importFrom("gee", "gee")

@@ -158,6 +158,9 @@ intubate <-
   ntbt_summaryStats <-
   ntbt_varGroupTest <-
 
+  ## fGarch
+  ntbt_garchFit <-
+
   ## forecast
   ntbt_tslm <-
   

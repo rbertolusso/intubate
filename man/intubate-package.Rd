@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 394 interfaces for:
+  Currently, there are 395 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -44,6 +44,8 @@
   \code{earth}: Multivariate Adaptive Regression Splines
   
   \code{EnvStats}: Environmental Statistics, Including US EPA Guidance
+  
+  \code{fGarch}: Rmetrics - Autoregressive Conditional Heteroskedastic Modelling
 
   \code{forecast}: Forecasting Functions for Time Series and Linear Models
   

@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 394 interfaces that can be related to data science
+`intubate` currently implements 395 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the non-formula variants should also work.
 
@@ -253,6 +253,7 @@ The R packages that have interfaces implemented so far are:
 * `e1071`: Support Vector Machines
 * `earth`: Multivariate Adaptive Regression Splines
 * `EnvStats`: Environmental Statistics, Including US EPA Guidance
+* `fGarch`: Rmetrics - Autoregressive Conditional Heteroskedastic Modelling
 * `forecast`: Forecasting Functions for Time Series and Linear Models
 * `gam`: Generalized Additive Models
 * `gbm`: Generalized Boosted Regression Models
