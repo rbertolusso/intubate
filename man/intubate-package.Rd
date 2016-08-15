@@ -17,11 +17,11 @@
   
   Currently, there are 338 interfaces for:
   
+  \code{aod}: Analysis of Overdispersed Data
+
   \code{ape}: Analyses of Phylogenetics and Evolution
 
   \code{arm}: Data Analysis Using Regression and Multilevel/Hierarchical Models
-
-  \code{aov}: Analysis of Overdispersed Data
 
   \code{brglm}: Bias reduction in binomial-response generalized linear models
 

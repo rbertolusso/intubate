@@ -1,4 +1,4 @@
-\name{aov}
+\name{aod}
 \alias{ntbt_betabin}
 \alias{ntbt_donner}
 \alias{ntbt_negbin}
@@ -6,9 +6,9 @@
 \alias{ntbt_quasipois}
 \alias{ntbt_raoscott}
 \alias{ntbt_splitbin}
-\title{Interfaces for aov package for data science pipelines.}
+\title{Interfaces for aod package for data science pipelines.}
 \description{
-  Interfaces to \code{aov} functions that can be used
+  Interfaces to \code{aod} functions that can be used
   in a pipeline implemented by \code{magrittr}.
 }
 \usage{
@@ -143,7 +143,7 @@ mydata \%>\%
 }
 \keyword{intubate}
 \keyword{magrittr}
-\keyword{aov}
+\keyword{aod}
 \keyword{betabin}
 \keyword{donner}
 \keyword{negbin}

@@ -1,6 +1,6 @@
 #importFrom("ape", "binaryPGLMM", "compar.gee", "correlogram.formula", "lmorigin", "yule.cov")
 #importFrom("arm", "bayesglm", "bayespolr")
-#importFrom("aov", "betabin", "donner", "negbin", "quasibin", "quasipois",
+#importFrom("aod", "betabin", "donner", "negbin", "quasibin", "quasipois",
 #                  "raoscott", "splitbin")
 #importFrom("brglm", "brglm")
 #importFrom("caret", "avNNet", "bagEarth", "bagFDA", "calibration", "dummyVars",

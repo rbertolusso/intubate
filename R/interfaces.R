@@ -29,14 +29,7 @@ intubate <-
   
   ## Interface functions
   
-  ## ape
-  ntbt_binaryPGLMM <-
-  ntbt_compar.gee <-
-  ntbt_correlogram.formula <-
-  ntbt_lmorigin <-
-  ntbt_yule.cov <-
-  
-  ## aov
+  ## aod
   ntbt_betabin <-
   ntbt_donner <-
   ntbt_negbin <-
@@ -46,6 +39,13 @@ intubate <-
   ntbt_raoscott <-
   ntbt_splitbin <-
 
+  ## ape
+  ntbt_binaryPGLMM <-
+  ntbt_compar.gee <-
+  ntbt_correlogram.formula <-
+  ntbt_lmorigin <-
+  ntbt_yule.cov <-
+  
   ## arm
   ntbt_bayesglm <-
   ntbt_bayespolr <-

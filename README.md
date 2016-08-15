@@ -190,9 +190,9 @@ proposed *solution*, that *shouldn't break anything else*, together with the req
 #### Interfaced libraries
 The R packages that have interfaces implemented so far are:
 
+* `aod`: Analysis of Overdispersed Data
 * `ape`: Analyses of Phylogenetics and Evolution
 * `arm`: Data Analysis Using Regression and Multilevel/Hierarchical Models
-* `aov`: Analysis of Overdispersed Data
 * `brglm`: Bias reduction in binomial-response generalized linear models
 * `car`: Companion to Applied Regression
 * `caret`: Classification and Regression Training
