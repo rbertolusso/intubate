@@ -388,6 +388,19 @@ intubate <-
   ntbt_pcr <-
   ntbt_plsr <-
   
+  ## pROC
+  ntbt_auc <-
+  ntbt_ci <-
+  ntbt_ci.auc <-
+  ntbt_ci.coords <-
+  ntbt_ci.se <-
+  
+  ntbt_ci.sp <-
+  ntbt_ci.thresholds <-
+  ntbt_multiclass.roc <-
+  ntbt_plot.roc <-
+  ntbt_roc <-
+
   ## pscl
   ntbt_hurdle <-
   ntbt_zeroinfl <-
