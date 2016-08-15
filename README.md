@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 370 interfaces that can be related to data science
+`intubate` currently implements 375 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -191,6 +191,7 @@ proposed *solution*, that *shouldn't break anything else*, together with the req
 #### Interfaced libraries
 The R packages that have interfaces implemented so far are:
 
+* `adabag`: Multiclass AdaBoost.M1, SAMME and Bagging
 * `aod`: Analysis of Overdispersed Data
 * `ape`: Analyses of Phylogenetics and Evolution
 * `arm`: Data Analysis Using Regression and Multilevel/Hierarchical Models

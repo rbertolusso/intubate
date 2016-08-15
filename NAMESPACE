@@ -1,7 +1,8 @@
-#importFrom("ape", "binaryPGLMM", "compar.gee", "correlogram.formula", "lmorigin", "yule.cov")
-#importFrom("arm", "bayesglm", "bayespolr")
+#importFrom("adabag", "autoprune", "bagging", "bagging.cv", "boosting", "boosting.cv")
 #importFrom("aod", "betabin", "donner", "negbin", "quasibin", "quasipois",
 #                  "raoscott", "splitbin")
+#importFrom("ape", "binaryPGLMM", "compar.gee", "correlogram.formula", "lmorigin", "yule.cov")
+#importFrom("arm", "bayesglm", "bayespolr")
 #importFrom("brglm", "brglm")
 #importFrom("caper", "brunch", "crunch", "macrocaic", "pgls")
 #importFrom("caret", "avNNet", "bagEarth", "bagFDA", "calibration", "dummyVars",

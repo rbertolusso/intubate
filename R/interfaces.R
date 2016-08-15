@@ -29,6 +29,13 @@ intubate <-
   
   ## Interface functions
   
+  ## adabag
+  ntbt_autoprune <-
+  ntbt_bagging <-
+  ntbt_bagging.cv <-
+  ntbt_boosting <-
+  ntbt_boosting.cv <-
+  
   ## aod
   ntbt_betabin <-
   ntbt_donner <-
