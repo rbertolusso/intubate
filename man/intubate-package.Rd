@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 356 interfaces for:
+  Currently, there are 361 interfaces for:
   
   \code{aod}: Analysis of Overdispersed Data
 
@@ -68,6 +68,8 @@
   \code{klaR}: Classification and Visualization
 
   \code{lattice}: Trellis Graphics for R
+  
+  \code{latticeExtra}: Extra Graphical Utilities Based on Lattice
   
   \code{leaps}: Regression Subset Selection
   

@@ -40,6 +40,7 @@
 #                   "NaiveBayes", "nm", "partimat", "plineplot", "pvs",
 #                   "rda", "sknn", "stepclass", "woe")
 #import("lattice")
+#importFrom("latticeExtra" , "ecdfplot", "mapplot", "rootogram", "segplot", "tileplot")
 #importFrom("leaps", "regsubsets")
 #importFrom("lmtest", "bgtest", "bptest", "coxtest", "dwtest", "encomptest",
 #           "gqtest", "grangertest", "harvtest", "hmctest", "jtest",

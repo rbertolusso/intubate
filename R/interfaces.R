@@ -282,6 +282,13 @@ intubate <-
   ntbt_wireframe <-
   ntbt_xyplot <-
   
+  ## latticeExtra
+  ntbt_ecdfplot <-
+  ntbt_mapplot <-
+  ntbt_rootogram <-
+  ntbt_segplot <-
+  ntbt_tileplot <-
+
   ## leaps
   ntbt_regsubsets <-
   

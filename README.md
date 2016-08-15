@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 356 interfaces that can be related to data science
+`intubate` currently implements 361 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -217,6 +217,7 @@ The R packages that have interfaces implemented so far are:
 * `kernlab`: Kernel-Based Machine Learning Lab
 * `klaR`: Classification and Visualization
 * `lattice`: Trellis Graphics for R
+* `latticeExtra`: Extra Graphical Utilities Based on Lattice
 * `leaps`: Regression Subset Selection
 * `lfe`: Linear Group Fixed Effects
 * `lmtest`: Testing Linear Regression Models
