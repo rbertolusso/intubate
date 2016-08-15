@@ -347,6 +347,9 @@ intubate <-
   ntbt_gam <-
   ntbt_gamm <-
   
+  ## minpack.lm
+  ntbt_nlsLM <-
+  
   ## modeltools
   ntbt_ModelEnvFormula <-
   ntbt_ParseFormula <- 

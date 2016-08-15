@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 386 interfaces that can be related to data science
+`intubate` currently implements 387 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -268,11 +268,13 @@ The R packages that have interfaces implemented so far are:
 * `lfe`: Linear Group Fixed Effects
 * `lmtest`: Testing Linear Regression Models
 * `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
-               Probit Regression, ...
+          Probit Regression, ...
 * `MCMCglmm`: MCMC Generalised Linear Mixed Models
 * `mda`: Mixture and Flexible Discriminant Analysis
 * `metafor`: Meta-Analysis Package for R
 * `mgcv`: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation
+* `minpack.lm`: R Interface to the Levenberg-Marquardt Nonlinear Least-Squares
+                Algorithm Found in MINPACK, Plus Support for Bounds
 * `modeltools`: Tools and Classes for Statistical Models
 * `nlme`: Linear and Nonlinear Mixed Effects Models
 * `nlreg`: Higher Order Inference for Nonlinear Heteroscedastic Models
