@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 350 interfaces for:
+  Currently, there are 354 interfaces for:
   
   \code{aod}: Analysis of Overdispersed Data
 
@@ -52,6 +52,8 @@
   \code{gee}: Generalized Estimation Equation Solver
   
   \code{glmx}: Generalized Linear Models Extended
+  
+  \code{gplots}: Various R Programming Tools for Plotting Data
   
   \code{graphics}: The R Graphics Package
 

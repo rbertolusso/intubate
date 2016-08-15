@@ -88,7 +88,7 @@ summary(sem.dhp.1)
 ## so it can be used easily in a pipeline.
 dta \%>\%
   ntbt_sem(model.dhp.1, R.DHP, 329,
-           fixed.x=c('RParAsp', 'RIQ', 'RSES', 'FSES', 'FIQ', 'FParAsp')) %>%
+           fixed.x=c('RParAsp', 'RIQ', 'RSES', 'FSES', 'FIQ', 'FParAsp')) \%>\%
   summary()
 
 

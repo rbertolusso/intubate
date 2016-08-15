@@ -166,6 +166,12 @@ intubate <-
   ## glmx
   ntbt_glmx <-
   ntbt_hetglm <-
+
+  ## gplots  
+  ntbt_bandplot <-
+  ntbt_lowess <-
+  ntbt_overplot <-
+  ntbt_plotmeans <-
   
   ## graphics
   ntbt_boxplot <-

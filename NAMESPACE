@@ -24,6 +24,7 @@
 #importFrom("gbm", "gbm")
 #importFrom("gee", "gee")
 #importFrom("glmx", "glmx", "hetglm")
+#importFrom("gplot", "bandplot", "lowess", "overplot", "plotmeans")
 #import("graphics")
 #importFrom("Hmisc", "areg.boot", "aregImpute", "biVar", "bpplotM", "dataRep",
 ##                   "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
