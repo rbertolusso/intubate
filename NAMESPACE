@@ -88,6 +88,7 @@
 #           "M5P", "M5Rules", "MultiBoostAB", "Normalize", "OneR",
 #           "PART", "SMO", "Stacking")
 #importFrom("sem", "rawMoments", "sem", "tsls")
+#importFrom("spBayes", "bayesGeostatExact", "bayesLMConjugate", "spDynLM")
 #import("stats")
 importFrom("stats", "as.formula")
 #importFrom("strucchange", "breakpoints", "efp", "Fstats", "mefp", "recresid",

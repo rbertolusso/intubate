@@ -57,27 +57,27 @@ data(bacteriuria)
 
 ## Original function to interface
 gssanova(infect ~ trt + time, family="binomial", data = bacteriuria,
-         id.basis = (1:820)[bacteriuria$id %in% c(3,38)], random = ~ 1 | id)
+         id.basis = (1:820)[bacteriuria$id \%in\% c(3,38)], random = ~ 1 | id)
 gssanova0(infect ~ trt + time, family="binomial", data = bacteriuria)
 gssanova1(infect ~ trt + time, family="binomial", data = bacteriuria,
-         id.basis = (1:820)[bacteriuria$id %in% c(3,38)], random = ~ 1 | id)
+         id.basis = (1:820)[bacteriuria$id \%in\% c(3,38)], random = ~ 1 | id)
 
 ## The interface puts data as first parameter
 ntbt_gssanova(bacteriuria, infect ~ trt + time, family="binomial",
-              id.basis = (1:820)[bacteriuria$id %in% c(3,38)], random = ~ 1 | id)
+              id.basis = (1:820)[bacteriuria$id \%in\% c(3,38)], random = ~ 1 | id)
 ntbt_gssanova0(bacteriuria, infect ~ trt + time, family="binomial")
 ntbt_gssanova1(bacteriuria, infect ~ trt + time, family="binomial",
-               id.basis = (1:820)[bacteriuria$id %in% c(3,38)], random = ~ 1 | id)
+               id.basis = (1:820)[bacteriuria$id \%in\% c(3,38)], random = ~ 1 | id)
 
 ## so it can be used easily in a pipeline.
 bacteriuria \%>\%
   ntbt_gssanova(infect ~ trt + time, family="binomial",
-                id.basis = (1:820)[bacteriuria$id %in% c(3,38)], random = ~ 1 | id)
+                id.basis = (1:820)[bacteriuria$id \%in\% c(3,38)], random = ~ 1 | id)
 bacteriuria \%>\%
   ntbt_gssanova0(infect ~ trt + time, family="binomial")
 bacteriuria \%>\%
   ntbt_gssanova1(infect ~ trt + time, family="binomial",
-                 id.basis = (1:820)[bacteriuria$id %in% c(3,38)], random = ~ 1 | id)
+                 id.basis = (1:820)[bacteriuria$id \%in\% c(3,38)], random = ~ 1 | id)
 
 
 ## ntbt_ssanova: Fitting Smoothing Spline ANOVA Models

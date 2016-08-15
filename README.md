@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 408 interfaces that can be related to data science
+`intubate` currently implements 411 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the non-formula variants should also work.
 
@@ -301,6 +301,7 @@ The R packages that have interfaces implemented so far are:
 * `RRF`: Regularized Random Forest
 * `RWeka`: R/Weka Interface
 * `sem`: Structural Equation Models
+* `spBayes`: Univariate and Multivariate Spatial-temporal Modeling
 * `stats`: The R Stats Package (glm, lm, loess, lqs, nls, ...)
 * `strucchange`: Testing, Monitoring, and Dating Structural Changes
 * `survey`: Analysis of Complex Survey Samples

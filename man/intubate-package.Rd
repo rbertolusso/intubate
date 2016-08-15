@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 408 interfaces for:
+  Currently, there are 411 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -139,6 +139,8 @@
   
   \code{sem}: Structural Equation Models
   
+  \code{spBayes}: Univariate and Multivariate Spatial-temporal Modeling
+
   \code{stats}: The R Stats Package (glm, lm, loess, lqs, nls, ...)
   
   \code{strucchange}: Testing, Monitoring, and Dating Structural Changes

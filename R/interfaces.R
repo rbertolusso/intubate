@@ -516,6 +516,11 @@ intubate <-
   ntbt_sem <-
   ntbt_tsls <-
   
+  ## spBayes
+  ntbt_bayesGeostatExact <-
+  ntbt_bayesLMConjugate <-
+  ntbt_spDynLM <-
+
   ## stats
   ntbt_aggregate <-
   ntbt_alias <-
