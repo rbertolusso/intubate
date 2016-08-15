@@ -182,6 +182,23 @@ intubate <-
   ntbt_lowess <-
   ntbt_overplot <-
   ntbt_plotmeans <-
+
+  ## gss  
+  ntbt_gssanova <-
+  ntbt_gssanova0 <-
+  ntbt_gssanova1 <-
+  ntbt_ssanova <-
+  ntbt_ssanova0 <-
+  
+  ntbt_ssanova9 <-
+  ntbt_sscden <-
+  ntbt_sscden1 <-
+  ntbt_sscox <-
+  ntbt_ssden <-
+  
+  ntbt_ssden1 <-
+  ntbt_sshzd <-
+  ntbt_ssllrm <-
   
   ## graphics
   ntbt_boxplot <-

@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 395 interfaces for:
+  Currently, there are 408 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -60,6 +60,8 @@
   \code{gplots}: Various R Programming Tools for Plotting Data
   
   \code{graphics}: The R Graphics Package
+  
+  \code{gss}: General Smoothing Splines
 
   \code{Hmisc}: Harrell Miscellaneous
 

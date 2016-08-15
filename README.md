@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 395 interfaces that can be related to data science
+`intubate` currently implements 408 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the non-formula variants should also work.
 
@@ -260,6 +260,7 @@ The R packages that have interfaces implemented so far are:
 * `gee`: Generalized Estimation Equation Solver
 * `glmx`: Generalized Linear Models Extended
 * `gplots`: Various R Programming Tools for Plotting Data
+* `gss`: General Smoothing Splines
 * `graphics`: The R Graphics Package
 * `Hmisc`: Harrell Miscellaneous
 * `ipred`: Improved Predictors

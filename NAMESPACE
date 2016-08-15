@@ -27,6 +27,9 @@
 #importFrom("gee", "gee")
 #importFrom("glmx", "glmx", "hetglm")
 #importFrom("gplot", "bandplot", "lowess", "overplot", "plotmeans")
+#importFrom("gss", "gssanova", "gssanova0", "gssanova1", "ssanova", "ssanova0",
+#                  "ssanova9", "sscden", "sscden1", "sscox", "ssden",
+#                  "ssden1", "sshzd", "ssllrm")
 #import("graphics")
 #importFrom("Hmisc", "areg.boot", "aregImpute", "biVar", "bpplotM", "dataRep",
 ##                   "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
@@ -57,7 +60,7 @@
 #importFrom("mda", "fda", "mda")
 #importFrom("metafor", "escalc", "rma")
 #importFrom("mgcv", "bam", "gam", "gamm")
-#importFrom("minpack.lm", "ntbt_nlsLM")
+#importFrom("minpack.lm", "nlsLM")
 #importFrom("modeltools", "ModelEnvFormula", "ParseFormula")
 #importFrom("nlme", "gls", "lme", "nlme", "nlsList")
 #importFrom("nlreg", "nlreg")
