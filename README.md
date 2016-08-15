@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 343 interfaces that can be related to data science
+`intubate` currently implements 344 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -87,6 +87,7 @@ phylogenetics,
 psychometrics,
 social sciences,
 surveys,
+survival analysis,
 ..., you will not have to install *all* the packages for which interfaces are provided
 if you intend to use only a subset of them. You only need to install
 the subset of packages you intend to use (which are probably already installed).
@@ -220,6 +221,7 @@ The R packages that have interfaces implemented so far are:
 * `lmtest`: Testing Linear Regression Models
 * `MASS`: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
+* `MCMCglmm`: MCMC Generalised Linear Mixed Models
 * `mda`: Mixture and Flexible Discriminant Analysis
 * `metafor`: Meta-Analysis Package for R
 * `mgcv`: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation

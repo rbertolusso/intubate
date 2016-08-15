@@ -310,6 +310,9 @@ intubate <-
   ntbt_polr <-
   ntbt_qda <-
   ntbt_rlm <-
+  
+  ## MCMCglmm
+  ntbt_MCMCglmm <-
 
   ## mda
   ntbt_fda <-

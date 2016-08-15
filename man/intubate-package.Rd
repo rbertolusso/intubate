@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 343 interfaces for:
+  Currently, there are 344 interfaces for:
   
   \code{aod}: Analysis of Overdispersed Data
 
@@ -76,6 +76,8 @@
   \code{MASS}: Robust Regression, Linear Discriminant Analysis, Ridge Regression,
                Probit Regression, ...
                
+  \code{MCMCglmm}: MCMC Generalised Linear Mixed Models
+
   \code{mda}: Mixture and Flexible Discriminant Analysis
   
   \code{metafor}: Meta-Analysis Package for R
