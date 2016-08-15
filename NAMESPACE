@@ -55,6 +55,7 @@
 #importFrom("mgcv", "bam", "gam", "gamm")
 #importFrom("modeltools", "ModelEnvFormula", "ParseFormula")
 #importFrom("nlme", "gls", "lme", "nlme", "nlsList")
+#importFrom("nlreg", "nlreg")
 #importFrom("nnet", "multinom", "nnet")
 #importFrom("ordinal", "clm", "clm2", "clmm")
 #importFrom("party", "cforest", "ctree", "mob")

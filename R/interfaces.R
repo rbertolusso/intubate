@@ -358,6 +358,9 @@ intubate <-
   ntbt_nlme <-
   ntbt_nlsList <-
   
+  ## nlreg
+  ntbt_nlreg <-
+
   ## nnet
   ntbt_multinom <-
   ntbt_nnet <-

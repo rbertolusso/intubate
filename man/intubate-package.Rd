@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 375 interfaces for:
+  Currently, there are 376 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -93,6 +93,8 @@
   \code{modeltools}: Tools and Classes for Statistical Models
   
   \code{nlme}: Linear and Nonlinear Mixed Effects Models
+  
+  \code{nlreg}: Higher Order Inference for Nonlinear Heteroscedastic Models
   
   \code{nnet}: Feed-Forward Neural Networks and Multinomial Log-Linear Models
   

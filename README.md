@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 375 interfaces that can be related to data science
+`intubate` currently implements 376 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -230,6 +230,7 @@ The R packages that have interfaces implemented so far are:
 * `mgcv`: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation
 * `modeltools`: Tools and Classes for Statistical Models
 * `nlme`: Linear and Nonlinear Mixed Effects Models
+* `nlreg`: Higher Order Inference for Nonlinear Heteroscedastic Models
 * `nnet`: Feed-Forward Neural Networks and Multinomial Log-Linear Models
 * `ordinal`: Regression Models for Ordinal Data
 * `party`: A Laboratory for Recursive Partytioning
