@@ -36,6 +36,10 @@ intubate <-
   ntbt_lmorigin <-
   ntbt_yule.cov <-
   
+  ## arm
+  ntbt_bayesglm <-
+  ntbt_bayespolr <-
+  
   ## brglm
   ntbt_brglm <-
 
