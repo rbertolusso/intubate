@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 361 interfaces that can be related to data science
+`intubate` currently implements 370 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -251,6 +251,7 @@ The R packages that have interfaces implemented so far are:
 * `survival`: Survival Analysis
 * `SwarmSVM`: Ensemble Learning Algorithms Based on Support Vector Machines
 * `tree`: Classification and Regression Trees
+* `vcd`: Visualizing Categorical Data
 * `vegan`: Community Ecology Package
 
 The aim is to continue adding interfaces to most methodologies

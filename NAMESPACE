@@ -85,6 +85,8 @@ importFrom("stats", "as.formula")
 #                       "survfit", "survSplit")
 #importFrom("SwarmSVM", "alphasvm")
 #importFrom("tree", "tree")
+#importFrom("vcd", "agreementplot", "assoc", "cd_plot", "cotabplot", "loddsratio",
+#                  "mosaic", "sieve", "spine", "structable")
 #importFrom("vegan", "adipart", "adonis", "adonis2", "bioenv", "capscale",
 #                    "cca", "dbrda", "envfit", "gdispweight", "multipart",
 #                    "ordicloud", "ordisplom", "ordisurf", "ordixyplot")

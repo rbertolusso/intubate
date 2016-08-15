@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 361 interfaces for:
+  Currently, there are 370 interfaces for:
   
   \code{aod}: Analysis of Overdispersed Data
 
@@ -135,6 +135,8 @@
   \code{SwarmSVM}: Ensemble Learning Algorithms Based on Support Vector Machines
   
   \code{tree}: Classification and Regression Trees
+  
+  \code{vcd}: Visualizing Categorical Data
   
   \code{vegan}: Community Ecology Package
   

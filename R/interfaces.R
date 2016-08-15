@@ -534,6 +534,18 @@ intubate <-
   ## tree
   ntbt_tree <-
   
+  ## vcd
+  ntbt_agreementplot <-
+  ntbt_assoc <-
+  ntbt_cd_plot <-
+  ntbt_cotabplot <-
+  ntbt_loddsratio <-
+  
+  ntbt_mosaic <-
+  ntbt_sieve <-
+  ntbt_spine <-
+  ntbt_structable <-
+
   ## vegan
   ntbt_adipart <-
   ntbt_adonis <-
