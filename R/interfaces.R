@@ -342,6 +342,11 @@ intubate <-
   ntbt_multinom <-
   ntbt_nnet <-
   
+  ## ordinal
+  ntbt_clm <-
+  ntbt_clm2 <-
+  ntbt_clmm <-
+  
   ## party
   ntbt_cforest <-
   ntbt_ctree <-

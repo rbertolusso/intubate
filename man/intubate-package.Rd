@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 344 interfaces for:
+  Currently, there are 347 interfaces for:
   
   \code{aod}: Analysis of Overdispersed Data
 
@@ -89,6 +89,8 @@
   \code{nlme}: Linear and Nonlinear Mixed Effects Models
   
   \code{nnet}: Feed-Forward Neural Networks and Multinomial Log-Linear Models
+  
+  \code{ordinal}: Regression Models for Ordinal Data
   
   \code{party}: A Laboratory for Recursive Partytioning
 

@@ -53,6 +53,7 @@
 #importFrom("modeltools", "ModelEnvFormula", "ParseFormula")
 #importFrom("nlme", "gls", "lme", "nlme", "nlsList")
 #importFrom("nnet", "multinom", "nnet")
+#importFrom("ordinal", "clm", "clm2", "clmm")
 #importFrom("party", "cforest", "ctree", "mob")
 #importFrom("pls", "cppls", "mvr", "pcr", "plsr")
 #importFrom("plotrix", "barNest", "brkdn.plot", "brkdnNest", "histStack", "plotH")
