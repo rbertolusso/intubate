@@ -1,6 +1,6 @@
 #### intubate <||> *Roberto Bertolusso*
 
-##### *2016-07-26* - *2016-08-14* (GPL >= 2)
+##### *2016-07-26* - *2016-08-15* (GPL >= 2)
 
 
 The aim of `intubate` (`<||>`) is to offer a painless way to
@@ -63,7 +63,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 354 interfaces that can be related to data science
+`intubate` currently implements 356 interfaces that can be related to data science
 methodologies and other disciplines. For now I am concentrating in functions having
 "formula" and "data", but the "x" "y" versions (or others) should also work.
 
@@ -241,6 +241,7 @@ The R packages that have interfaces implemented so far are:
 * `rms`: Regression Modeling Strategies
 * `robustbase`: Basic Robust Statistics
 * `rpart`: Recursive Partitioning and Regression Trees
+* `RRF`: Regularized Random Forest
 * `RWeka`: R/Weka Interface
 * `sem`: Structural Equation Models
 * `stats`: The R Stats Package (glm, lm, loess, lqs, nls, ...)

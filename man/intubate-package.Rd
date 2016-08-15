@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 354 interfaces for:
+  Currently, there are 356 interfaces for:
   
   \code{aod}: Analysis of Overdispersed Data
 
@@ -117,6 +117,8 @@
   \code{rpart}: Recursive Partitioning and Regression Trees
   
   \code{RWeka}: R/Weka Interface
+  
+  \code{RRF}: Regularized Random Forest
   
   \code{sem}: Structural Equation Models
   

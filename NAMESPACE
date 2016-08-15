@@ -68,6 +68,7 @@
 #                  "ols", "orm", "psm")
 #importFrom("robustbase", "adjbox", "glmrob", "lmrob", "ltsReg", "nlrob")
 #importFrom("rpart", "rpart")
+#importFrom("RRF", "RRF", "rrfImpute")
 #importFrom("RWeka", "AdaBoostM1", "Bagging", "CostSensitiveClassifier", "DecisionStump", "Discretize",
 #           "GainRatioAttributeEval", "IBk", "InfoGainAttributeEval", "J48", "JRip",
 #           "LBR", "LogitBoost", "LinearRegression", "LMT", "Logistic",

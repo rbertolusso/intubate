@@ -415,6 +415,10 @@ intubate <-
   ## rpart
   ntbt_rpart <-
   
+  ## RRF
+  ntbt_RRF <-
+  ntbt_rrfImpute <-
+
   #RWeka
   ntbt_AdaBoostM1 <-
   ntbt_Bagging <-
