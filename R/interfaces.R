@@ -438,6 +438,11 @@ intubate <-
   ntbt_SMO <-
   ntbt_Stacking <- 
   
+  ## sem
+  ntbt_rawMoments <-
+  ntbt_sem <-
+  ntbt_tsls <-
+  
   ## stats
   ntbt_aggregate <-
   ntbt_alias <-

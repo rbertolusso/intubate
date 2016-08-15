@@ -44,7 +44,7 @@ summary(model)
 ## so it can be used easily in a pipeline.
 set.seed(1)
 PlodiaPO \%>\%
-  ntbt_MCMCglmm(PO ~ 1, random = ~ FSfamily, verbose = FALSE) %>%
+  ntbt_MCMCglmm(PO ~ 1, random = ~ FSfamily, verbose = FALSE) \%>\%
   summary()
 }
 }

@@ -72,6 +72,7 @@
 #           "LBR", "LogitBoost", "LinearRegression", "LMT", "Logistic",
 #           "M5P", "M5Rules", "MultiBoostAB", "Normalize", "OneR",
 #           "PART", "SMO", "Stacking")
+#importFrom("sem", "rawMoments", "sem", "tsls")
 #import("stats")
 importFrom("stats", "as.formula")
 #importFrom("strucchange", "breakpoints", "efp", "Fstats", "mefp", "recresid",
