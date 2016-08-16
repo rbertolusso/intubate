@@ -1,6 +1,6 @@
 #### intubate <||> *Roberto Bertolusso*
 
-##### *2016-07-26* - *2016-08-15* (GPL >= 2)
+##### *2016-07-26* - *2016-08-16* (GPL >= 2)
 
 
 The aim of `intubate` (`<||>`) is to offer a painless way to
@@ -169,19 +169,18 @@ USJudgeRatings %>%
 ```
 
 #### Another example
-Dr. Sheather's website where original data and code was extracted:
+The link below is to Dr. Sheather's website where original data and code was extracted.
+Note that I downloaded it around June 2015 (it may have been modified since then).
+In the link there is also information about the book. 
+This code could be used to produce Figure 3.1 on page 46, containing 4 plots.
+Different strategies are illustrated.
 
 http://www.stat.tamu.edu/~sheather/book/
 
-Note that I downloaded it around June 2015. It may have been modified since then.
-In the link there is also information about the book.
-
-This code could be used to produce Figure 3.1 on page 46.
-
 ```{r}
-par(mfrow=c(2,2))
+par(mfrow=c(2,2))    ## To produce 4 panels to accommodate each plot
 
-## As in the book (without using pipes and attaching data)
+## 1) As in the book (without using pipes and attaching data)
 attach(anscombe)
 plot(x1, y1, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 1")
 abline(lsfit(x1, y1))
@@ -190,7 +189,7 @@ detach()
 ## anscombe$x1 and anscombe$y1.
 ## Spaces were added for clarity and better comparison with code below.
 
-## Alternative using magrittr pipes (%>%) and intubate (no need to attach).
+## 2) Alternative using magrittr pipes (%>%) and intubate (no need to attach).
 anscombe %>%
   ntbt_plot(x2, y2, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 2") %>%
   ntbt(lsfit, x2, y2) %>%
@@ -205,24 +204,24 @@ anscombe %>%
 ##   directly a non-pipe-aware function for which intubate does not provide
 ##   an interface.
 
-## Alternatively, if intubate does not provide an interface to a given
+## 3) Alternatively, if intubate does not provide an interface to a given
 ## function (as currently happens with lsfit), you can create your own
 ## interface "on demand" and use it right away in your pipelines.
 ## You only need to include the following line of code:
-ntbt_lsfit <- intubate  ## NOTE: we are *not* including parentheses
-## Just remember that:
+
+ntbt_lsfit <- intubate  ## NOTE: we are *not* including parentheses.
+
+## That's it. Just remember that:
 ## 1) intubate interfaces *must* start with 'ntbt_' followed by the
 ##    name of the function to interface.
 ## 2) parentheses are *not* used in the definition of the interface.
-
-## That's it. Now you can use ntbt_lsfit in your pipeline.
+## Now you can use ntbt_lsfit in your pipeline.
 anscombe %>%
-  ntbt_plot(x2, y2, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 2") %>%
-  ntbt_lsfit(x2, y2) %>%    ## Using just created "on demand" interface
+  ntbt_plot(x3, y3, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 2") %>%
+  ntbt_lsfit(x3, y3) %>%    ## Using just created "on demand" interface
   abline()
 
-## You can also use the formula variant
-## (this was the original aim of intubate)
+## 4) Alternatively, you can use the formula variant (original aim of intubate).
 anscombe %>%
   ntbt_plot(y4 ~ x4, xlim=c(4,20), ylim=c(3,14), main="Data Set 4") %>%
   ntbt_lm(y4 ~ x4) %>%    ## We are using 'ntbt_lm' instead of 'ntbt_lmfit' 
