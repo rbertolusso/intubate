@@ -22,24 +22,23 @@ ntbt <- function(data, fti, ...) {
   preCall <- match.call(expand.dots = FALSE)
   Call <- match.call(expand.dots = TRUE)
 
-  fti_name <- all.names(Call[[3]])
+  cfti <- all.names(Call[[3]])
   ## For now we ignore the namespace and call the function
   ## without it.
-  fti_name <- fti_name[length(fti_name)]
+  cfti <- cfti[length(cfti)]
   ## For some reason (unknown to me), if we use instead the code
-  #  if (length(fti_name) == 3)
-  #    fti_name <- paste0(fti_name[2], fti_name[1], fti_name[3])
+  #  if (length(cfti) == 3)
+  #    cfti <- paste0(cfti[2], cfti[1], cfti[3])
   ## that would recreate the original code,
-  ## as.name(fti_name) expands to stats::lm enclosed in backsticks
+  ## as.name(cfti) expands to stats::lm enclosed in backsticks
   ## and I do not know for now how to get rid of those backsticks
   ## that still are there when you check the
   ## final Call (with print), and then
   ## there is an error when you eval().
   
-  Call[[1]] <- as.name(fti_name)
   Call[[3]] <- NULL
 
-  result <- process_call(data, preCall, Call, parent.frame())
+  result <- process_call(data, preCall, Call, cfti, parent.frame())
   
   if (result$result_visible)
     return (result$result)
@@ -63,7 +62,7 @@ is_intuBag <- function(object) {
 ## Internal functions
 
 ## (internal)
-process_call <- function(data, preCall, Call, use_envir) {
+process_call <- function(data, preCall, Call, cfti, use_envir) {
 ##  print(Call)
   io <- parse_intubOrder(preCall$..., data)
 ##  print(io$found)
@@ -73,7 +72,18 @@ process_call <- function(data, preCall, Call, use_envir) {
   }
   input_data <- io$input_data
 
-  if (length(preCall$...) == 0)  {
+  Call[[1]] <- as.name(cfti)
+  ## print(formals(cfti))
+  
+  first_par_name <- names(formals(cfti))[1]
+  
+  if (first_par_name %in% c("data", ".data")) { ## already pipe-aware function
+    ##cat("Already pipe-aware function\n")
+    names(Call)[[2]] <- first_par_name
+    ##print(Call)
+    result <- eval(Call, envi = use_envir)
+  } else 
+    if (length(preCall$...) == 0)  {
     #cat("No arguments other than data\n")
     #print(Call)
     result <- eval(Call)
@@ -87,19 +97,20 @@ process_call <- function(data, preCall, Call, use_envir) {
     result_visible <- ret$result_visible
     Call <- ret$Call
   } else  {
-    #cat("Rest of cases\n")
-    #print(Call)
-    if(length(input_data) == 1 && !is_intuBag(input_data))
+    cat("Rest of cases\n")
+    print(Call[-2])
+    if(length(input_data) == 1 && !is_intuBag(input_data)) 
       input_data <- input_data[[1]]  ## Need to get the object inside the list.
     result <- try(with(input_data, eval(Call[-2])), silent = TRUE) ## Remove "data" [-2] then call
     if (class(result)[[1]] == "try-error") {
       if (io$is_intuBag)
         Call[[2]] <- as.name(io$input[1])
-      names(Call)[[2]] <- ""                     ## Leave data unnamed
-      #print(Call)
+      names(Call)[[2]] <- ""                   ## Leave data unnamed. For already pipe-aware functions
+      print(Call)
       result <- try(eval(Call), silent = TRUE) ## For subset() and such, that already are
                                                ## pipe aware.
       if (class(result)[[1]] == "try-error") {
+        cat("Calling formula case from Rest of cases\n")
         ret <- process_formula_case(Call, use_envir, data) ## Try formula (formula could be
                                                      ## result of a function call)
         result <- ret$result
@@ -114,7 +125,8 @@ process_call <- function(data, preCall, Call, use_envir) {
     result_visible <- withVisible(result)$visible
   
   if (io$found) {
-    if (length(io$input_functions) + length(io$result_functions) > 0) {
+    if (length(io$input_functions) + length(io$result_functions) > 0 ||
+        io$verbose) {
       cat("\n") 
       print(Call)
     }
@@ -124,10 +136,15 @@ process_call <- function(data, preCall, Call, use_envir) {
     exec_intubOrder(io$result_functions, "result", result)
   }
 
-  if (!is.null(result) && io$output[1] != "")
-    data[[io$output[1]]] <- result
-##    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
-    
+  if (!is.null(result) && io$output[1] != "") {
+    if (io$is_intuBag) {
+      data[[io$output[1]]] <- result
+    ##    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
+    } else {
+      assign(io$output[1], result, envir = globalenv())  ## For now to the globalenv()
+                                                         ## Later user define with option
+    }
+  }
 ##  print(io)
   if (!io$is_intuBag) {
     if (!is.null(result) && !io$forward_input) {
@@ -147,6 +164,7 @@ parse_intubOrder <- function(par_list, data) {
   intuBorder <- "<||>"
   io <- list()
   io$found <- FALSE
+
   for (pos in 1:length(par_list)) {
     io$intubOrder <- par_list[[pos]]
     if (is.character(io$intubOrder) &&
@@ -196,8 +214,8 @@ parse_intubOrder <- function(par_list, data) {
   ## Get names of outputs.
   ## cat("Outputs\n")
   io$output <- trimws(strsplit(input_output[2], ";")[[1]])
-  
-#  print(io)
+
+  #  print(io)
   io
 }
 
@@ -333,48 +351,6 @@ process_formula_case <- function(Call, use_envir, data) {
 }
 
 
-function(Call, use_envir) {
-  cat("process_formula_case\n")
-  pos <- which(sapply(charCall <- as.character(Call), function(par) {
-    gsub(".*(<\\|\\|>).*", "\\1", par) == "<||>"
-  }))
-  if (length(pos) > 0) {
-    charCall[[pos]] <- gsub("[\"']<\\|\\|>[\"']", charCall[[2]], charCall[[pos]])
-    . <- eval(parse(text = charCall[[pos]]), envir = use_envir)
-    Call[[pos]] <- quote(.)
-    ## Call[[pos]] <- eval(parse(text = charCall[[pos]]), envir = use_envir)
-    ##    Call[[pos]] <- eval(parse(text = charCall[[pos]]), envir = Call[-2])
-    Call <- Call[-2]
-    #charCall <- charCall[-2]
-    print(Call)
-    #print(names(charCall))
-    #print(charCall)
-    #Call <- Call[-2]
-    
-    #    print(eval(charCall))
-  }
-  #  print(Call[[5]])
-  #  print(pos)
-  
-  Call[2:3] <- Call[3:2]                       ## Switch parameters
-  names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
-  ## print(Call)
-  result <- try(eval(Call, envir = use_envir), silent = TRUE)
-  if (class(result)[[1]] == "try-error") {     ## Maybe data has other name
-    names(Call)[[3]] <- ""                     ## Leave data unnamed
-    ## print(Call)
-    result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
-    if (class(result)[[1]] == "try-error") {   ## Maybe data is in position 3
-      Call[3:4] <- Call[4:3]                   ## Switch parameters
-      ## print(Call)
-      result <- eval(Call, envir = use_envir)  ## Retry. If error, give up
-    }
-  }
-  list(result = result, Call = Call)
-}
-
-
-
 ## (internal)
 ## Determine if there is a formula
 there_are_formulas <- function(par_list) {
@@ -387,6 +363,7 @@ there_are_formulas <- function(par_list) {
                as.character(par)[[1]] == "~"
              }) > 0)
 }
+
 
 ## (internal)
 ## Name checking
@@ -404,16 +381,16 @@ get_calling_name <- function(prefix, full_name) {
                 " is an invalid name.\n", 
                 "The interface should be named ", prefix, "_<name>\n",
                 "where <name> is the name of the function to be interfaced."))
-  func_name <- gsub(paste0(prefix, "_(.+)"), "\\1", full_name)
-  if (!exists(func_name)) {
-    stop(paste0("The function <| ", func_name, " |> does not seem to be defined.\n",
-                "Did you install the package where <| ", func_name, " |> is included?\n",
+  cfti <- gsub(paste0(prefix, "_(.+)"), "\\1", full_name)
+  if (!exists(cfti)) {
+    stop(paste0("The function <| ", cfti, " |> does not seem to be defined.\n",
+                "Did you install the package where <| ", cfti, " |> is included?\n",
                 "If not, please run: install.packages(\"package_name\")\n",
                 "Did you load the corresponding library?\n",
                 "If not, please run: library(package_name)\n",
                 "To keep system resources low, intubate does not install, nor loads, packages."))
   }
-  as.name(func_name)
+  cfti
 }
 
 
