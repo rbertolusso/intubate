@@ -160,7 +160,8 @@
   The aim is to provide interfaces to most methodologies
   used in data science.
   
-  \code{intubate} core depends only on \code{base} and \code{stats} libraries.
+  \code{intubate} core depends only on \code{base}, \code{stats}, 
+  and \code{utils} libraries.
   To keep it as lean as possible, \code{intubate} will not
   install not load any library. You need to make sure that the
   library containing the functions to be interfaced are loaded

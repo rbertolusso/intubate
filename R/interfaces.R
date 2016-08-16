@@ -147,7 +147,7 @@ intubate <-
   ntbt_earth <-
 
   ## EnvStats
-  ntbt_calibrate <-
+  ## ntbt_calibrate <-    ## It needs an attach() in interface. Disabled for now.
   ntbt_gofTest <-
   ntbt_gofGroupTest <-
   ntbt_kendallSeasonalTrendTest <-

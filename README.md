@@ -70,7 +70,8 @@ methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
 but the non-formula variants should also work (even cases currently lacking interfaces).
 
-`intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
+`intubate` core depends only on `base`, `stats`, and `utils` libraries.
+To keep it as lean as
 possible, and to be able to continue to include more interfaces without bloating your machine, 
 starting from version 0.99.3 `intubate` **will not** install the packages
 that contain the functions that are interfaced. *You will need to install them yourself*,
@@ -93,7 +94,7 @@ surveys,
 survival analysis,
 ..., you will not have to install *all* the packages for which interfaces are provided
 if you intend to use only a subset of them. You only need to install
-the subset of packages you intend to use (which are probably already installed).
+the subset of packages you intend to use (which are probably already installed in your machine).
 
 Also, there are cases where some packages are in conflict if loaded simultaneously, leading
 to a segmentation fault (for example, kernlab functions fail when testing the whole
@@ -272,8 +273,8 @@ anscombe %>%
 ```
 
 This is the plot produced:
+<div style="text-align:center"><img src=".excluded/img/sheather_fig_3.1.png" /></div>
 
-<p><img src=".excluded/img/sheather_fig_3.1.png" /></p>
 
 #### Interfaced libraries
 
@@ -1019,9 +1020,6 @@ Adding interfaces to the `intubate` package also represent one-liners for me.
 The time consuming part on my side is to prepare
 the documentation, that certainly needs improvement, and make sure
 the examples work.
-
-By the way, if it weren't for the examples, `intubate` would
-only have dependencies on `base`. The implementation is extremely lean.
 
 ## Discussion
 #### Disclaimer:

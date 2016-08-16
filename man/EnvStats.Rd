@@ -171,7 +171,7 @@ EPA.09.Ex.11.1.arsenic.df \%>\%
 \keyword{intubate}
 \keyword{magrittr}
 \keyword{EnvStats}
-\keyword{ntbt_calibrate}
+%\keyword{ntbt_calibrate}
 \keyword{ntbt_gofTest}
 \keyword{ntbt_gofGroupTest}
 \keyword{ntbt_kendallSeasonalTrendTest}
