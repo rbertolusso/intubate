@@ -26,6 +26,7 @@
 #importFrom("gbm", "gbm")
 #importFrom("gee", "gee")
 #importFrom("glmx", "glmx", "hetglm")
+#importFrom("gmnl", "gmnl")
 #importFrom("gplot", "bandplot", "lowess", "overplot", "plotmeans")
 #importFrom("gss", "gssanova", "gssanova0", "gssanova1", "ssanova", "ssanova0",
 #                  "ssanova9", "sscden", "sscden1", "sscox", "ssden",
@@ -61,6 +62,7 @@
 #importFrom("metafor", "escalc", "rma")
 #importFrom("mgcv", "bam", "gam", "gamm")
 #importFrom("minpack.lm", "nlsLM")
+#importFrom("mlogit", "mlogit")
 #importFrom("modeltools", "ModelEnvFormula", "ParseFormula")
 #importFrom("nlme", "gls", "lme", "nlme", "nlsList")
 #importFrom("nlreg", "nlreg")
