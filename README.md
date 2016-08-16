@@ -38,19 +38,20 @@ that work well in a pipe (much like `stats::setNames())`.
 * The [*srvyr*](http://www.github.com/gergness/srvyr) package allows for analysis of complex surveys using the pipe-friendly syntax of dplyr.
 
 ### In a nutshell
-If you like `magrittr` pipelines (%>%) and your are looking
+If you like `magrittr` pipelines (%>%) and you are looking
 for an alternative to perfoming a statistical analysis
 in the following way:
 
 ```{r}
-fit <- lm(sr ~ ., data = LifeCycleSavings)
+fit <- lm(sr ~ ., LifeCycleSavings)
 summary(fit)
 ```
-`intubate` let's you do it this other ways:
+
+`intubate` let's you do it in these other ways:
 
 ```{r}
-library(magrittr)
 library(intubate)
+library(magrittr)
 
 ## 1) Using interface (provided by intubate OR user defined)
 LifeCycleSavings %>%
@@ -63,9 +64,11 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 411 interfaces that can be related to data science
-methodologies and other disciplines. For now I am concentrating in functions having
-"formula" and "data", but the non-formula variants should also work.
+`intubate` currently implements 411 interfaces (below you will find a list of packages
+containing the interfaced functions) that can be related to data science
+methodologies and other disciplines. For now the focus is on interfacing
+non-pipe-aware functions having "formula" and "data" (in that order),
+but the non-formula variants should also work (even cases currently lacking interfaces).
 
 `intubate` core depends only on `base` and `stats` libraries. To keep it as lean as
 possible, and to be able to continue to include more interfaces without bloating your machine, 
@@ -98,7 +101,7 @@ examples provided with `intubate`, but not when testing kernlab only examples
 in a clean environment. I ignore which is/are the other(s) package(s) conflicting with it.
 The only thing I know is that the package name is alphabetically ordered prior to kernlab)
 
-#### Interfaces "on demand", or by calling non-pipe-aware functions directly
+#### Interfaces "on demand"
 `intubate` *also* let's
 you **create your own interfaces** "on demand", **right now**, giving you
 full power of decision regarding which functions to interface. It *also*
@@ -111,20 +114,27 @@ field that may, in the long run, continue to lack interfaces due to my
 unforgivable, but unavoidable, ignorance.
 
 As an example of creating an interface "on demand", suppose the interface to
-`cor.test` was lacking in the current version of `intubate` and you want to
+`cor.test` was lacking in the current version of `intubate` and *suppose*
+(only for a moment) that you want to
 create yours because you are searching for a pipeline-aware alternative to
-the following style of coding (which, by the way, is perfectly fine as it is
-and you shouldn't change it if you like it and serves your purposes):
+any of the following styles of coding (which, by the way, are perfectly fine
+as they are and you shouldn't change yours if you like it and serves your purposes):
 
 ```{r}
+data(USJudgeRatings)
+
+## 1)
+cor.test(USJudgeRatings$CONT, USJudgeRatings$INTG)
+
+## 2)
 attach(USJudgeRatings)
 cor.test(CONT, INTG)
 detach()
 
-## or
+## 3)
 with(USJudgeRatings, cor.test(CONT, INTG))
      
-## or even
+## 4)
 USJudgeRatings %>%
    with(cor.test(CONT, INTG))
 ```
@@ -156,7 +166,8 @@ USJudgeRatings %>%
   ntbt_cor.test(~ CONT + INTG)        ## Also the formula variant
 ```
 
-You **do not have to create an interface** if you do not
+#### Calling non-pipe-aware functions directly
+Moreover, you **do not have to create an interface** if you do not
 want to. You can **call the non-pipe-aware function directly** with `ntbt`,
 in the following way:
 
@@ -168,7 +179,33 @@ USJudgeRatings %>%
   ntbt(cor.test, ~ CONT + INTG)        ## Also the formula variant
 ```
 
-#### Another example
+You can potentially use `ntbt` with *any function*, also the ones without an interface
+provided by `intubate`. In principle,
+the functions you would like to call are the ones you cannot use directly in
+a pipeline (because `data` is in second place instead of first).
+
+#### Bugs and Feature requests
+The generality of the capabilities of the interfacing machine still needs to be further
+*verified*, as there are thousands of potential functions to interface and
+certainly some are bound to fail when interfaced.
+
+The goal is to make `intubate` each time more robust by
+addressing the peculiarities of newly discovered failing functions.
+
+For the time being, only cases where the
+*interfaces provided with* `intubate` *fail* will be considered as *bugs*.
+
+Cases of failing *user defined interfaces* or when using `ntbt` to call functions
+directly that do not have interfaces provided with released versions of `intubate`,
+will be considered *feature requests*.
+
+Of course, it will be greatly appreciated,
+if you have some coding skills and can follow the code of the interface,
+if you could provide the proposed *solution*, that *shouldn't break anything else*,
+together with the feature request.
+
+#### Another example, showing different techniques to achieve the same goal
+
 The link below is to Dr. Sheather's website where original data and code was extracted.
 Note that I downloaded it around June 2015 (it may have been modified since then).
 In the link there is also information about the book. 
@@ -186,8 +223,9 @@ plot(x1, y1, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 1")
 abline(lsfit(x1, y1))
 detach()
 
-## You needed to attach so variables are visible without using
-## anscombe$x1 and anscombe$y1.
+## You needed to attach so variables are visible locally.
+## If not, you should have used anscombe$x1 and anscombe$y1.
+## You could also have used 'with'.
 ## Spaces were added for clarity and better comparison with code below.
 
 ## 2) Alternative using magrittr pipes (%>%) and intubate (no need to attach):
@@ -199,7 +237,7 @@ anscombe %>%
 ## * 'ntbt_plot' is the interface to 'plot' provided by intubate.
 ##   As 'plot' returns NULL, intubate forwards (invisibly) its input
 ##   automatically without having to use %T>%, so 'lsfit' gets the
-##   original data (what it needs) and everything fits in one pipeline.
+##   original data (what it needs) and everything is done in one pipeline.
 ## * 'ntbt' let's you call the non-pipe-aware function 'lsfit' directly.
 ##   You can use 'ntbt' *always* (you do not need to use 'ntbt_' interfaces
 ##   if you do not want to), but 'ntbt' is particularly useful to interface
@@ -234,27 +272,6 @@ anscombe %>%
 This is the plot produced:
 
 <p><img src=".excluded/img/sheather_fig_3.1.png" /></p>
-
-
-You can use `ntbt` with *any function*, also the ones without an interface
-provided by `intubate`. In principle,
-the functions you would like to call are the ones you cannot use directly in
-a pipeline (because `data` is in second place instead of first).
-
-The generality of the last assertion still needs to be *verified*, as there are
-thousands of potential functions to interface and certainly some are bound to fail
-when interfaced.
-
-My goal is to make `intubate` each time more robust by
-addressing the peculiarities of newly discovered failing functions.
-
-However, for the time being, I will consider as *bugs* only cases where the
-*interfaces provided with* `intubate` *fail*.
-Cases of failing *user defined interfaces* or when using `ntbt` to call functions
-directly that do not have interfaces provided with released versions of `intubate`,
-will be considered *feature requests* and not bugs (and I will greatly appreciate,
-if you have some coding skills and can follow my code, if you could provide the
-proposed *solution*, that *shouldn't break anything else*, together with the request).
 
 #### Interfaced libraries
 

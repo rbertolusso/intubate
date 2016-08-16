@@ -250,18 +250,18 @@ airquality \%>\%
 
 ## lm
 ## Original function to interface
-lm(conc ~ uptake, CO2)
+lm(sr ~ ., LifeCycleSavings)
 
 ## The interface reverses the order of data and formula
-ntbt_lm(CO2, conc ~ uptake)
+ntbt_lm(LifeCycleSavings, sr ~ .)
 
 ## so it can be used easily in a pipeline.
 library(magrittr)
-CO2 \%>\%
-  ntbt_lm(conc ~ uptake)
+LifeCycleSavings \%>\%
+  ntbt_lm(sr ~ .)
 
-CO2 \%>\%
-  ntbt_lm(conc ~ uptake) \%>\%
+LifeCycleSavings \%>\%
+  ntbt_lm(sr ~ .) \%>\%
   summary()
 
 ## loess
