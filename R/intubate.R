@@ -300,7 +300,7 @@ process_formula_case <- function(Call, use_envir, data) {
       }
     }
   }
-  
+
   ## Parameters exhausted and still error
   ## Try attaching data and call, It will fail if there is a . in the formula,
   ## but at this point there is no much else to do.
@@ -311,11 +311,19 @@ process_formula_case <- function(Call, use_envir, data) {
   ## working with local variables. It would be better if the authors of EnvStats
   ## improve the data management.
   ## Remove "data" (now at the end of Call) then call.
-  Call <- Call[-length(Call)]
+
+  ## check --as-cran does not like the attach() below. Currently it is there
+  ## only to address calibrate() in EnvStats. So for now, I will remove
+  ## the interface to calibrate(), and get back to this after 0.99.3
+  ## is submitted (maybe later this week).
+  ##
+  ## If we get to this point, we will just admit defeat.
+  
+  #  Call <- Call[-length(Call)]
   ## print(Call)
-  attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
-  result <- try(eval(Call), silent = TRUE)  ## Use try as we use attach()
-  detach()
+#  attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
+#  result <- try(eval(Call)), silent = TRUE)  ## Use try as we use attach()
+#  detach()
   if (class(result)[[1]] == "try-error")
     stop(result)          ## We have run out of sorts... Admit defeat.
 

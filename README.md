@@ -185,9 +185,11 @@ the functions you would like to call are the ones you cannot use directly in
 a pipeline (because `data` is in second place instead of first).
 
 #### Bugs and Feature requests
-The generality of the capabilities of the interfacing machine still needs to be further
-*verified*, as there are thousands of potential functions to interface and
-certainly some are bound to fail when interfaced.
+The robustness and generality of the interfacing machinery still needs to be
+further *verified* (and very likely improved),
+as there are thousands of potential functions to interface and
+certainly some are bound to fail when interfaced. Some have already been addressed
+when implementing provided interfaces (as their examples failed).
 
 The goal is to make `intubate` each time more robust by
 addressing the peculiarities of newly discovered failing functions.
@@ -207,7 +209,7 @@ together with the feature request.
 #### Another example, showing different techniques to achieve the same goal
 
 The link below is to Dr. Sheather's website where original data and code was extracted.
-Note that I downloaded it around June 2015 (it may have been modified since then).
+Note that it was downloaded around June 2015 (it may have been modified since then).
 In the link there is also information about the book. 
 This code could be used to produce Figure 3.1 on page 46, containing 4 plots.
 Different strategies are illustrated.
@@ -295,7 +297,8 @@ interfaces (`ntbt`) and
 that the interfaces and `ntbt` could also be successfully used in cases
 where non-formula variants are implemented.
 
-However, my starting point inevitably led the way,
+However, my starting point inevitably led the way. I did not *see* the big picture
+(well, what *today* I *think* the big picture is...),
 so the current version only addresses packages containing functions that use formula
 variant, even
 if in those cases you can also use the non-formula variants (you can see the
@@ -402,10 +405,16 @@ The aim is to continue adding interfaces to most methodologies
 I make no personal judgement (mostly due to personal ignorance)
 about the merit of any interfaced function.
 I have used only a subset of what is provided, and I am happy to include others,
-that I am currently unaware of, down the line.
+that I am currently unaware of, down the line. In principle I plan on including
+packages that are listed as reverse depends, imports, or suggest on package `Formula`
+(I am missing still quite a bit of them). Adding interfacings is easy (and can be
+boring...) so I will appreciate if you want to contribute (and you will be credited
+in the help of the interfaced package). Also is welcome the improvement of the
+provided examples (such as making sure the data used is correct for the statistical
+technique used).
 
 I do not claim to be a data scientist (I still have almost no clue of what a data scientist
-is or is not, and my confusion about the subject only increases),
+is or is not, and my confusion about the subject only increases with time),
 nor someone entitled to tell you what to use or not.
 
 As such, I am not capable of engaging in disputes of what is relevant or not, or,

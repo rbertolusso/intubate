@@ -1,5 +1,5 @@
 \name{EnvStats}
-\alias{ntbt_calibrate}
+%\alias{ntbt_calibrate}
 \alias{ntbt_gofTest}
 \alias{ntbt_gofGroupTest}
 \alias{ntbt_kendallSeasonalTrendTest}
@@ -14,7 +14,7 @@
   in a pipeline implemented by \code{magrittr}.
 }
 \usage{
-ntbt_calibrate(data, ...)
+#ntbt_calibrate(data, ...)   ## Not implement for 0.99.3 as needs an attach()
 ntbt_gofTest(data, ...)
 ntbt_gofGroupTest(data, ...)
 ntbt_kendallSeasonalTrendTest(data, ...)
@@ -51,12 +51,18 @@ data(EPA.97.cadmium.111.df)
 ## Original function to interface
 calibrate(Cadmium ~ Spike, data = EPA.97.cadmium.111.df) 
 
+## NOTE: --check-as-cran does not like having an attach()
+##       in the code, which is needed to interface
+##       calibrate (at least for now). I will get back
+##       to this after 0.99.3 is submitted. Please do not
+##       report as bug (instead please find a solution to this!)
+
 ## The interface puts data as first parameter
-ntbt_calibrate(EPA.97.cadmium.111.df, Cadmium ~ Spike) 
+#ntbt_calibrate(EPA.97.cadmium.111.df, Cadmium ~ Spike)
 
 ## so it can be used easily in a pipeline.
-EPA.97.cadmium.111.df \%>\%
-  ntbt_calibrate(Cadmium ~ Spike) 
+#EPA.97.cadmium.111.df \%>\%
+#  ntbt_calibrate(Cadmium ~ Spike) 
 
 
 ## ntbt_gofGroupTest: Goodness-of-Fit Test for a Specified Probability
