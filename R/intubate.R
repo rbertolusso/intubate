@@ -114,8 +114,10 @@ process_call <- function(data, preCall, Call, use_envir) {
     result_visible <- withVisible(result)$visible
   
   if (io$found) {
-    cat("\n") 
-    print(Call)
+    if (length(io$input_functions) + length(io$result_functions) > 0) {
+      cat("\n") 
+      print(Call)
+    }
     #print(io$input_functions)
     exec_intubOrder(io$input_functions, "source", input_data)
     #print(io$result_functions)
@@ -201,7 +203,6 @@ parse_intubOrder <- function(par_list, data) {
 
 ## (internal)
 exec_intubOrder <- function(..object_functions.., where, ..object_value..) {
-  oldmfrow <- par()$mfrow    ## Just in case
   for (this_function in ..object_functions..) {
     include_object <- TRUE
     if (this_function == "print") {
@@ -224,47 +225,6 @@ exec_intubOrder <- function(..object_functions.., where, ..object_value..) {
       cat(printed[printed != "NULL"], sep = "\n")
     }
   }
-  par(mfrow = oldmfrow)
-}
-
-
-function(object_functions, where, object) {
-  oldmfrow <- par()$mfrow    ## Just in case
-  
-  for (this_function in object_functions) {
-    include_object <- TRUE
-    if (this_function == "print") {
-      printed <- capture.output(print(object))
-    } else {
-      if (length(strsplit(this_function, "\\(")[[1]]) > 1) {
-        fun_name <- gsub("(.*)\\(.*\\).*", "\\1", this_function)
-        
-        if (gsub("(-).*", "\\1", fun_name) == "-") {
-          fun_name <- gsub("-(.*)", "\\1", fun_name)
-          include_object <- FALSE
-        }
-        fun_par <- gsub(".*\\((.*)\\).*", "\\1", this_function)
-        
-        strCall <- paste0(fun_name, "(", ifelse(include_object,
-                                                "object, ",
-                                                ""), fun_par, ")")
-        printed <- capture.output(print(eval(parse(text = strCall))))
-      } else {
-        printed <- capture.output(print(do.call(this_function, args=list(quote(object)))))
-      }
-    }
-    ## print(str(printed))
-    if (printed[1] != "NULL" && include_object) {
-      cat("\n")
-      header <- paste0(" ", this_function, " <||> ", where, " ")
-      sep <- paste0("# ", paste0(rep("-", nchar(header)), collapse = ""), "\n")
-      cat(sep)
-      cat(paste0("# ", header, "\n"))
-      cat(sep)
-      cat(printed[printed != "NULL"], sep = "\n")
-    }
-  }
-  par(mfrow = oldmfrow)
 }
 
 
