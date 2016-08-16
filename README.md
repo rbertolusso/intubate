@@ -64,7 +64,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 411 interfaces (below you will find a list of packages
+`intubate` currently implements 412 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -348,6 +348,7 @@ The R packages that have interfaces implemented so far are:
 * `gbm`: Generalized Boosted Regression Models
 * `gee`: Generalized Estimation Equation Solver
 * `glmx`: Generalized Linear Models Extended
+* `gmnl`: Multinomial Logit Models with Random Parameters
 * `gplots`: Various R Programming Tools for Plotting Data
 * `gss`: General Smoothing Splines
 * `graphics`: The R Graphics Package

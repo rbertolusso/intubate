@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 411 interfaces for:
+  Currently, there are 412 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -56,6 +56,8 @@
   \code{gee}: Generalized Estimation Equation Solver
   
   \code{glmx}: Generalized Linear Models Extended
+  
+  \code{gmnl}: Multinomial Logit Models with Random Parameters
   
   \code{gplots}: Various R Programming Tools for Plotting Data
   

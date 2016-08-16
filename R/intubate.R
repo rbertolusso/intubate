@@ -81,7 +81,7 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
     ##cat("Already pipe-aware function\n")
     names(Call)[[2]] <- first_par_name
     ##print(Call)
-    result <- eval(Call, envi = use_envir)
+    result <- eval(Call, envir = use_envir)
   } else 
     if (length(preCall$...) == 0)  {
     #cat("No arguments other than data\n")

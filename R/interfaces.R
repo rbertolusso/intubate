@@ -176,7 +176,10 @@ intubate <-
   ## glmx
   ntbt_glmx <-
   ntbt_hetglm <-
-
+  
+  ## gmnl
+  ntbt_gmnl <-
+  
   ## gplots  
   ntbt_bandplot <-
   ntbt_lowess <-
