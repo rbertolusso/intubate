@@ -63,9 +63,12 @@ is_intuBag <- function(object) {
 
 ## (internal)
 process_call <- function(data, preCall, Call, cfti, use_envir) {
-##  print(Call)
   io <- parse_intubOrder(preCall$..., data)
-##  print(io$found)
+  
+  if (io$diagnose) print(Call)
+  if (io$diagnose) print(preCall)
+  
+  ##  print(io$found)
   if (io$found) {
     preCall$...[[io$pos]] <- NULL   ## Remove intubOrder
     Call[[io$pos + 2]] <- NULL
@@ -73,32 +76,32 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   input_data <- io$input_data
 
   Call[[1]] <- as.name(cfti)
-  ## print(formals(cfti))
+  if (io$diagnose) print(Call)
+  if (io$diagnose) cat("* Formals:", names(formals(cfti)), "\n")
   
   first_par_name <- names(formals(cfti))[1]
   
-  if (first_par_name %in% c("data", ".data")) { ## already pipe-aware function
-    ##cat("Already pipe-aware function\n")
+  if (first_par_name %in% c("data", ".data", "_data")) { ## already pipe-aware function
+    if (io$diagnose) cat("* Already pipe-aware function\n")
     names(Call)[[2]] <- first_par_name
-    ##print(Call)
+    if (io$diagnose) print(Call)
     result <- eval(Call, envir = use_envir)
-  } else 
-    if (length(preCall$...) == 0)  {
-    #cat("No arguments other than data\n")
-    #print(Call)
+  } else if (length(preCall$...) == 0)  {
+    if (io$diagnose) cat("* No arguments other than data\n")
+    if (io$diagnose) print(Call)
     result <- eval(Call)
   } else if (there_are_formulas(preCall$...) || io$force_formula_case) {
-    #cat("Formula\n")
+    if (io$diagnose) cat("* Formula case\n")
     if (io$is_intuBag)
       Call[[2]] <- as.name(io$input[1])
-    #print(Call)
+    if (io$diagnose) print(Call)
     ret <- process_formula_case(Call, use_envir, data)      
     result <- ret$result
     result_visible <- ret$result_visible
     Call <- ret$Call
   } else  {
-    #cat("Rest of cases\n")
-    #print(Call[-2])
+    if (io$diagnose) cat("* Rest of cases\n")
+    if (io$diagnose) print(Call[-2])
     if(length(input_data) == 1 && !is_intuBag(input_data)) 
       input_data <- input_data[[1]]  ## Need to get the object inside the list.
     result <- try(with(input_data, eval(Call[-2])), silent = TRUE) ## Remove "data" [-2] then call
@@ -106,11 +109,11 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
       if (io$is_intuBag)
         Call[[2]] <- as.name(io$input[1])
       names(Call)[[2]] <- ""                   ## Leave data unnamed. For already pipe-aware functions
-      #print(Call)
+      if (io$diagnose) print(Call)
       result <- try(eval(Call), silent = TRUE) ## For subset() and such, that already are
                                                ## pipe aware.
       if (class(result)[[1]] == "try-error") {
-        #cat("Calling formula case from Rest of cases\n")
+        if (io$diagnose) cat("* Calling formula case from Rest of cases\n")
         ret <- process_formula_case(Call, use_envir, data) ## Try formula (formula could be
                                                      ## result of a function call)
         result <- ret$result
@@ -124,6 +127,9 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   if (!exists("result_visible"))
     result_visible <- withVisible(result)$visible
   
+  if (io$diagnose) cat(paste0("* Result is ", ifelse(result_visible, "", "in"), "visible\n"))
+  if (io$diagnose && io$force_return_invisible) cat("* Force return invisible\n")
+  
   if (io$found) {
     if (  ## length(io$input_functions) + length(io$result_functions) > 0 ||
         io$verbose) {
@@ -131,9 +137,9 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
       print(Call)
     }
     #print(io$input_functions)
-    exec_intubOrder(io$input_functions, "source", input_data)
+    exec_intubOrder(io$input_functions, "source", input_data, input_data)
     #print(io$result_functions)
-    exec_intubOrder(io$result_functions, "result", result)
+    exec_intubOrder(io$result_functions, "result", result, input_data)
   }
 
   if (!is.null(result) && io$output[1] != "") {
@@ -145,19 +151,18 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
                                                          ## Later user define with option
     }
   }
-##  print(io)
+  ##  print(io)
   if (!io$is_intuBag) {
     if (!is.null(result) && !io$forward_input) {
-      if (result_visible) {
-        ## cat("visible\n")
+      if (result_visible && !io$force_return_invisible) {
         return (list(result = result, result_visible = TRUE))
       } else
         data <- result
     }
   }
-  ## cat("invisible\n")
   list(result = data, result_visible = FALSE)
 }
+
 
 ## (internal)
 parse_intubOrder <- function(par_list, data) {
@@ -187,14 +192,11 @@ parse_intubOrder <- function(par_list, data) {
   io$result_functions <- trimws(strsplit(io$result_functions, ";")[[1]])
   #print(io$result_functions)
   
-  io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1",
-                                 io$intubOrder) == "F")
-  io$forward_input <- (gsub(".*<.*\\|.*(f).*\\|.*>.*", "\\1",
-                            io$intubOrder) == "f")
-  io$invisible_result <- (gsub(".*<.*\\|.*(i).*\\|.*>.*", "\\1",
-                               io$intubOrder) == "i")
-  io$verbose <- (gsub(".*<.*\\|.*(v).*\\|.*>.*", "\\1",
-                      io$intubOrder) == "v")
+  io$diagnose <- (gsub(".*<.*\\|.*(D).*\\|.*>.*", "\\1", io$intubOrder) == "D")
+  io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1", io$intubOrder) == "F")
+  io$forward_input <- (gsub(".*<.*\\|.*(f).*\\|.*>.*", "\\1", io$intubOrder) == "f")
+  io$force_return_invisible <- (gsub(".*<.*\\|.*(i).*\\|.*>.*", "\\1", io$intubOrder) == "i")
+  io$verbose <- (gsub(".*<.*\\|.*(v).*\\|.*>.*", "\\1", io$intubOrder) == "v")
   
   io$is_intuBag <- is_intuBag(data)
   input_output <- strsplit(paste0(" ", io$intubOrder, " "), ## Spaces to avoid failure.
@@ -220,14 +222,15 @@ parse_intubOrder <- function(par_list, data) {
 }
 
 ## (internal)
-exec_intubOrder <- function(..object_functions.., where, ..object_value..) {
+exec_intubOrder <- function(..object_functions.., where, ..object_value.., ..envir..) {
   for (this_function in ..object_functions..) {
     include_object <- TRUE
     if (this_function == "print") {
       printed <- capture.output(print(..object_value..))
     } else {
       if (length(strsplit(this_function, "\\(")[[1]]) > 1) {
-        printed <- capture.output(print(eval(parse(text = gsub("#", "..object_value..", this_function)))))
+        printed <- capture.output(print(eval(parse(text = gsub("#", "..object_value..", this_function)),
+                                             envir = ..envir..)))
       } else {
         printed <- capture.output(print(do.call(this_function, args=list(quote(..object_value..)))))
       }

@@ -1,6 +1,6 @@
 #### intubate <||> *Roberto Bertolusso*
 
-##### *2016-07-26* - *2016-08-16* (GPL >= 2)
+##### *2016-07-26* - *2016-08-17* (GPL >= 2)
 
 
 The aim of `intubate` (`<||>`) is to offer a painless way to
