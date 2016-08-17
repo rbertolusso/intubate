@@ -64,7 +64,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 413 interfaces (below you will find a list of packages
+`intubate` currently implements 414 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -371,6 +371,7 @@ The R packages that have interfaces implemented so far are:
 * `mgcv`: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation
 * `minpack.lm`: R Interface to the Levenberg-Marquardt Nonlinear Least-Squares
                 Algorithm Found in MINPACK, Plus Support for Bounds
+* `mhurdle`: Multiple Hurdle Tobit Models
 * `mlogit`: Multinomial logit model
 * `modeltools`: Tools and Classes for Statistical Models
 * `nlme`: Linear and Nonlinear Mixed Effects Models

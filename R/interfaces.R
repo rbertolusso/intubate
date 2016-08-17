@@ -380,6 +380,9 @@ intubate <-
   ntbt_gam <-
   ntbt_gamm <-
   
+  ## mhurdle
+  ntbt_mhurdle <-
+  
   ## minpack.lm
   ntbt_nlsLM <-
   

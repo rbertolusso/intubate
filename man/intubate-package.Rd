@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 413 interfaces for:
+  Currently, there are 414 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -97,6 +97,8 @@
   \code{metafor}: Meta-Analysis Package for R
   
   \code{mgcv}: Mixed GAM Computation Vehicle with GCV/AIC/REML Smoothness Estimation
+  
+  \code{mhurdle}: Multiple Hurdle Tobit Models
   
   \code{minpack.lm}: R Interface to the Levenberg-Marquardt Nonlinear Least-Squares
                      Algorithm Found in MINPACK, Plus Support for Bounds
