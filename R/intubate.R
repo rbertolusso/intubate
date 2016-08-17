@@ -97,8 +97,8 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
     result_visible <- ret$result_visible
     Call <- ret$Call
   } else  {
-    cat("Rest of cases\n")
-    print(Call[-2])
+    #cat("Rest of cases\n")
+    #print(Call[-2])
     if(length(input_data) == 1 && !is_intuBag(input_data)) 
       input_data <- input_data[[1]]  ## Need to get the object inside the list.
     result <- try(with(input_data, eval(Call[-2])), silent = TRUE) ## Remove "data" [-2] then call
@@ -106,11 +106,11 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
       if (io$is_intuBag)
         Call[[2]] <- as.name(io$input[1])
       names(Call)[[2]] <- ""                   ## Leave data unnamed. For already pipe-aware functions
-      print(Call)
+      #print(Call)
       result <- try(eval(Call), silent = TRUE) ## For subset() and such, that already are
                                                ## pipe aware.
       if (class(result)[[1]] == "try-error") {
-        cat("Calling formula case from Rest of cases\n")
+        #cat("Calling formula case from Rest of cases\n")
         ret <- process_formula_case(Call, use_envir, data) ## Try formula (formula could be
                                                      ## result of a function call)
         result <- ret$result
@@ -125,7 +125,7 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
     result_visible <- withVisible(result)$visible
   
   if (io$found) {
-    if (length(io$input_functions) + length(io$result_functions) > 0 ||
+    if (  ## length(io$input_functions) + length(io$result_functions) > 0 ||
         io$verbose) {
       cat("\n") 
       print(Call)
