@@ -50,13 +50,15 @@ intuBag <- function(...) {
   iBag <- list(...)
   if (sum(names(iBag) == "") > 0)
     stop("All elements of an intuBag must be named.")
-  class(iBag) <- c("intuBag")
+  ## class(iBag) <- c("intuBag")
+  attr(iBag, "intuBag") <- TRUE
   iBag
 }
 
 ## (external)
 is_intuBag <- function(object) {
-  sum(class(object) == "intuBag") > 0
+  ## sum(class(object) == "intuBag") > 0
+  (!is.null(attr(object, "intuBag")) && attr(object, "intuBag"))
 }
 
 ## Internal functions
@@ -81,12 +83,13 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   
   first_par_name <- names(formals(cfti))[1]
   
-  if (first_par_name %in% c("data", ".data", "_data")) { ## already pipe-aware function
-    if (io$diagnose) cat("* Already pipe-aware function\n")
-    names(Call)[[2]] <- first_par_name
-    if (io$diagnose) print(Call)
-    result <- eval(Call, envir = use_envir)
-  } else if (length(preCall$...) == 0)  {
+  #if (first_par_name %in% c("data", ".data", "_data")) { ## already pipe-aware function
+  #  if (io$diagnose) cat("* Already pipe-aware function\n")
+  #  names(Call)[[2]] <- first_par_name
+  #  if (io$diagnose) print(Call)
+  #  result <- eval(Call, envir = use_envir)
+  #} else
+  if (length(preCall$...) == 0)  {
     if (io$diagnose) cat("* No arguments other than data\n")
     if (io$diagnose) print(Call)
     result <- eval(Call)
@@ -366,7 +369,6 @@ there_are_formulas <- function(par_list) {
                as.character(par)[[1]] == "~"
              }) > 0)
 }
-
 
 ## (internal)
 ## Name checking
