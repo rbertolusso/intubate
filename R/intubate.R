@@ -61,14 +61,25 @@ is_intuBag <- function(object) {
   (!is.null(attr(object, "intuBag")) && attr(object, "intuBag"))
 }
 
-## Internal functions
+## (external)
+intubate_denv <- function(new_envir = NULL) {
+  old_denv <- local_env$denv
+  if (!is.null(new_envir))
+    local_env$denv <- new_envir
+  old_denv
+}
+
+## Internal variables and functions
+
+local_env <- new.env()
+local_env$denv <- new.env()
 
 ## (internal)
 process_call <- function(data, preCall, Call, cfti, use_envir) {
   io <- parse_intubOrder(preCall$..., data)
   
-  if (io$diagnose) print(Call)
-  if (io$diagnose) print(preCall)
+  if (io$show_diagnostics) print(Call)
+  ## if (io$show_diagnostics) print(preCall)
   
   ##  print(io$found)
   if (io$found) {
@@ -78,33 +89,34 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   input_data <- io$input_data
 
   Call[[1]] <- as.name(cfti)
-  if (io$diagnose) print(Call)
-  if (io$diagnose) cat("* Formals:", names(formals(cfti)), "\n")
+  
+  if (io$show_diagnostics) print(Call)
+  if (io$show_diagnostics) cat("* Formals:", names(formals(cfti)), "\n")
   
   first_par_name <- names(formals(cfti))[1]
   
   #if (first_par_name %in% c("data", ".data", "_data")) { ## already pipe-aware function
-  #  if (io$diagnose) cat("* Already pipe-aware function\n")
+  #  if (io$show_diagnostics) cat("* Already pipe-aware function\n")
   #  names(Call)[[2]] <- first_par_name
-  #  if (io$diagnose) print(Call)
+  #  if (io$show_diagnostics) print(Call)
   #  result <- eval(Call, envir = use_envir)
   #} else
   if (length(preCall$...) == 0)  {
-    if (io$diagnose) cat("* No arguments other than data\n")
-    if (io$diagnose) print(Call)
+    if (io$show_diagnostics) cat("* No arguments other than data\n")
+    if (io$show_diagnostics) print(Call)
     result <- eval(Call)
   } else if (there_are_formulas(preCall$...) || io$force_formula_case) {
-    if (io$diagnose) cat("* Formula case\n")
+    if (io$show_diagnostics) cat("* Formula case\n")
     if (io$is_intuBag)
       Call[[2]] <- as.name(io$input[1])
-    if (io$diagnose) print(Call)
-    ret <- process_formula_case(Call, use_envir, data)      
+    if (io$show_diagnostics) print(Call)
+    ret <- process_formula_case(Call, use_envir, data, io)
     result <- ret$result
     result_visible <- ret$result_visible
     Call <- ret$Call
   } else  {
-    if (io$diagnose) cat("* Rest of cases\n")
-    if (io$diagnose) print(Call[-2])
+    if (io$show_diagnostics) cat("* Rest of cases\n")
+    if (io$show_diagnostics) print(Call[-2])
     if(length(input_data) == 1 && !is_intuBag(input_data)) 
       input_data <- input_data[[1]]  ## Need to get the object inside the list.
     result <- try(with(input_data, eval(Call[-2])), silent = TRUE) ## Remove "data" [-2] then call
@@ -112,12 +124,12 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
       if (io$is_intuBag)
         Call[[2]] <- as.name(io$input[1])
       names(Call)[[2]] <- ""                   ## Leave data unnamed. For already pipe-aware functions
-      if (io$diagnose) print(Call)
+      if (io$show_diagnostics) print(Call)
       result <- try(eval(Call), silent = TRUE) ## For subset() and such, that already are
                                                ## pipe aware.
       if (class(result)[[1]] == "try-error") {
-        if (io$diagnose) cat("* Calling formula case from Rest of cases\n")
-        ret <- process_formula_case(Call, use_envir, data) ## Try formula (formula could be
+        if (io$show_diagnostics) cat("* Calling formula case from Rest of cases\n")
+        ret <- process_formula_case(Call, use_envir, data, io) ## Try formula (formula could be
                                                      ## result of a function call)
         result <- ret$result
         result_visible <- ret$result_visible
@@ -130,12 +142,11 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   if (!exists("result_visible"))
     result_visible <- withVisible(result)$visible
   
-  if (io$diagnose) cat(paste0("* Result is ", ifelse(result_visible, "", "in"), "visible\n"))
-  if (io$diagnose && io$force_return_invisible) cat("* Force return invisible\n")
+  if (io$show_diagnostics) cat(paste0("* Result is ", ifelse(result_visible, "", "in"), "visible\n"))
+  if (io$show_diagnostics && io$force_return_invisible) cat("* Force return invisible\n")
   
   if (io$found) {
-    if (  ## length(io$input_functions) + length(io$result_functions) > 0 ||
-        io$verbose) {
+    if (io$show_successful_call) {
       cat("\n") 
       print(Call)
     }
@@ -150,8 +161,7 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
       data[[io$output[1]]] <- result
     ##    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
     } else {
-      assign(io$output[1], result, envir = globalenv())  ## For now to the globalenv()
-                                                         ## Later user define with option
+      assign(io$output[1], result, envir = local_env$denv)
     }
   }
   ##  print(io)
@@ -195,13 +205,13 @@ parse_intubOrder <- function(par_list, data) {
   io$result_functions <- trimws(strsplit(io$result_functions, ";")[[1]])
   #print(io$result_functions)
   
-  io$diagnose <- (gsub(".*<.*\\|.*(D).*\\|.*>.*", "\\1", io$intubOrder) == "D")
+  io$show_successful_call <- (gsub(".*<.*\\|.*(C).*\\|.*>.*", "\\1", io$intubOrder) == "C")
+  io$show_diagnostics <- (gsub(".*<.*\\|.*(D).*\\|.*>.*", "\\1", io$intubOrder) == "D")
   io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1", io$intubOrder) == "F")
   io$forward_input <- (gsub(".*<.*\\|.*(f).*\\|.*>.*", "\\1", io$intubOrder) == "f")
   io$force_return_invisible <- (gsub(".*<.*\\|.*(i).*\\|.*>.*", "\\1", io$intubOrder) == "i")
   io$verbose <- (gsub(".*<.*\\|.*(v).*\\|.*>.*", "\\1", io$intubOrder) == "v")
   
-  io$is_intuBag <- is_intuBag(data)
   input_output <- strsplit(paste0(" ", io$intubOrder, " "), ## Spaces to avoid failure.
                            "<.*\\|.*\\|.*>")[[1]]
   if (length(input_output) > 2)             ## For overachievers...
@@ -210,7 +220,9 @@ parse_intubOrder <- function(par_list, data) {
   ## Get requested inputs.
   ## cat("Inputs\n")
   io$input <- trimws(strsplit(input_output[1], ";")[[1]])
-  
+
+  io$is_intuBag <- is_intuBag(data)
+
   if (io$input[1] != "") {
     io$input_data <- as.list(data[io$input])
   } else
@@ -260,23 +272,24 @@ exec_intubOrder <- function(..object_functions.., where, ..object_value.., ..env
 ## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
 ## not clue how to implement), for *all* the formulas that have a ".", so maybe
 ## the end result will be even more involved and this is as good as we can do.
-process_formula_case <- function(Call, use_envir, data) {
-  ## cat("process_formula_case\n")
+process_formula_case <- function(Call, use_envir, data, io) {
   pos <- which(sapply(charCall <- as.character(Call), function(par) {
     gsub(".*(#).*", "\\1", par) == "#"
   }))
   if (length(pos) > 0) {
+    if (io$show_diagnostics) cat("* Position specified\n")
     to_parse <- gsub("[\"']?#[\"']?", charCall[[2]], charCall[[pos]])
     .res_expr. <- eval(parse(text = to_parse), envir = use_envir)
     Call[[pos]] <- as.name(".res_expr.")
     Call <- Call[-2]
+    if (io$show_diagnostics) print(Call)
     result <- eval(Call)    ## If you specify position, you better know what you are doing.
     return(list(result = result,
                 result_visible = withVisible(result)$visible,
                 Call = Call))
   }
 
-  #print(Call)
+  if (io$show_diagnostics) print(Call)
   ## Try as it is (data is named)
   result <- try(eval(Call, envir = use_envir), silent = TRUE)
   if (class(result)[[1]] != "try-error") {
@@ -288,7 +301,7 @@ process_formula_case <- function(Call, use_envir, data) {
   Call[2:3] <- Call[3:2]                       ## Switch parameters
   names(Call)[2:3] <- names(Call)[3:2]         ## and names
   ## names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
-  #print(Call)
+  if (io$show_diagnostics) print(Call)
   result <- try(eval(Call, envir = use_envir), silent = TRUE)
   if (class(result)[[1]] != "try-error") {
     return(list(result = result,
@@ -298,7 +311,7 @@ process_formula_case <- function(Call, use_envir, data) {
   
   ## Maybe data has other name. Remove parameter name for "data"
   names(Call)[[3]] <- ""
-  #print(Call)
+  if (io$show_diagnostics) print(Call)
   result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
   if (class(result)[[1]] != "try-error") {
     return(list(result = result,
@@ -314,7 +327,7 @@ process_formula_case <- function(Call, use_envir, data) {
     for (par in 4:length(names(Call))) {
       Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
       names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
-      #print(Call)
+      if (io$show_diagnostics) print(Call)
       result <- try(eval(Call, envir = use_envir),    ## See if it flies
                     silent = TRUE)
       if (class(result)[[1]] != "try-error") {
@@ -343,8 +356,8 @@ process_formula_case <- function(Call, use_envir, data) {
   ##
   ## If we get to this point, we will just admit defeat.
   
-  #  Call <- Call[-length(Call)]
-  ## print(Call)
+#  Call <- Call[-length(Call)]
+#  if (io$show_diagnostics) print(Call)
 #  attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
 #  result <- try(eval(Call)), silent = TRUE)  ## Use try as we use attach()
 #  detach()
