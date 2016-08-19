@@ -61,6 +61,11 @@ intubate <-
   ntbt_bayesglm <-
   ntbt_bayespolr <-
   
+  ## betareg
+  ntbt_betamix <-
+  ntbt_betareg <-
+  ntbt_betatree <-
+
   ## brglm
   ntbt_brglm <-
   

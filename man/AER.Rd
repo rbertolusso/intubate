@@ -41,7 +41,8 @@ ivreg(log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax/cpi
       data = CigarettesSW, subset = year == "1995")
 
 ## The interface puts data as first parameter
-ntbt_ivreg(CigarettesSW, log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax/cpi),
+ntbt_ivreg(CigarettesSW,
+           log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax/cpi),
            subset = year == "1995")
 
 ## so it can be used easily in a pipeline.
@@ -58,7 +59,8 @@ tobit(affairs ~ age + yearsmarried + religiousness + occupation + rating,
       data = Affairs)
 
 ## The interface puts data as first parameter
-ntbt_tobit(Affairs, affairs ~ age + yearsmarried + religiousness + occupation + rating)
+ntbt_tobit(Affairs,
+           affairs ~ age + yearsmarried + religiousness + occupation + rating)
 
 ## so it can be used easily in a pipeline.
 Affairs \%>\%

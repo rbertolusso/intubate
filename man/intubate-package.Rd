@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 423 interfaces for:
+  Currently, there are 426 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -26,6 +26,8 @@
   \code{ape}: Analyses of Phylogenetics and Evolution
 
   \code{arm}: Data Analysis Using Regression and Multilevel/Hierarchical Models
+  
+  \code{betareg}: Beta Regression
 
   \code{brglm}: Bias reduction in binomial-response generalized linear models
 
