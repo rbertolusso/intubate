@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 418 interfaces (below you will find a list of packages
+`intubate` currently implements 420 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -219,6 +219,7 @@ This is the plot produced:
 The R packages that have interfaces implemented so far are:
 
 * `adabag`: Multiclass AdaBoost.M1, SAMME and Bagging
+* `AER`: Applied Econometrics with R
 * `aod`: Analysis of Overdispersed Data
 * `ape`: Analyses of Phylogenetics and Evolution
 * `arm`: Data Analysis Using Regression and Multilevel/Hierarchical Models

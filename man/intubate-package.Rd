@@ -15,9 +15,11 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 418 interfaces for:
+  Currently, there are 420 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
+  
+  \code{AER}: Applied Econometrics with R
   
   \code{aod}: Analysis of Overdispersed Data
 

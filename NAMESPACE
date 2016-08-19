@@ -1,4 +1,5 @@
 #importFrom("adabag", "autoprune", "bagging", "bagging.cv", "boosting", "boosting.cv")
+#importFrom("AER", "ivreg", "tobit")
 #importFrom("aod", "betabin", "donner", "negbin", "quasibin", "quasipois",
 #                  "raoscott", "splitbin")
 #importFrom("ape", "binaryPGLMM", "compar.gee", "correlogram.formula", "lmorigin", "yule.cov")

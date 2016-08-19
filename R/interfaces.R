@@ -36,6 +36,10 @@ intubate <-
   ntbt_boosting <-
   ntbt_boosting.cv <-
   
+  ## AER
+  ntbt_ivreg <-
+  ntbt_tobit <-
+  
   ## aod
   ntbt_betabin <-
   ntbt_donner <-
