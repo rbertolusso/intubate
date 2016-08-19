@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 444 interfaces for:
+  Currently, there are 445 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -174,6 +174,8 @@
   \code{survival}: Survival Analysis
   
   \code{SwarmSVM}: Ensemble Learning Algorithms Based on Support Vector Machines
+  
+  \code{systemfit}: Estimating Systems of Simultaneous Equations
   
   \code{tree}: Classification and Regression Trees
   

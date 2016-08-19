@@ -648,7 +648,10 @@ intubate <-
   ntbt_survSplit <-
   
   ## SwarmSVM
-  ntbt_alphasvm <- 
+  ntbt_alphasvm <-
+  
+  ## systemfit
+  ntbt_systemfit <-
 
   ## tree
   ntbt_tree <-

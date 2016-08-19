@@ -112,6 +112,7 @@ importFrom("stats", "as.formula")
 #importFrom("survival", "cch", "coxph", "pyears", "survConcordance", "survexp",
 #                       "survfit", "survSplit")
 #importFrom("SwarmSVM", "alphasvm")
+#importFrom("systemfit", "systemfit")
 #importFrom("tree", "tree")
 importFrom("utils", "capture.output")
 #importFrom("vcd", "agreementplot", "assoc", "cd_plot", "cotabplot", "loddsratio",

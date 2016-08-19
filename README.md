@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 444 interfaces (below you will find a list of packages
+`intubate` currently implements 445 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -298,6 +298,7 @@ The R packages that have interfaces implemented so far are:
 * `survey`: Analysis of Complex Survey Samples
 * `survival`: Survival Analysis
 * `SwarmSVM`: Ensemble Learning Algorithms Based on Support Vector Machines
+* `systemfit`: Estimating Systems of Simultaneous Equations
 * `tree`: Classification and Regression Trees
 * `vcd`: Visualizing Categorical Data
 * `vegan`: Community Ecology Package
