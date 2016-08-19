@@ -2,7 +2,7 @@ Package: intubate
 Type: Package
 Title: Interface to Popular R Functions for Data Science Pipelines
 Version: 0.99.3
-Date: 2016-08-02
+Date: 2016-08-19
 Author: Roberto Bertolusso
 Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
 Description:

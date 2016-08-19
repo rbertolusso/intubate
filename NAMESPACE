@@ -35,15 +35,16 @@
 #                  "ssden1", "sshzd", "ssllrm")
 #import("graphics")
 #importFrom("Hmisc", "areg.boot", "aregImpute", "biVar", "bpplotM", "dataRep",
-##                   "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
-##                   "rcorrcens", "redun", "summary", "summaryD", "summaryM",
-##                   "summaryP", "summaryRc", "summaryS", "transcan", "varclus",
-##                   "xYplot")
+#                    "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
+#                    "rcorrcens", "redun", "summary", "summaryD", "summaryM",
+#                    "summaryP", "summaryRc", "summaryS", "transcan", "varclus",
+#                    "xYplot")
 #importFrom("ipred", "bagging", "errorest", "inbagg", "inclass", "slda")
 #importFrom("iRegression", "bivar", "ccrm", "cm", "crm", "MinMax")
 #importFrom("kernlab", "gausspr", "kfa", "kha", "kkmeans", "kpca",
-##                     "kqr", "ksvm", "lssvm", "rvm", "sigest",
-##                     "specc")
+#                      "kqr", "ksvm", "lssvm", "rvm", "sigest",
+#                      "specc")
+#importFrom("kknn", "train.kknn", "cv.kknn", "kknn")
 #importFrom("klaR", "classscatter", "cond.index", "greedy.wilks", "loclda", "meclight",
 #                   "NaiveBayes", "nm", "partimat", "plineplot", "pvs",
 #                   "rda", "sknn", "stepclass", "woe")
@@ -53,7 +54,7 @@
 #importFrom("leaps", "regsubsets")
 #importFrom("lfe", "felm")
 #importFrom("lme4", "glmer", "glmer.nb", "glFormula", "lFormula", "lmer",
-##                  "lmList", "nlmer")
+#                   "lmList", "nlmer")
 #importFrom("lmtest", "bgtest", "bptest", "coxtest", "dwtest", "encomptest",
 #           "gqtest", "grangertest", "harvtest", "hmctest", "jtest",
 #           "raintest", "resettest")
@@ -111,5 +112,4 @@ importFrom("utils", "capture.output")
 #importFrom("vegan", "adipart", "adonis", "adonis2", "bioenv", "capscale",
 #                    "cca", "dbrda", "envfit", "gdispweight", "multipart",
 #                    "ordicloud", "ordisplom", "ordisurf", "ordixyplot")
-#exportPattern("intubate.*|ntbt|intuBag|is_intuBag|^ntbt_[[:alpha:]]+")
 exportPattern("intu|ntbt")

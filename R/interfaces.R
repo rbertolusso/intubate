@@ -265,6 +265,26 @@ intubate <-
   ntbt_crm <-
   ntbt_MinMax <-
   
+  ## kernlab
+  ntbt_gausspr <-
+  ntbt_kfa <-
+  ntbt_kha <-
+  ntbt_kkmeans <-
+  ntbt_kpca <-
+  
+  ntbt_kqr <-
+  ntbt_ksvm <-
+  ntbt_lssvm <-
+  ntbt_rvm <-
+  ntbt_sigest <-
+  
+  ntbt_specc <-
+  
+  ## kknn
+  ntbt_train.kknn <-
+  ntbt_cv.kknn <-
+  ntbt_kknn <-
+  
   ## klaR
   ntbt_classscatter <-
   ntbt_cond.index <-
@@ -282,21 +302,6 @@ intubate <-
   ntbt_sknn <-
   ntbt_stepclass <-
   ntbt_woe <-
-
-  ## kernlab
-  ntbt_gausspr <-
-  ntbt_kfa <-
-  ntbt_kha <-
-  ntbt_kkmeans <-
-  ntbt_kpca <-
-  
-  ntbt_kqr <-
-  ntbt_ksvm <-
-  ntbt_lssvm <-
-  ntbt_rvm <-
-  ntbt_sigest <-
-  
-  ntbt_specc <-
   
   ## lattice
   ntbt_barchart <-
