@@ -87,7 +87,7 @@ plot(bt)
 ## so it can be used easily in a pipeline.
 set.seed(1071)
 ReadingSkills \%>\%
-  ntbt_betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3, minsize = 10) %>%
+  ntbt_betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3, minsize = 10) \%>\%
   plot()
 }
 }
@@ -95,5 +95,4 @@ ReadingSkills \%>\%
 \keyword{magrittr}
 \keyword{betareg}
 \keyword{betamix}
-\keyword{betareg}
 \keyword{betatree}

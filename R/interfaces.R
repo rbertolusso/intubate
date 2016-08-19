@@ -166,10 +166,15 @@ intubate <-
   ntbt_summaryFull <-
   ntbt_summaryStats <-
   ntbt_varGroupTest <-
-
+  
   ## fGarch
   ntbt_garchFit <-
 
+  ## flexmix
+  ntbt_flexmix <-
+  ntbt_initFlexmix <-
+  ntbt_stepFlexmix <-
+  
   ## forecast
   ntbt_tslm <-
   

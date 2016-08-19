@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 426 interfaces (below you will find a list of packages
+`intubate` currently implements 429 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -235,6 +235,7 @@ The R packages that have interfaces implemented so far are:
 * `earth`: Multivariate Adaptive Regression Splines
 * `EnvStats`: Environmental Statistics, Including US EPA Guidance
 * `fGarch`: Rmetrics - Autoregressive Conditional Heteroskedastic Modelling
+* `flexmix`: Flexible Mixture Modeling
 * `forecast`: Forecasting Functions for Time Series and Linear Models
 * `gam`: Generalized Additive Models
 * `gbm`: Generalized Boosted Regression Models
