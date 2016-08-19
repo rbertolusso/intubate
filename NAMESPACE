@@ -46,6 +46,7 @@
 #importFrom("klaR", "classscatter", "cond.index", "greedy.wilks", "loclda", "meclight",
 #                   "NaiveBayes", "nm", "partimat", "plineplot", "pvs",
 #                   "rda", "sknn", "stepclass", "woe")
+#importFrom("lars", "lars", "cv.lars")
 #import("lattice")
 #importFrom("latticeExtra" , "ecdfplot", "mapplot", "rootogram", "segplot", "tileplot")
 #importFrom("leaps", "regsubsets")

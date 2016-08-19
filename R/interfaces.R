@@ -316,6 +316,10 @@ intubate <-
   ntbt_wireframe <-
   ntbt_xyplot <-
   
+  ## lars
+  ntbt_lars <-
+  ntbt_cv.lars <-
+  
   ## latticeExtra
   ntbt_ecdfplot <-
   ntbt_mapplot <-

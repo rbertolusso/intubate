@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 416 interfaces (below you will find a list of packages
+`intubate` currently implements 418 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -248,6 +248,7 @@ The R packages that have interfaces implemented so far are:
 * `iRegression`: Regression Methods for Interval-Valued Variables
 * `kernlab`: Kernel-Based Machine Learning Lab
 * `klaR`: Classification and Visualization
+* `lars`: Least Angle Regression, Lasso and Forward Stagewise
 * `lattice`: Trellis Graphics for R
 * `latticeExtra`: Extra Graphical Utilities Based on Lattice
 * `leaps`: Regression Subset Selection

@@ -79,11 +79,12 @@ dta \%>\%
   plot()
 
 
-## ntbt_cv.glmnet: cv.glmnet Cross-validation for glmnet
+## ntbt_cv.glmnet: Cross-validation for glmnet
 
 ## Original function to interface
 attach(dta)
 ## Ridge Regression
+set.seed(1)
 cv.ridge <- cv.glmnet(x, y, alpha = 0)
 plot(cv.ridge)
 
@@ -94,6 +95,7 @@ detach()
 
 ## The interface puts data as first parameter
 ## Ridge Regression
+set.seed(1)
 cv.ridge <- ntbt_cv.glmnet(dta, x, y, alpha = 0)
 plot(cv.ridge)
 
@@ -103,6 +105,7 @@ plot(cv.lasso)
 
 ## so it can be used easily in a pipeline.
 ## Ridge Regression
+set.seed(1)
 dta \%>\%
   ntbt_cv.glmnet(x, y, alpha = 0) \%>\%
   plot()
