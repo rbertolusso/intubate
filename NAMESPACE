@@ -25,6 +25,7 @@
 #importFrom("gam", "gam")
 #importFrom("gbm", "gbm")
 #importFrom("gee", "gee")
+#importFrom("glmnet", "glmnet", "cv.glmnet")
 #importFrom("glmx", "glmx", "hetglm")
 #importFrom("gmnl", "gmnl")
 #importFrom("gplot", "bandplot", "lowess", "overplot", "plotmeans")

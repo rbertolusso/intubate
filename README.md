@@ -1,6 +1,6 @@
 #### intubate <||> *Roberto Bertolusso*
 
-##### *2016-07-26* - *2016-08-17* (GPL >= 2)
+##### *2016-07-26* - *2016-08-18* (GPL >= 2)
 
 
 The aim of `intubate` (`<||>`) is to offer a painless way to
@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 414 interfaces (below you will find a list of packages
+`intubate` currently implements 416 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -237,6 +237,7 @@ The R packages that have interfaces implemented so far are:
 * `gam`: Generalized Additive Models
 * `gbm`: Generalized Boosted Regression Models
 * `gee`: Generalized Estimation Equation Solver
+* `glmnet`: Lasso and Elastic-Net Regularized Generalized Linear Models
 * `glmx`: Generalized Linear Models Extended
 * `gmnl`: Multinomial Logit Models with Random Parameters
 * `gplots`: Various R Programming Tools for Plotting Data
@@ -450,9 +451,9 @@ https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf
 library(survey)
 data(api)
 
+## First, the original code from the vignette
 vars<-names(apiclus1)[c(12:13,16:23,27:37)] 
 
-## First, the original code from the vignette
 dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
 summary(dclus1)
 svymean(~api00, dclus1)
@@ -473,24 +474,24 @@ summary(logitmodel)
 
 ## Strategy 1: long pipeline, light use of intubOrders.
 apiclus1 %>%
-  ntbt(svydesign, id = ~dnum, weights = ~ pw, fpc = ~ fpc, "<|| summary >") %>%
-  ntbt(svymean, ~ api00, "<|f| print >") %>%
-  ntbt(svyquantile, ~ api00, quantile = c(0.25,0.5,0.75), ci = TRUE, "<|f| print >") %>%
-  ntbt(svytotal, ~ stype, "<|f| print >") %>%
-  ntbt(svytotal, ~ enroll, "<|f| print >") %>%
-  ntbt(svyratio, ~ api.stu, ~ enroll, "<|f| print >") %>%
-  ntbt(svyratio, ~ api.stu, ~ enroll, design=subset("#", stype=="H"), "<|f| print >") %>%
-  ntbt(svymean, make.formula(vars), na.rm = TRUE, "<|f| print >") %>%
-  ntbt(svyby, ~ ell + meals, ~ stype, svymean, "<|f| print >") %>%
-  ntbt(svyglm, api00 ~ ell + meals, "<|f| summary >") %>%
-  ntbt(svyglm, I(sch.wide=="Yes") ~ ell + meals, family = quasibinomial(), "<|f| summary >") %>%
+  ntbt(svydesign, id = ~dnum, weights = ~ pw, fpc = ~ fpc, "<|C| summary >") %>%
+  ntbt(svymean, ~ api00, "<|Cf| print >") %>%
+  ntbt(svyquantile, ~ api00, quantile = c(0.25,0.5,0.75), ci = TRUE, "<|Cf| print >") %>%
+  ntbt(svytotal, ~ stype, "<|Cf| print >") %>%
+  ntbt(svytotal, ~ enroll, "<|Cf| print >") %>%
+  ntbt(svyratio, ~ api.stu, ~ enroll, "<|Cf| print >") %>%
+  ntbt(svyratio, ~ api.stu, ~ enroll, design=subset("#", stype=="H"), "<|Cf| print >") %>%
+  ntbt(svymean, make.formula(vars), na.rm = TRUE, "<|Cf| print >") %>%
+  ntbt(svyby, ~ ell + meals, ~ stype, svymean, "<|Cf| print >") %>%
+  ntbt(svyglm, api00 ~ ell + meals, "<|Cf| summary >") %>%
+  ntbt(svyglm, I(sch.wide=="Yes") ~ ell + meals, family = quasibinomial(), "<|Cf| summary >") %>%
   summary() ## We have forwarded the result from svydesign (line 2),
             ## so we could still continue using it downstream.
 
 ## Strategy 2: short pipeline, heavy use of *one* intubOrder.
 apiclus1 %>%
   ntbt(svydesign, id = ~dnum, weights = ~pw, fpc = ~fpc,
-       "<|f|
+       "<|Cf|
          summary;
          svymean(~api00, #);
          svyquantile(~api00, #, quantile = c(0.25, 0.5, 0.75), ci = TRUE);
@@ -504,11 +505,6 @@ apiclus1 %>%
          summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >") %>%
   head()  ## We have forwarded the original dataset,
           ## so we could continue using it downstream.
-
-## This is how to create interfaces for the missing functions.
-ntbt_svymean <- ntbt_svyquantile <- ntbt_svytotal <-
-  ntbt_svyratio <- ntbt_svyby <- ntbt_svyglm <-
-  intubate
 ```
 
 `intubOrders` are under heavy development, so this is just an idea that is searching

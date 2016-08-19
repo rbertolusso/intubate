@@ -395,9 +395,9 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
     print(errors[length(errors):1])
     stop(paste0("Message from intubate:\n",
                 "All possibilities have been exhausted.\n",
-                "The error may be due to intubate of to the interfaced function.\n",
-                "If it is due to the interfaced function you may find the\n",
-                "the reason in one of the errors listed above (in reverse order).\n"))
+                "The error may be due to intubate or to the interfaced function.\n",
+                "If it is due to the interfaced function, you may find the cause\n",
+                "in one of the errors listed, in reverse order, above.\n"))
   }
   list(result = result,
        result_visible = withVisible(result)$visible,

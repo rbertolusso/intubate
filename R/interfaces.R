@@ -172,6 +172,10 @@ intubate <-
   
   ## gee
   ntbt_gee <-
+
+  ## glmnet
+  ntbt_glmnet <-
+  ntbt_cv.glmnet <-
   
   ## glmx
   ntbt_glmx <-
