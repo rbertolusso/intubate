@@ -48,7 +48,7 @@ cf <- cforest(dist ~ speed, data = cars)
 cf <- ntbt_cforest(cars, dist ~ speed)
 
 ## so it can be used easily in a pipeline.
-cf <- cars %>%
+cf <- cars \%>\%
   ntbt_cforest(dist ~ speed)
 
 
@@ -64,8 +64,8 @@ airct <- ntbt_ctree(airq, Ozone ~ .)
 plot(airct)
 
 ## so it can be used easily in a pipeline.
-airq %>%
-  ntbt_ctree(Ozone ~ .) %>%
+airq \%>\%
+  ntbt_ctree(Ozone ~ .) \%>\%
   plot()
 
 
@@ -85,10 +85,10 @@ pid_tree2 <- ntbt_glmtree(PimaIndiansDiabetes, diabetes ~ glucose | pregnant +
 plot(pid_tree2)
 
 ## so it can be used easily in a pipeline.
-PimaIndiansDiabetes %>%
+PimaIndiansDiabetes \%>\%
   ntbt_glmtree(diabetes ~ glucose | pregnant +
                  pressure + triceps + insulin + mass + pedigree + age,
-               family = binomial) %>%
+               family = binomial) \%>\%
   plot()
 
 
@@ -113,10 +113,10 @@ bh_tree <- ntbt_lmtree(BostonHousing,
 plot(bh_tree)
 
 ## so it can be used easily in a pipeline.
-BostonHousing %>%
+BostonHousing \%>\%
   ntbt_lmtree(medv ~ log(lstat) + I(rm^2) | zn + indus + chas +
                 nox + age + dis + rad + tax + crim + b + ptratio,
-              minsize = 40) %>%
+              minsize = 40) \%>\%
   plot()
 
 
@@ -138,9 +138,9 @@ pid_tree <- ntbt_mob(PimaIndiansDiabetes, diabetes ~ glucose | pregnant + pressu
 plot(pid_tree)
 
 ## so it can be used easily in a pipeline.
-PimaIndiansDiabetes %>%
+PimaIndiansDiabetes \%>\%
   ntbt_mob(diabetes ~ glucose | pregnant + pressure +
-             triceps + insulin + mass + pedigree + age, fit = logit) %>%
+             triceps + insulin + mass + pedigree + age, fit = logit) \%>\%
   plot()
 
 
@@ -159,7 +159,7 @@ dgp <- function(nobs = 1000, nreg = 5, creg = 0.4, ptreat = 0.5, sd = 1,
   gopt <- function(d) {
     as.numeric(d$x1 > -0.545) * as.numeric(d$x2 < 0.545)
   }
-  d$y <- coef[1] + drop(as.matrix(d[, paste0("x", 1:5)]) %*% coef[-1]) -
+  d$y <- coef[1] + drop(as.matrix(d[, paste0("x", 1:5)]) \%*\% coef[-1]) -
     eff * (d$a - gopt(d))^2 + d$err
   d$a <- factor(d$a)
   return(d)
@@ -176,8 +176,8 @@ palm <- ntbt_palmtree(d, y ~ a | x1 + x2 + x5 | x1 + x2 + x3 + x4 + x5)
 plot(palm)
 
 ## so it can be used easily in a pipeline.
-d %>%
-  ntbt_palmtree(y ~ a | x1 + x2 + x5 | x1 + x2 + x3 + x4 + x5) %>%
+d \%>\%
+  ntbt_palmtree(y ~ a | x1 + x2 + x5 | x1 + x2 + x3 + x4 + x5) \%>\%
   plot()
 }
 }

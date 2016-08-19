@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 435 interfaces for:
+  Currently, there are 440 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -134,11 +134,13 @@
   \code{plotrix}: Various Plotting Functions
   
   \code{pls}: Partial Least Squares and Principal Component Regression
-  
+
   \code{pROC}: Display and Analyze ROC Curves
-  
+
   \code{pscl}: Political Science Computational Laboratory, Stanford University
-  
+
+  \code{psychotree}: Recursive Partitioning Based on Psychometric Models
+
   \code{quantreg}: Quantile Regression
 
   \code{randomForest}: Random Forests for Classification and Regression

@@ -482,7 +482,14 @@ intubate <-
   ## pscl
   ntbt_hurdle <-
   ntbt_zeroinfl <-
-
+  
+  ## psychotree
+  ntbt_bttree <-
+  ntbt_mpttree <-
+  ntbt_pctree <-
+  ntbt_raschtree <-
+  ntbt_rstree <-
+  
   ## quantreg
   ntbt_dynrq <-
   ntbt_KhmaladzeTest <-
