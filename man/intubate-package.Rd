@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 429 interfaces for:
+  Currently, there are 435 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -128,7 +128,9 @@
   \code{ordinal}: Regression Models for Ordinal Data
   
   \code{party}: A Laboratory for Recursive Partytioning
-
+  
+  \code{partykit}: A Toolkit for Recursive Partytioning
+  
   \code{plotrix}: Various Plotting Functions
   
   \code{pls}: Partial Least Squares and Principal Component Regression

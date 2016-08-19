@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 429 interfaces (below you will find a list of packages
+`intubate` currently implements 435 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -275,6 +275,7 @@ The R packages that have interfaces implemented so far are:
 * `nnet`: Feed-Forward Neural Networks and Multinomial Log-Linear Models
 * `ordinal`: Regression Models for Ordinal Data
 * `party`: A Laboratory for Recursive Partytioning
+* `partykit`: A Toolkit for Recursive Partytioning
 * `plotrix`: Various Plotting Functions
 * `pls`: Partial Least Squares and Principal Component Regression
 * `pROC`: Display and Analyze ROC Curves

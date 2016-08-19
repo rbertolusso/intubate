@@ -443,7 +443,16 @@ intubate <-
   ntbt_cforest <-
   ntbt_ctree <-
   ntbt_mob <-
-
+  
+  ## partykit
+  ntbt_cforest <-
+  ntbt_ctree <-
+  ntbt_glmtree <-
+  ntbt_lmtree <-
+  ntbt_mob <-
+  
+  ntbt_palmtree <-
+  
   ## plotrix
   ntbt_barNest <-
   ntbt_brkdn.plot <-
