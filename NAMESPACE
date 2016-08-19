@@ -108,4 +108,5 @@ importFrom("utils", "capture.output")
 #importFrom("vegan", "adipart", "adonis", "adonis2", "bioenv", "capscale",
 #                    "cca", "dbrda", "envfit", "gdispweight", "multipart",
 #                    "ordicloud", "ordisplom", "ordisurf", "ordixyplot")
-exportPattern("intubate.*|ntbt|intuBag|is_intuBag|^ntbt_[[:alpha:]]+")
+#exportPattern("intubate.*|ntbt|intuBag|is_intuBag|^ntbt_[[:alpha:]]+")
+exportPattern("intu|ntbt")
