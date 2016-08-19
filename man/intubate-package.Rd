@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 440 interfaces for:
+  Currently, there are 444 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -158,6 +158,8 @@
   \code{RRF}: Regularized Random Forest
   
   \code{RWeka}: R/Weka Interface
+  
+  \code{sampleSelection}: Sample Selection Models
   
   \code{sem}: Structural Equation Models
   

@@ -561,7 +561,13 @@ intubate <-
   
   ntbt_PART <-
   ntbt_SMO <-
-  ntbt_Stacking <- 
+  ntbt_Stacking <-
+  
+  ## sampleSelection
+  ntbt_probit <-
+  ntbt_binaryChoice <-
+  ntbt_selection <-
+  ntbt_heckit <-
   
   ## sem
   ntbt_rawMoments <-

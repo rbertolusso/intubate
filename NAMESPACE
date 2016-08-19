@@ -101,6 +101,7 @@
 #           "LBR", "LogitBoost", "LinearRegression", "LMT", "Logistic",
 #           "M5P", "M5Rules", "MultiBoostAB", "Normalize", "OneR",
 #           "PART", "SMO", "Stacking")
+#importFrom("sampleSelection", "probit", "binaryChoice", "selection", "heckit")
 #importFrom("sem", "rawMoments", "sem", "tsls")
 #importFrom("spBayes", "bayesGeostatExact", "bayesLMConjugate", "spDynLM")
 #import("stats")

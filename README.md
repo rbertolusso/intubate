@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 440 interfaces (below you will find a list of packages
+`intubate` currently implements 444 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -290,6 +290,7 @@ The R packages that have interfaces implemented so far are:
 * `rpart`: Recursive Partitioning and Regression Trees
 * `RRF`: Regularized Random Forest
 * `RWeka`: R/Weka Interface
+* `sampleSelection`: Sample Selection Models
 * `sem`: Structural Equation Models
 * `spBayes`: Univariate and Multivariate Spatial-temporal Modeling
 * `stats`: The R Stats Package (glm, lm, loess, lqs, nls, ...)
