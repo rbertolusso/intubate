@@ -428,6 +428,9 @@ intubate <-
   ## mlogit
   ntbt_mlogit <-
   
+  ## mnlogit
+  ntbt_mnlogit <-
+  
   ## modeltools
   ntbt_ModelEnvFormula <-
   ntbt_ParseFormula <- 

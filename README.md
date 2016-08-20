@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 454 interfaces (below you will find a list of packages
+`intubate` currently implements 455 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -270,6 +270,7 @@ The R packages that have interfaces implemented so far are:
                 Algorithm Found in MINPACK, Plus Support for Bounds
 * `mhurdle`: Multiple Hurdle Tobit Models
 * `mlogit`: Multinomial logit model
+* `mnlogit`: Multinomial Logit Model
 * `modeltools`: Tools and Classes for Statistical Models
 * `nlme`: Linear and Nonlinear Mixed Effects Models
 * `nlreg`: Higher Order Inference for Nonlinear Heteroscedastic Models

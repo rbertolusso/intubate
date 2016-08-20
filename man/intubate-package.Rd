@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 454 interfaces for:
+  Currently, there are 455 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -118,7 +118,9 @@
                      Algorithm Found in MINPACK, Plus Support for Bounds
                      
   \code{mlogit}: Multinomial logit model
-
+  
+  \code{mnlogit}: Multinomial Logit Model
+  
   \code{modeltools}: Tools and Classes for Statistical Models
   
   \code{nlme}: Linear and Nonlinear Mixed Effects Models

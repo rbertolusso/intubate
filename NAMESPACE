@@ -74,6 +74,7 @@
 #importFrom("mhurdle", "mhurdle")
 #importFrom("minpack.lm", "nlsLM")
 #importFrom("mlogit", "mlogit")
+#importFrom("mnlogit", "mnlogit")
 #importFrom("modeltools", "ModelEnvFormula", "ParseFormula")
 #importFrom("nlme", "gls", "lme", "nlme", "nlsList")
 #importFrom("nlreg", "nlreg")
