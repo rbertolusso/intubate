@@ -26,6 +26,7 @@
 #importFrom("fGarch", "garchFit")
 #importFrom("flexmix", "flexmix", "initFlexmix", "stepFlexmix")
 #importFrom("forecast", "tslm")
+#importFrom("frontier", "sfa")
 #importFrom("gam", "gam")
 #importFrom("gbm", "gbm")
 #importFrom("gee", "gee")

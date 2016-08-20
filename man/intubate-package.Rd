@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 459 interfaces for:
+  Currently, there are 460 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -54,6 +54,8 @@
   \code{flexmix}: Flexible Mixture Modeling
 
   \code{forecast}: Forecasting Functions for Time Series and Linear Models
+
+  \code{frontier}: Stochastic Frontier Analysis
   
   \code{gam}: Generalized Additive Models
   

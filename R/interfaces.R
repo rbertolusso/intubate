@@ -178,6 +178,9 @@ intubate <-
   ## forecast
   ntbt_tslm <-
   
+  ## frontier
+  ntbt_sfa <-
+  
   ## gam
   ntbt_gam <-
   
