@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 460 interfaces (below you will find a list of packages
+`intubate` currently implements 461 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -251,6 +251,7 @@ The R packages that have interfaces implemented so far are:
 * `Hmisc`: Harrell Miscellaneous
 * `ipred`: Improved Predictors
 * `iRegression`: Regression Methods for Interval-Valued Variables
+* `ivfixed`: Instrumental fixed effect panel data model
 * `kernlab`: Kernel-Based Machine Learning Lab
 * `kknn`: Weighted k-Nearest Neighbors
 * `klaR`: Classification and Visualization

@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 460 interfaces for:
+  Currently, there are 461 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -82,6 +82,8 @@
   \code{ipred}: Improved Predictors
 
   \code{iRegression}: Regression Methods for Interval-Valued Variables
+  
+  \code{ivfixed}: Instrumental fixed effect panel data model
   
   \code{kernlab}: Kernel-Based Machine Learning Lab
 

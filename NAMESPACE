@@ -47,6 +47,7 @@
 #                    "xYplot")
 #importFrom("ipred", "bagging", "errorest", "inbagg", "inclass", "slda")
 #importFrom("iRegression", "bivar", "ccrm", "cm", "crm", "MinMax")
+#importFrom("ivfixed", "ivFixed")
 #importFrom("kernlab", "gausspr", "kfa", "kha", "kkmeans", "kpca",
 #                      "kqr", "ksvm", "lssvm", "rvm", "sigest",
 #                      "specc")

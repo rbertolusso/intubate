@@ -290,6 +290,9 @@ intubate <-
   ntbt_crm <-
   ntbt_MinMax <-
   
+  ## ivfixed
+  ntbt_ivFixed <-
+  
   ## kernlab
   ntbt_gausspr <-
   ntbt_kfa <-
