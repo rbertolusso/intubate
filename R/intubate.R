@@ -132,10 +132,9 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
     result_visible <- ret$result_visible
     Call <- ret$Call
   } else  {
-    if (io$show_diagnostics) cat("* Rest of cases\n")
-    if (io$show_diagnostics) print(Call[-2])
     if (io$input != "")  ## NOTE: below should it be input_data[[io$input]] instead?
       input_data <- input_data[[1]]  ## Need to get the object inside the list.
+    if (io$show_diagnostics) { cat("* Rest of cases # 1\n"); print(Call[-2]) }
     result <- try(with(input_data, eval(Call[-2])), silent = TRUE) ## Remove "data" [-2] then call
     if (class(result)[[1]] == "try-error") {
       errors[[paste0("Error", length(errors) + 1)]] <-
@@ -143,7 +142,7 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
       if (io$input != "")
         Call[[2]] <- as.name(io$input)
       names(Call)[[2]] <- ""                   ## Leave data unnamed. For already pipe-aware functions
-      if (io$show_diagnostics) print(Call)
+      if (io$show_diagnostics) { cat("* Rest of cases # 2\n"); print(Call) }
       result <- try(eval(Call, envir = use_envir), silent = TRUE) ## For subset() and such, that already are
                                                ## pipe aware.
       if (class(result)[[1]] == "try-error") {
@@ -303,14 +302,14 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
     .res_expr. <- eval(parse(text = to_parse), envir = use_envir)
     Call[[pos]] <- as.name(".res_expr.")
     Call <- Call[-2]
-    if (io$show_diagnostics) print(Call)
+    if (io$show_diagnostics) { cat("* Formula with position\n"); print(Call) }
     result <- eval(Call)    ## If you specify position, you better know what you are doing.
     return(list(result = result,
                 result_visible = withVisible(result)$visible,
                 Call = Call))
   }
 
-  if (io$show_diagnostics) print(Call)
+  if (io$show_diagnostics) { cat("* Formula # 1\n"); print(Call) }
   ## Try as it is (data is named)
   result <- try(eval(Call, envir = use_envir), silent = TRUE)
   if (class(result)[[1]] != "try-error") {
@@ -324,7 +323,7 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
   Call[2:3] <- Call[3:2]                       ## Switch parameters
   names(Call)[2:3] <- names(Call)[3:2]         ## and names
   ## names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
-  if (io$show_diagnostics) print(Call)
+  if (io$show_diagnostics) { cat("* Formula # 2\n"); print(Call) }
   result <- try(eval(Call, envir = use_envir), silent = TRUE)
   if (class(result)[[1]] != "try-error") {
     return(list(result = result,
@@ -336,7 +335,7 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
   
   ## Maybe data has other name. Remove parameter name for "data"
   names(Call)[[3]] <- ""
-  if (io$show_diagnostics) print(Call)
+  if (io$show_diagnostics) { cat("* Formula # 3\n"); print(Call) }
   result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
   if (class(result)[[1]] != "try-error") {
     return(list(result = result,
@@ -354,7 +353,7 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
     for (par in 4:length(names(Call))) {
       Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
       names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
-      if (io$show_diagnostics) print(Call)
+      if (io$show_diagnostics) { cat("* Formula # 4\n"); print(Call) }
       result <- try(eval(Call, envir = use_envir),    ## See if it flies
                     silent = TRUE)
       if (class(result)[[1]] != "try-error") {
