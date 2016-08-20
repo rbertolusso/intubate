@@ -46,7 +46,7 @@ print(fitols)
 
 ## so it can be used easily in a pipeline.
 ## Need "<|F|>" (at least for now) to clarify it is a formula
-Kmenta %>%
+Kmenta \%>\%
   ntbt_systemfit(system, "<|F|>") \%>\%
   print()
 }

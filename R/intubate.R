@@ -216,12 +216,12 @@ parse_io <- function(par_list, data) {
   if (!io$found)
     io$intubOrder <- intuBorder
   
-  io$input_functions <- gsub(".*<([^|]*)\\|[^|]*\\|.*>.*", "\\1", io$intubOrder)
+  io$input_functions <- trimws(gsub(".*<([^|]*)\\|[^|]*\\|.*>.*", "\\1", io$intubOrder))
   #print(io$input_functions)
   io$input_functions <- trimws(strsplit(io$input_functions, ";")[[1]])
   #print(io$input_functions)
   
-  io$result_functions <- gsub(".*<[^|]*\\|[^|]*\\|(.*)>.*", "\\1", io$intubOrder)
+  io$result_functions <- trimws(gsub(".*<[^|]*\\|[^|]*\\|(.*)>.*", "\\1", io$intubOrder))
   #print(io$result_functions)
   io$result_functions <- trimws(strsplit(io$result_functions, ";")[[1]])
   #print(io$result_functions)
