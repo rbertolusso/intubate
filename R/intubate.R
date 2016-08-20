@@ -124,32 +124,40 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
     result <- eval(Call)
   } else if (there_are_formulas(preCall$...) || io$force_formula_case) {
     if (io$show_diagnostics) cat("* Formula case\n")
-    if (io$input != "")
+    if (io$input != "") {
       Call[[2]] <- as.name(io$input)
+      which_envir <- input_data
+    } else
+      which_envir <- use_envir
     if (io$show_diagnostics) print(Call)
-    ret <- process_formula_case(Call, use_envir, data, io, errors)
+    ret <- process_formula_case(Call, which_envir, data, io, errors)
     result <- ret$result
     result_visible <- ret$result_visible
     Call <- ret$Call
-  } else  {
+  } else  { ## Rest of cases
     if (io$input != "")  ## NOTE: below should it be input_data[[io$input]] instead?
-      input_data <- input_data[[1]]  ## Need to get the object inside the list.
+      which_input_data <- input_data[[1]]  ## Need to get the object inside the list.
+    else
+      which_input_data <- input_data
     if (io$show_diagnostics) { cat("* Rest of cases # 1\n"); print(Call[-2]) }
-    result <- try(with(input_data, eval(Call[-2])), silent = TRUE) ## Remove "data" [-2] then call
+    ## Remove "data" [-2] from call
+    result <- try(with(which_input_data, eval(Call[-2])), silent = TRUE)
     if (class(result)[[1]] == "try-error") {
       errors[[paste0("Error", length(errors) + 1)]] <-
         list(context = "Rest of cases # 1", call_attempted = Call[-2], error_message = result)
-      if (io$input != "")
+      if (io$input != "") {
         Call[[2]] <- as.name(io$input)
-      names(Call)[[2]] <- ""                   ## Leave data unnamed. For already pipe-aware functions
+        which_envir <- input_data
+      } else
+        which_envir <- use_envir
+      names(Call)[[2]] <- ""             ## Leave data unnamed. For already pipe-aware functions
       if (io$show_diagnostics) { cat("* Rest of cases # 2\n"); print(Call) }
-      result <- try(eval(Call, envir = use_envir), silent = TRUE) ## For subset() and such, that already are
-                                               ## pipe aware.
+      result <- try(eval(Call, envir = which_envir), silent = TRUE)
       if (class(result)[[1]] == "try-error") {
         errors[[paste0("Error", length(errors) + 1)]] <-
           list(context = "Rest of cases # 2", call_attempted = Call, error_message = result)
         if (io$show_diagnostics) cat("* Calling formula case from Rest of cases\n")
-        ret <- process_formula_case(Call, use_envir, data, io, errors)
+        ret <- process_formula_case(Call, which_envir, data, io, errors)
         ## Try formula (formula could be result of a function call)
         result <- ret$result
         result_visible <- ret$result_visible
@@ -389,7 +397,7 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
 #  attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
 #  result <- try(eval(Call)), silent = TRUE)  ## Use try as we use attach()
 #  detach()
-  if (class(result)[[1]] == "try-error") {
+  if (FALSE && class(result)[[1]] == "try-error") {
     cat("\n************\nError messages:")
     print(errors[length(errors):1])
     stop(paste0("Message from intubate:\n",
