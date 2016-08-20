@@ -358,7 +358,7 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
     ## Let's have "data" take a walk until it finds its place in the world,
     ## as functions are supposed to check if unnamed parameters are sent
     ## in the right order (you hope, at least).
-    for (par in 4:length(names(Call))) {
+    for (par in 4:length(Call)) {
       Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
       names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
       if (io$show_diagnostics) { cat("* Formula # 4\n"); print(Call) }
