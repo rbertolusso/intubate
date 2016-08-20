@@ -15,7 +15,7 @@
   (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
   the vast majority of functions.
   
-  Currently, there are 457 interfaces for:
+  Currently, there are 459 interfaces for:
   
   \code{adabag}: Multiclass AdaBoost.M1, SAMME and Bagging
   
@@ -145,6 +145,8 @@
 
   \code{psychomix}: Psychometric Mixture Models
   
+  \code{psychotools}: Infrastructure for Psychometric Modeling
+
   \code{psychotree}: Recursive Partitioning Based on Psychometric Models
 
   \code{quantreg}: Quantile Regression

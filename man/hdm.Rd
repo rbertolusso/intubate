@@ -7,7 +7,7 @@
 \alias{ntbt_rlassoEffects}
 \alias{ntbt_rlassoIV}
 \alias{ntbt_rlassologit}
-\alias{ntbt_tsls}
+%\alias{ntbt_tsls}
 \title{Interfaces for hdm package for data science pipelines.}
 \description{
   Interfaces to \code{hdm} functions that can be used
@@ -22,7 +22,7 @@ ntbt_rlassoLATET(data, ...)
 ntbt_rlassoEffects(data, ...)
 ntbt_rlassoIV(data, ...)
 ntbt_rlassologit(data, ...)
-ntbt_tsls(data, ...)
+# ntbt_tsls(data, ...)           ## Already defined in sem
 }
 \arguments{
   \item{data}{data frame, tibble, list, ...}

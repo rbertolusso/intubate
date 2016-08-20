@@ -89,6 +89,7 @@
 #                   "ci.sp", "ci.thresholds", "multiclass.roc", "plot.roc", "roc")
 #importFrom("pscl", "hurdle", "zeroinfl")
 #importFrom("psychomix", "btmix", "raschmix")
+#importFrom("psychotools", "anchor", "anchortest")
 #importFrom("psychotree", "bttree", "mpttree", "pctree", "raschtree", "rstree")
 #importFrom("quantreg", "dynrq", "KhmaladzeTest", "nlrq", "rq", "rqProcess",
 #                       "rqss")

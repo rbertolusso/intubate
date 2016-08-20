@@ -502,6 +502,10 @@ intubate <-
   ntbt_btmix <-
   ntbt_raschmix <-
   
+  ## psychotools
+  ntbt_anchor <-
+  ntbt_anchortest <-
+  
   ## psychotree
   ntbt_bttree <-
   ntbt_mpttree <-
