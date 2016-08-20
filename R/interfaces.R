@@ -234,6 +234,18 @@ intubate <-
   ntbt_stripchart <-
   ntbt_text <-
   
+  ## hdm
+  ntbt_rlasso <-
+  ntbt_rlassoATE <-
+  ntbt_rlassoATET <-
+  ntbt_rlassoLATE <-
+  ntbt_rlassoLATET <-
+  
+  ntbt_rlassoEffects <-
+  ntbt_rlassoIV <-
+  ntbt_rlassologit <-
+  ntbt_tsls <-
+  
   ## Hmisc
   ntbt_areg.boot <-
   ntbt_aregImpute <-

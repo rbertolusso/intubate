@@ -37,6 +37,8 @@
 #                  "ssanova9", "sscden", "sscden1", "sscox", "ssden",
 #                  "ssden1", "sshzd", "ssllrm")
 #import("graphics")
+#importFrom("hdm", "rlasso", "rlassoATE", "rlassoATET", "rlassoLATE", "rlassoLATET",
+##                 "rlassoEffects", "rlassoIV", "rlassologit", "tsls")
 #importFrom("Hmisc", "areg.boot", "aregImpute", "biVar", "bpplotM", "dataRep",
 #                    "describe", "Dotplot", "Ecdf", "fit.mult.impute", "nobsY",
 #                    "rcorrcens", "redun", "summary", "summaryD", "summaryM",

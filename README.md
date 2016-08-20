@@ -1,6 +1,6 @@
 #### intubate <||> *Roberto Bertolusso*
 
-##### *2016-07-26* - *2016-08-19* (GPL >= 2)
+##### *2016-07-26* - *2016-08-20* (GPL >= 2)
 
 
 The aim of `intubate` (`<||>`) is to offer a painless way to
@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 445 interfaces (below you will find a list of packages
+`intubate` currently implements 454 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -246,6 +246,7 @@ The R packages that have interfaces implemented so far are:
 * `gplots`: Various R Programming Tools for Plotting Data
 * `gss`: General Smoothing Splines
 * `graphics`: The R Graphics Package
+* `hdm`: High-Dimensional Metrics
 * `Hmisc`: Harrell Miscellaneous
 * `ipred`: Improved Predictors
 * `iRegression`: Regression Methods for Interval-Valued Variables
