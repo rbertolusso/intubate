@@ -135,8 +135,8 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
     result_visible <- ret$result_visible
     Call <- ret$Call
   } else  { ## Rest of cases
-    if (io$input != "")  ## NOTE: below should it be input_data[[io$input]] instead?
-      which_input_data <- input_data[[1]]  ## Need to get the object inside the list.
+    if (io$input != "")
+      which_input_data <- input_data[[io$input]]  ## Need to get the object inside the collection.
     else
       which_input_data <- input_data
     if (io$show_diagnostics) { cat("* Rest of cases # 1\n"); print(Call[-2]) }
@@ -397,8 +397,8 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
 #  attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
 #  result <- try(eval(Call)), silent = TRUE)  ## Use try as we use attach()
 #  detach()
-  if (FALSE && class(result)[[1]] == "try-error") {
-    cat("\n************\nError messages:")
+  if (class(result)[[1]] == "try-error") {
+    cat("\n************\nintubate\nStart of error messages (last to first)\n:")
     print(errors[length(errors):1])
     stop(paste0("Message from intubate:\n",
                 "All possibilities have been exhausted.\n",
