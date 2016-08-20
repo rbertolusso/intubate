@@ -56,7 +56,7 @@ LifeCycleSavings %>%
   summary()
 ```
 
-`intubate` currently implements 455 interfaces (below you will find a list of packages
+`intubate` currently implements 457 interfaces (below you will find a list of packages
 containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
@@ -282,6 +282,7 @@ The R packages that have interfaces implemented so far are:
 * `pls`: Partial Least Squares and Principal Component Regression
 * `pROC`: Display and Analyze ROC Curves
 * `pscl`: Political Science Computational Laboratory, Stanford University
+* `psychomix`: Psychometric Mixture Models
 * `psychotree`: Recursive Partitioning Based on Psychometric Models
 * `quantreg`: Quantile Regression
 * `randomForest`: Random Forests for Classification and Regression

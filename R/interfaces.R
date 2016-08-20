@@ -498,6 +498,10 @@ intubate <-
   ntbt_hurdle <-
   ntbt_zeroinfl <-
   
+  ## psychomix
+  ntbt_btmix <-
+  ntbt_raschmix <-
+  
   ## psychotree
   ntbt_bttree <-
   ntbt_mpttree <-

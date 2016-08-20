@@ -88,6 +88,7 @@
 #importFrom("pROC", "auc", "ci", "ci.auc", "ci.coords", "ci.se",
 #                   "ci.sp", "ci.thresholds", "multiclass.roc", "plot.roc", "roc")
 #importFrom("pscl", "hurdle", "zeroinfl")
+#importFrom("psychomix", "btmix", "raschmix")
 #importFrom("psychotree", "bttree", "mpttree", "pctree", "raschtree", "rstree")
 #importFrom("quantreg", "dynrq", "KhmaladzeTest", "nlrq", "rq", "rqProcess",
 #                       "rqss")
