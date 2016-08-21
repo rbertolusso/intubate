@@ -76,6 +76,7 @@ intuEnv <- function() {
   local_env$intuEnv
 }
 
+## (external)
 set_intuEnv <- function(envir) {
   old_intuEnv <- local_env$intuEnv
   if (!is.environment(envir))
@@ -87,8 +88,11 @@ set_intuEnv <- function(envir) {
 
 ## Internal variables and functions
 
-local_env <- new.env()
+local_env <- new.env()          ## Local environment
+
+## intuEnv
 local_env$intuEnv <- new.env()
+attr(local_env$intuEnv, "name") <- "intuEnv"
 
 ## (internal)
 process_call <- function(data, preCall, Call, cfti, use_envir) {
@@ -118,11 +122,12 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   #  if (io$show_diagnostics) print(Call)
   #  result <- eval(Call, envir = use_envir)
   #} else
-  if (length(preCall$...) == 0)  {
-    if (io$show_diagnostics) cat("* No arguments other than data\n")
-    if (io$show_diagnostics) print(Call)
-    result <- eval(Call)
-  } else if (there_are_formulas(preCall$...) || io$force_formula_case) {
+  #if (length(preCall$...) == 0)  {
+  #  if (io$show_diagnostics) cat("* No arguments other than data\n")
+  #  if (io$show_diagnostics) print(Call)
+  #  result <- eval(Call)
+  #} else
+  if (there_are_formulas(preCall$...) || io$force_formula_case) {
     if (io$show_diagnostics) cat("* Formula case\n")
     if (io$input != "") {
       Call[[2]] <- as.name(io$input)
@@ -140,7 +145,7 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
     else
       which_input_data <- input_data
     if (io$show_diagnostics) { cat("* Rest of cases # 1\n"); print(Call[-2]) }
-    ## Remove "data" [-2] from call
+    ## Remove "data" [-2] when calling
     result <- try(with(which_input_data, eval(Call[-2])), silent = TRUE)
     if (class(result)[[1]] == "try-error") {
       errors[[paste0("Error", length(errors) + 1)]] <-
@@ -174,22 +179,22 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   if (io$show_diagnostics && io$force_return_invisible) cat("* Force return invisible\n")
   
   if (io$found) {
-    if (io$show_successful_call) {
+    if (io$show_successful_call || io$be_verbose) {
       cat("\n") 
       print(Call)
     }
     #print(io$input_functions)
-    exec_io(io$input_functions, "source", input_data, input_data)
+    exec_io(io$input_functions, "source", input_data, input_data, io)
     #print(io$result_functions)
-    exec_io(io$result_functions, "result", result, input_data)
+    exec_io(io$result_functions, "result", result, input_data, io)
   }
 
-  if (!is.null(result) && io$output[1] != "") {
+  if (!is.null(result) && io$output != "") {
     if (io$is_intuBag) {
-      data[[io$output[1]]] <- result
-    ##    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
+      data[[io$output]] <- result
+      ##    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
     } else {
-      assign(io$output[1], result, envir = local_env$intuEnv)
+      assign(io$output, result, envir = intuEnv())
     }
   }
   ##  print(io)
@@ -238,7 +243,7 @@ parse_io <- function(par_list, data) {
   io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1", io$intubOrder) == "F")
   io$forward_input <- (gsub(".*<.*\\|.*(f).*\\|.*>.*", "\\1", io$intubOrder) == "f")
   io$force_return_invisible <- (gsub(".*<.*\\|.*(i).*\\|.*>.*", "\\1", io$intubOrder) == "i")
-  io$verbose <- (gsub(".*<.*\\|.*(v).*\\|.*>.*", "\\1", io$intubOrder) == "v")
+  io$be_verbose <- (gsub(".*<.*\\|.*(v).*\\|.*>.*", "\\1", io$intubOrder) == "v")
   
   input_output <- strsplit(paste0(" ", io$intubOrder, " "), ## Spaces to avoid failure.
                            "<.*\\|.*\\|.*>")[[1]]
@@ -252,20 +257,25 @@ parse_io <- function(par_list, data) {
   io$input <- trimws(input_output[1])
   if (io$input != "") {   ## Add requirement of data being an intuBag?
   ##  io$input_data <- as.list(data[io$input])  ## We removed class.
-    io$input_data <- data[io$input]
+    if (is.environment(data)) {
+      io$input_data <- list(get(io$input, envir = data))
+      names(io$input_data) <- io$input
+    } else {
+      io$input_data <- data[io$input]
+    }
   } else
     io$input_data <- data
   
   ## Get names of outputs.
   ## cat("Outputs\n")
-  io$output <- trimws(strsplit(input_output[2], ";")[[1]])
+  io$output <- trimws(input_output[2])
 
   #  print(io)
   io
 }
 
 ## (internal)
-exec_io <- function(..object_functions.., where, ..object_value.., ..envir..) {
+exec_io <- function(..object_functions.., where, ..object_value.., ..envir.., ..io..) {
   for (this_function in ..object_functions..) {
     include_object <- TRUE
     if (this_function == "print") {
@@ -284,7 +294,7 @@ exec_io <- function(..object_functions.., where, ..object_value.., ..envir..) {
       header <- paste0("* ", this_function, " <||> ", where, " *")
       sep <- paste0(paste0(rep("-", nchar(header)), collapse = ""), "\n")
       #cat(sep)
-      cat(paste0(header, "\n"))
+      if (..io..$be_verbose) cat(paste0(header, "\n"))
       #cat(sep)
       cat(printed[printed != "NULL"], sep = "\n")
     }
