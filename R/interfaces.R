@@ -724,7 +724,7 @@ intubate <-
     
     cfti <- get_calling_name("ntbt", as.character(Call[[1]]))
     
-    result <- process_call(data, preCall, Call, cfti, parent.frame())
+    result <- process_call("intubate", data, preCall, Call, cfti, parent.frame())
     
     if (result$result_visible)
       return (result$result)

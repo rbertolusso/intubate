@@ -36,9 +36,7 @@ ntbt <- function(data, fti, ...) {
   ## final Call (with print), and then
   ## there is an error when you eval().
   
-  Call[[3]] <- NULL
-
-  result <- process_call(data, preCall, Call, cfti, parent.frame())
+  result <- process_call("ntbt", data, preCall, Call, cfti, parent.frame())
   
   if (result$result_visible)
     return (result$result)
@@ -95,12 +93,17 @@ local_env$intuEnv <- new.env()
 attr(local_env$intuEnv, "name") <- "intuEnv"
 
 ## (internal)
-process_call <- function(data, preCall, Call, cfti, use_envir) {
-  io <- parse_io(preCall$..., data)
+process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   
   #if (io$be_verbose) {
     #if (io$show_diagnostics)
   print(Call)
+
+  if (called_from == "ntbt")
+    Call[[3]] <- NULL
+  
+  io <- parse_io(preCall$..., data)
+
   ## if (io$show_diagnostics) print(preCall)
   
   ##  print(io$found)
@@ -115,7 +118,7 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   if (io$show_diagnostics) {cat("* Function to call, with intubOrder removed:\n"); print(Call)}
   if (io$show_diagnostics) cat("* Formals:", names(formals(cfti)), "\n")
   
-  first_par_name <- names(formals(cfti))[1]
+  #first_par_name <- names(formals(cfti))[1]
   
   errors <- list()
   #if (first_par_name %in% c("data", ".data", "_data")) { ## already pipe-aware function
