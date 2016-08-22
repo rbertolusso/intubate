@@ -155,12 +155,13 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
         which_envir <- input_data
       } else
         which_envir <- use_envir
-      names(Call)[[2]] <- ""             ## Leave data unnamed. For already pipe-aware functions
-      if (io$show_diagnostics) { cat("* Rest of cases # 2\n"); print(Call) }
-      result <- try(eval(Call, envir = which_envir), silent = TRUE)
+      Call_data_unnamed <- Call               ## Create a copy for modification.
+      names(Call_data_unnamed)[[2]] <- ""     ## Leave data unnamed.
+      if (io$show_diagnostics) { cat("* Rest of cases # 2\n"); print(Call_data_unnamed) }
+      result <- try(eval(Call_data_unnamed, envir = which_envir), silent = TRUE)
       if (class(result)[[1]] == "try-error") {
         errors[[paste0("Error", length(errors) + 1)]] <-
-          list(context = "Rest of cases # 2", call_attempted = Call, error_message = result)
+          list(context = "Rest of cases # 2", call_attempted = Call_data_unnamed, error_message = result)
         if (io$show_diagnostics) cat("* Calling formula case from Rest of cases\n")
         ret <- process_formula_case(Call, which_envir, data, io, errors)
         ## Try formula (formula could be result of a function call)
