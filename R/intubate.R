@@ -98,7 +98,9 @@ attr(local_env$intuEnv, "name") <- "intuEnv"
 process_call <- function(data, preCall, Call, cfti, use_envir) {
   io <- parse_io(preCall$..., data)
   
-  if (io$show_diagnostics) print(Call)
+  #if (io$be_verbose) {
+    #if (io$show_diagnostics)
+  print(Call)
   ## if (io$show_diagnostics) print(preCall)
   
   ##  print(io$found)
@@ -110,7 +112,7 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
 
   Call[[1]] <- as.name(cfti)
   
-  if (io$show_diagnostics) print(Call)
+  if (io$show_diagnostics) {cat("* Function to call, with intubOrder removed:\n"); print(Call)}
   if (io$show_diagnostics) cat("* Formals:", names(formals(cfti)), "\n")
   
   first_par_name <- names(formals(cfti))[1]
@@ -127,29 +129,29 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
   #  if (io$show_diagnostics) print(Call)
   #  result <- eval(Call)
   #} else
-  if (there_are_formulas(preCall$...) || io$force_formula_case) {
-    if (io$show_diagnostics) cat("* Formula case\n")
-    if (io$input != "") {
-      Call[[2]] <- as.name(io$input)
-      which_envir <- input_data
-    } else
-      which_envir <- use_envir
-    if (io$show_diagnostics) print(Call)
-    ret <- process_formula_case(Call, which_envir, data, io, errors)
-    result <- ret$result
-    result_visible <- ret$result_visible
-    Call <- ret$Call
-  } else  { ## Rest of cases
+  #if (there_are_formulas(preCall$...) || io$force_formula_case) {
+  #  if (io$show_diagnostics) cat("* Formula case\n")
+  #  if (io$input != "") {
+  #    Call[[2]] <- as.name(io$input)
+  #    which_envir <- input_data
+  #  } else
+  #    which_envir <- use_envir
+  #  if (io$show_diagnostics) print(Call)
+  #  ret <- process_formula_case(Call, which_envir, data, io, errors)
+  #  result <- ret$result
+  #  result_visible <- ret$result_visible
+  #  Call <- ret$Call
+  #} else  { ## Rest of cases
     if (io$input != "")
       which_input_data <- input_data[[io$input]]  ## Need to get the object inside the collection.
     else
       which_input_data <- input_data
-    if (io$show_diagnostics) { cat("* Rest of cases # 1\n"); print(Call[-2]) }
+    if (io$show_diagnostics) { cat("* Strategy # 1\n"); print(Call[-2]) }
     ## Remove "data" [-2] when calling
     result <- try(with(which_input_data, eval(Call[-2])), silent = TRUE)
     if (class(result)[[1]] == "try-error") {
       errors[[paste0("Error", length(errors) + 1)]] <-
-        list(context = "Rest of cases # 1", call_attempted = Call[-2], error_message = result)
+        list(context = "Strategy # 1", call_attempted = Call[-2], error_message = result)
       if (io$input != "") {
         Call[[2]] <- as.name(io$input)
         which_envir <- input_data
@@ -157,12 +159,12 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
         which_envir <- use_envir
       Call_data_unnamed <- Call               ## Create a copy for modification.
       names(Call_data_unnamed)[[2]] <- ""     ## Leave data unnamed.
-      if (io$show_diagnostics) { cat("* Rest of cases # 2\n"); print(Call_data_unnamed) }
+      if (io$show_diagnostics) { cat("* Strategy # 2\n"); print(Call_data_unnamed) }
       result <- try(eval(Call_data_unnamed, envir = which_envir), silent = TRUE)
       if (class(result)[[1]] == "try-error") {
         errors[[paste0("Error", length(errors) + 1)]] <-
-          list(context = "Rest of cases # 2", call_attempted = Call_data_unnamed, error_message = result)
-        if (io$show_diagnostics) cat("* Calling formula case from Rest of cases\n")
+          list(context = "Strategy # 2", call_attempted = Call_data_unnamed, error_message = result)
+        ## if (io$show_diagnostics) cat("* Calling formula case from Rest of cases\n")
         ret <- process_formula_case(Call, which_envir, data, io, errors)
         ## Try formula (formula could be result of a function call)
         result <- ret$result
@@ -172,22 +174,24 @@ process_call <- function(data, preCall, Call, cfti, use_envir) {
     } else {
       Call = Call[-2]
     }
-  }
+  #}
   if (!exists("result_visible"))
     result_visible <- withVisible(result)$visible
   
+  if (io$show_diagnostics || io$show_successful_call) { cat("* Successful call:\n"); print(Call) }
   if (io$show_diagnostics) cat(paste0("* Result is ", ifelse(result_visible, "", "in"), "visible\n"))
-  if (io$show_diagnostics && io$force_return_invisible) cat("* Force return invisible\n")
-  
+  if (io$show_diagnostics && is.null(result)) cat("* Result is null\n")
+    
   if (io$found) {
-    if (io$show_successful_call || io$be_verbose) {
-      cat("\n") 
-      print(Call)
-    }
-    #print(io$input_functions)
+    if (io$show_diagnostics && length(io$input_functions) > 0)
+      { cat("* Input functions:\n"); print(io$input_functions) }
     exec_io(io$input_functions, "source", input_data, input_data, io)
-    #print(io$result_functions)
+
+    if (io$show_diagnostics && length(io$result_functions) > 0)
+      { cat("* Result functions:\n"); print(io$result_functions) }
     exec_io(io$result_functions, "result", result, input_data, io)
+
+    if (io$show_diagnostics && io$force_return_invisible) cat("* Force return invisible\n")
   }
 
   if (!is.null(result) && io$output != "") {
@@ -230,15 +234,11 @@ parse_io <- function(par_list, data) {
     io$intubOrder <- intuBorder
   
   io$input_functions <- trimws(gsub(".*<([^|]*)\\|[^|]*\\|.*>.*", "\\1", io$intubOrder))
-  #print(io$input_functions)
   io$input_functions <- trimws(strsplit(io$input_functions, ";")[[1]])
-  #print(io$input_functions)
-  
+
   io$result_functions <- trimws(gsub(".*<[^|]*\\|[^|]*\\|(.*)>.*", "\\1", io$intubOrder))
-  #print(io$result_functions)
   io$result_functions <- trimws(strsplit(io$result_functions, ";")[[1]])
-  #print(io$result_functions)
-  
+
   io$show_successful_call <- (gsub(".*<.*\\|.*(C).*\\|.*>.*", "\\1", io$intubOrder) == "C")
   io$show_diagnostics <- (gsub(".*<.*\\|.*(D).*\\|.*>.*", "\\1", io$intubOrder) == "D")
   io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1", io$intubOrder) == "F")
