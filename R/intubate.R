@@ -95,7 +95,7 @@ attr(local_env$intuEnv, "name") <- "intuEnv"
 ## (internal)
 process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   
-  print(Call)
+  user_call <- Call
 
   if (called_from == "ntbt")
     Call[[3]] <- NULL
@@ -103,6 +103,9 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   io <- parse_io(preCall$..., data)
 
   ## io$show_diagnostics <- TRUE
+
+  if (io$show_diagnostics || io$be_verbose)
+    print(user_Call)
   
   if (io$found) {
     preCall$...[[io$pos]] <- NULL   ## Remove intubOrder
@@ -112,10 +115,10 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
 
   Call[[1]] <- as.name(cfti)
 
-  if (io$show_diagnostics) {cat("* Function to call, with intubOrder removed:\n"); print(Call)}
+  if (io$show_diagnostics) { cat("* Function to call, with intubOrder removed:\n"); print(Call) }
   if (io$show_diagnostics) cat("* Formals:", names(formals(cfti)), "\n")
 
-  ret <- call_interfaced_function(cfti, Call, use_envir, data, input_data, io)
+  ret <- call_interfaced_function(cfti, Call, use_envir, input_data, io)
   result <- ret$result
   result_visible <- ret$result_visible
   Call <- ret$Call
@@ -218,35 +221,35 @@ parse_io <- function(par_list, data) {
 }
 
 ## (internal)
-exec_io <- function(..object_functions.., where, ..object_value.., ..envir.., ..io..) {
-  for (this_function in ..object_functions..) {
-    include_object <- TRUE
-    if (this_function == "print") {
-      printed <- capture.output(print(..object_value..))
+exec_io <- function(..object_functions.., ..where.., ..object_value.., ..envir.., ..io..) {
+  for (..this_function.. in ..object_functions..) {
+    ..include_object.. <- TRUE
+    if (..this_function.. == "print") {
+      ..printed.. <- capture.output(print(..object_value..))
     } else {
-      if (length(strsplit(this_function, "\\(")[[1]]) > 1) {
-        printed <- capture.output(print(eval(parse(text = gsub("#", "..object_value..", this_function)),
+      if (length(strsplit(..this_function.., "\\(")[[1]]) > 1) {
+        ..printed.. <- capture.output(print(eval(parse(text = gsub("#", "..object_value..", ..this_function..)),
                                              envir = ..envir..)))
       } else {
-        printed <- capture.output(print(do.call(this_function, args=list(quote(..object_value..)))))
+        ..printed.. <- capture.output(print(do.call(..this_function.., args=list(quote(..object_value..)))))
       }
     }
-    ## print(str(printed))
-    if (length(printed) > 0 && printed[1] != "NULL" && include_object) {
+    ## print(str(..printed..))
+    if (length(..printed..) > 0 && ..printed..[1] != "NULL" && ..include_object..) {
       cat("\n")
-      header <- paste0("* ", this_function, " <||> ", where, " *")
-      sep <- paste0(paste0(rep("-", nchar(header)), collapse = ""), "\n")
+      ..header.. <- paste0("* ", ..this_function.., " <||> ", ..where.., " *")
+      #sep <- paste0(paste0(rep("-", nchar(header)), collapse = ""), "\n")
       #cat(sep)
-      if (..io..$be_verbose) cat(paste0(header, "\n"))
+      if (..io..$be_verbose) cat(paste0(..header.., "\n"))
       #cat(sep)
-      cat(printed[printed != "NULL"], sep = "\n")
+      cat(..printed..[..printed.. != "NULL"], sep = "\n")
     }
   }
 }
 
 
 ## (internal)
-call_interfaced_function <- function(cfti, Call, use_envir, data, input_data, io) {
+call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
   
   pos <- which(sapply(charCall <- as.character(Call), function(par) {
     gsub(".*(#).*", "\\1", par) == "#"
@@ -257,7 +260,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, data, input_data, io
     .res_expr. <- eval(parse(text = to_parse), envir = use_envir)
     Call[[pos]] <- as.name(".res_expr.")
     Call <- Call[-2]
-    if (io$show_diagnostics) { cat("* Formula with position\n"); print(Call) }
+    if (io$show_diagnostics) { cat("* Position specified\n"); print(Call) }
     result <- eval(Call)    ## If you specify position, you better know what you are doing.
     return(list(result = result,
                 result_visible = withVisible(result)$visible,
@@ -303,7 +306,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, data, input_data, io
     which_input_data <- input_data
 
   Call <- Call[-2]
-  if (io$show_diagnostics) { cat("* Strategy # 1\n"); print(Call) }
+  if (io$show_diagnostics) { cat("* Using with\n"); print(Call) }
   ## Remove "data" [-2] when calling
   result <- try(with(which_input_data, eval(Call)), silent = TRUE)
   if (class(result)[[1]] != "try-error") {
@@ -312,7 +315,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, data, input_data, io
                 Call = Call))
   }
   errors[[paste0("Error", length(errors) + 1)]] <-
-    list(context = "Strategy # 1", call_attempted = Call, error_message = result)
+    list(context = "Using with", call_attempted = Call, error_message = result)
   Call <- Call_saved
   
   if (io$input != "") {
@@ -322,7 +325,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, data, input_data, io
     which_envir <- use_envir
   Call_data_unnamed <- Call               ## Create a copy for modification.
   names(Call)[[2]] <- ""     ## Leave data unnamed.
-  if (io$show_diagnostics) { cat("* Strategy # 2\n"); print(Call) }
+  if (io$show_diagnostics) { cat("* Leaving data unnamed\n"); print(Call) }
   result <- try(eval(Call, envir = which_envir), silent = TRUE)
   if (class(result)[[1]] != "try-error") {
     return(list(result = result,
@@ -330,7 +333,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, data, input_data, io
                 Call = Call))
   }
   errors[[paste0("Error", length(errors) + 1)]] <-
-    list(context = "Strategy # 2", call_attempted = Call_data_unnamed, error_message = result)
+    list(context = "Leaving data unnamed", call_attempted = Call_data_unnamed, error_message = result)
   Call <- Call_saved
 
   if (io$show_diagnostics) { cat("* Formula # 1\n"); print(Call) }
@@ -390,27 +393,10 @@ call_interfaced_function <- function(cfti, Call, use_envir, data, input_data, io
     }
   }
 
-  ## Parameters exhausted and still error
-  ## Try attaching data and call, It will fail if there is a . in the formula,
-  ## but at this point there is no much else to do.
-  ## This is needed to accomodate at least calibrate() in EnvStats,
-  ## that seem to not accept "." as name of data when called in a pipeline
-  ## (the interface called directly with the name of the data works fine).
-  ## So let's make it believe we are just in some sort of "global environment"
-  ## working with local variables. It would be better if the authors of EnvStats
-  ## improve the data management.
-  ## Remove "data" (now at the end of Call) then call.
-
-  ## check --as-cran does not like the attach() below. Currently it is there
-  ## only to address calibrate() in EnvStats. So for now, I will remove
-  ## the interface to calibrate(), and get back to this after 0.99.3
-  ## is submitted (maybe later this week).
-  ##
-  ## If we get to this point, we will just admit defeat.
   
 #  Call <- Call[-length(Call)]
 #  if (io$show_diagnostics) print(Call)
-#  attach(data) ## Tried with() but calibrate() still complained. Too high maintenance!
+#  attach(input_data) ## Tried with() but calibrate() still complained. Too high maintenance!
 #  result <- try(eval(Call)), silent = TRUE)  ## Use try as we use attach()
 #  detach()
   if (class(result)[[1]] == "try-error") {
