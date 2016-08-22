@@ -104,6 +104,8 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   
   io <- parse_io(preCall$..., data)
 
+  ## io$show_diagnostics <- TRUE
+  
   ## if (io$show_diagnostics) print(preCall)
   
   ##  print(io$found)
@@ -114,7 +116,7 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   input_data <- io$input_data
 
   Call[[1]] <- as.name(cfti)
-  
+
   if (io$show_diagnostics) {cat("* Function to call, with intubOrder removed:\n"); print(Call)}
   if (io$show_diagnostics) cat("* Formals:", names(formals(cfti)), "\n")
   
@@ -145,6 +147,30 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   #  result_visible <- ret$result_visible
   #  Call <- ret$Call
   #} else  { ## Rest of cases
+  
+  names_from_formal <- names(formals(cfti))
+  data_pos <- which(names_from_formal %in% c("data"))
+  if (length(data_pos) > 0) {
+    data_pos <- data_pos + 1                          ## Adapt to our Call
+    if (data_pos > 2 && length(Call) > 2) {
+      for (par in 3:min(data_pos, length(Call))) {    ## Move to natural position
+        Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
+        names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
+      }
+    }
+    if (io$input != "") {
+      Call[[data_pos]] <- as.name(io$input)
+      which_envir <- input_data
+    } else
+      which_envir <- use_envir
+    
+    if (io$show_diagnostics) { cat("* Re-position data\n"); print(Call) }
+    ## Try as it is (data is named)
+    result <- try(eval(Call, envir = which_envir), silent = TRUE)
+    if (class(result)[[1]] == "try-error") {
+      stop(result)
+    }
+  } else {
     if (io$input != "")
       which_input_data <- input_data[[io$input]]  ## Need to get the object inside the collection.
     else
@@ -177,7 +203,7 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
     } else {
       Call = Call[-2]
     }
-  #}
+  }
   if (!exists("result_visible"))
     result_visible <- withVisible(result)$visible
   
