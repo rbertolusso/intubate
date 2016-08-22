@@ -95,8 +95,6 @@ attr(local_env$intuEnv, "name") <- "intuEnv"
 ## (internal)
 process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   
-  #if (io$be_verbose) {
-    #if (io$show_diagnostics)
   print(Call)
 
   if (called_from == "ntbt")
@@ -106,9 +104,6 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
 
   ## io$show_diagnostics <- TRUE
   
-  ## if (io$show_diagnostics) print(preCall)
-  
-  ##  print(io$found)
   if (io$found) {
     preCall$...[[io$pos]] <- NULL   ## Remove intubOrder
     Call[[io$pos + 2]] <- NULL
@@ -119,93 +114,11 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
 
   if (io$show_diagnostics) {cat("* Function to call, with intubOrder removed:\n"); print(Call)}
   if (io$show_diagnostics) cat("* Formals:", names(formals(cfti)), "\n")
-  
-  #first_par_name <- names(formals(cfti))[1]
-  
-  errors <- list()
-  #if (first_par_name %in% c("data", ".data", "_data")) { ## already pipe-aware function
-  #  if (io$show_diagnostics) cat("* Already pipe-aware function\n")
-  #  names(Call)[[2]] <- first_par_name
-  #  if (io$show_diagnostics) print(Call)
-  #  result <- eval(Call, envir = use_envir)
-  #} else
-  #if (length(preCall$...) == 0)  {
-  #  if (io$show_diagnostics) cat("* No arguments other than data\n")
-  #  if (io$show_diagnostics) print(Call)
-  #  result <- eval(Call)
-  #} else
-  #if (there_are_formulas(preCall$...) || io$force_formula_case) {
-  #  if (io$show_diagnostics) cat("* Formula case\n")
-  #  if (io$input != "") {
-  #    Call[[2]] <- as.name(io$input)
-  #    which_envir <- input_data
-  #  } else
-  #    which_envir <- use_envir
-  #  if (io$show_diagnostics) print(Call)
-  #  ret <- process_formula_case(Call, which_envir, data, io, errors)
-  #  result <- ret$result
-  #  result_visible <- ret$result_visible
-  #  Call <- ret$Call
-  #} else  { ## Rest of cases
-  
-  names_from_formal <- names(formals(cfti))
-  data_pos <- which(names_from_formal %in% c("data"))
-  if (length(data_pos) > 0) {
-    data_pos <- data_pos + 1                          ## Adapt to our Call
-    if (data_pos > 2 && length(Call) > 2) {
-      for (par in 3:min(data_pos, length(Call))) {    ## Move to natural position
-        Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
-        names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
-      }
-    }
-    if (io$input != "") {
-      Call[[data_pos]] <- as.name(io$input)
-      which_envir <- input_data
-    } else
-      which_envir <- use_envir
-    
-    if (io$show_diagnostics) { cat("* Re-position data\n"); print(Call) }
-    ## Try as it is (data is named)
-    result <- try(eval(Call, envir = which_envir), silent = TRUE)
-    if (class(result)[[1]] == "try-error") {
-      stop(result)
-    }
-  } else {
-    if (io$input != "")
-      which_input_data <- input_data[[io$input]]  ## Need to get the object inside the collection.
-    else
-      which_input_data <- input_data
-    if (io$show_diagnostics) { cat("* Strategy # 1\n"); print(Call[-2]) }
-    ## Remove "data" [-2] when calling
-    result <- try(with(which_input_data, eval(Call[-2])), silent = TRUE)
-    if (class(result)[[1]] == "try-error") {
-      errors[[paste0("Error", length(errors) + 1)]] <-
-        list(context = "Strategy # 1", call_attempted = Call[-2], error_message = result)
-      if (io$input != "") {
-        Call[[2]] <- as.name(io$input)
-        which_envir <- input_data
-      } else
-        which_envir <- use_envir
-      Call_data_unnamed <- Call               ## Create a copy for modification.
-      names(Call_data_unnamed)[[2]] <- ""     ## Leave data unnamed.
-      if (io$show_diagnostics) { cat("* Strategy # 2\n"); print(Call_data_unnamed) }
-      result <- try(eval(Call_data_unnamed, envir = which_envir), silent = TRUE)
-      if (class(result)[[1]] == "try-error") {
-        errors[[paste0("Error", length(errors) + 1)]] <-
-          list(context = "Strategy # 2", call_attempted = Call_data_unnamed, error_message = result)
-        ## if (io$show_diagnostics) cat("* Calling formula case from Rest of cases\n")
-        ret <- process_formula_case(Call, which_envir, data, io, errors)
-        ## Try formula (formula could be result of a function call)
-        result <- ret$result
-        result_visible <- ret$result_visible
-        Call <- ret$Call
-      }
-    } else {
-      Call = Call[-2]
-    }
-  }
-  if (!exists("result_visible"))
-    result_visible <- withVisible(result)$visible
+
+  ret <- call_interfaced_function(cfti, Call, use_envir, data, input_data, io)
+  result <- ret$result
+  result_visible <- ret$result_visible
+  Call <- ret$Call
   
   if (io$show_diagnostics || io$show_successful_call) { cat("* Successful call:\n"); print(Call) }
   if (io$show_diagnostics) cat(paste0("* Result is ", ifelse(result_visible, "", "in"), "visible\n"))
@@ -333,14 +246,8 @@ exec_io <- function(..object_functions.., where, ..object_value.., ..envir.., ..
 
 
 ## (internal)
-## This special case for formulas is, at least for now, needed because
-## "Rest of cases" below does not know how to manage cases with "." in
-## a formula (and the called function neither because only sees the variables
-## inside the data, not the data itself). An alternative could be to have in
-## "Rest of cases" some sort of "stats::model.matrix" call (of which I have
-## not clue how to implement), for *all* the formulas that have a ".", so maybe
-## the end result will be even more involved and this is as good as we can do.
-process_formula_case <- function(Call, use_envir, data, io, errors) {
+call_interfaced_function <- function(cfti, Call, use_envir, data, input_data, io) {
+  
   pos <- which(sapply(charCall <- as.character(Call), function(par) {
     gsub(".*(#).*", "\\1", par) == "#"
   }))
@@ -356,6 +263,75 @@ process_formula_case <- function(Call, use_envir, data, io, errors) {
                 result_visible = withVisible(result)$visible,
                 Call = Call))
   }
+
+  Call_saved <- Call
+  errors <- list()
+
+  names_from_formal <- names(formals(cfti))
+  data_pos <- which(names_from_formal %in% c("data"))
+  if (length(data_pos) > 0) {
+    data_pos <- data_pos + 1                          ## Adapt to our Call
+    
+    if (data_pos > 2 && length(Call) > 2) {
+      for (par in 3:min(data_pos, length(Call))) {    ## Move to natural position
+        Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
+        names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
+      }
+    }
+    if (io$input != "") {
+      Call[[data_pos]] <- as.name(io$input)
+      which_envir <- input_data
+    } else
+      which_envir <- use_envir
+    
+    if (io$show_diagnostics) { cat("* Re-position data\n"); print(Call) }
+    ## Try as it is (data is named)
+    result <- try(eval(Call, envir = which_envir), silent = TRUE)
+    if (class(result)[[1]] != "try-error") {
+      return(list(result = result,
+                  result_visible = withVisible(result)$visible,
+                  Call = Call))
+    }
+    errors[[paste0("Error", length(errors) + 1)]] <-
+      list(context = "Re-position data", call_attempted = Call, error_message = result)
+    Call <- Call_saved
+  }
+
+  if (io$input != "")
+    which_input_data <- input_data[[io$input]]  ## Need to get the object inside the collection.
+  else
+    which_input_data <- input_data
+
+  Call <- Call[-2]
+  if (io$show_diagnostics) { cat("* Strategy # 1\n"); print(Call) }
+  ## Remove "data" [-2] when calling
+  result <- try(with(which_input_data, eval(Call)), silent = TRUE)
+  if (class(result)[[1]] != "try-error") {
+    return(list(result = result,
+                result_visible = withVisible(result)$visible,
+                Call = Call))
+  }
+  errors[[paste0("Error", length(errors) + 1)]] <-
+    list(context = "Strategy # 1", call_attempted = Call, error_message = result)
+  Call <- Call_saved
+  
+  if (io$input != "") {
+    Call[[2]] <- as.name(io$input)
+    which_envir <- input_data
+  } else
+    which_envir <- use_envir
+  Call_data_unnamed <- Call               ## Create a copy for modification.
+  names(Call)[[2]] <- ""     ## Leave data unnamed.
+  if (io$show_diagnostics) { cat("* Strategy # 2\n"); print(Call) }
+  result <- try(eval(Call, envir = which_envir), silent = TRUE)
+  if (class(result)[[1]] != "try-error") {
+    return(list(result = result,
+                result_visible = withVisible(result)$visible,
+                Call = Call))
+  }
+  errors[[paste0("Error", length(errors) + 1)]] <-
+    list(context = "Strategy # 2", call_attempted = Call_data_unnamed, error_message = result)
+  Call <- Call_saved
 
   if (io$show_diagnostics) { cat("* Formula # 1\n"); print(Call) }
   ## Try as it is (data is named)
