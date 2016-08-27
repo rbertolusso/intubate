@@ -7,28 +7,23 @@ The aim of `intubate` (`<||>`) is to offer a painless way to
 add R functions that that are not pipe-aware
 to data science pipelines implemented by `magrittr` with the
 operator `%>%`, without having to rely on workarounds. It also
-offers two extensions (currently in experimental stage), called
-`intubOrders`, and `intuBags`.
+offers three extensions (implemented but still considered experimental),
+called `intubOrders`, `intuEnv`, and `intuBags`.
 
 #### Installation
 
-* the latest released version from CRAN (0.99.2) with
+* the latest released version from CRAN (0.99.3) with
 
 ```{r}
 install.packages("intubate")
 ```
-(keep in mind you should use this version only for the interfaces, with
- a number of helper functions to define your interface. The
- newer version, 0.99.3, will need only one helper function, `intubate`, for all
- interfaces, and will also let you call the non-pipe-aware functions directly,
- *without* having to define an interface, by using the *new* function `ntbt`.)
- 
 * the latest development version from github with
 
 ```{r}
 # install.packages("devtools")
 devtools::install_github("rbertolusso/intubate")
 ```
+
 ### In a nutshell
 If you like `magrittr` pipelines (%>%) and you are looking
 for an alternative to perfoming a statistical analysis
@@ -61,13 +56,13 @@ containing the interfaced functions) that can be related to data science
 methodologies and other disciplines. For now the focus is on interfacing
 non-pipe-aware functions having "formula" and "data" (in that order),
 but the non-formula variants should also work (even cases currently lacking interfaces).
+As a proof of concept of this, two libraries that contain non-formula variants only (`glmnet` and `lars`) have also been interfaced.
 
 #### Interfaces "on demand"
-`intubate` *also* let's
-you **create your own interfaces** "on demand", **right now**, giving you
-full power of decision regarding which functions to interface. It *also*
-let's you **call the non-pipe-aware functions directly**, withou the need
-of defining an interface.
+`intubate` *also* allows to **create your own interfaces** "on demand",
+**right now**, giving you full power of decision regarding which functions
+to interface. It *also* lets you **call the non-pipe-aware functions directly**,
+without the need of defining an interface.
 
 The ability of being able to amplify the scope of `intubate`
 may prove to be particularly welcome in case you are related to a particular
@@ -147,8 +142,7 @@ a pipeline (because `data` is in second place instead of first).
 
 #### Example showing different techniques
 
-The link below is to Dr. Sheather's website where original data and code was extracted.
-Note that it was downloaded around June 2015 (it may have been modified since then).
+The link below is to Dr. Sheather's website where code was extracted (around June 2015).
 In the link there is also information about the book. 
 This code could be used to produce Figure 3.1 on page 46, containing 4 plots.
 Different strategies are illustrated.
@@ -312,112 +306,6 @@ The R packages that have interfaces implemented so far are:
 The aim is to continue adding interfaces to most methodologies
   used in data science or other disciplines.
   
-`intubate` core depends only on `base`, `stats`, and `utils` libraries.
-To keep it as lean as
-possible, and to be able to continue to include more interfaces without bloating your machine, 
-starting from version 0.99.3 `intubate` **will not** install the packages
-that contain the functions that are interfaced. *You will need to install them yourself*,
-and load the corresponding libraries before using them in your pipelines. This
-also applies to `magrittr` (in case you want to use `intubate` without pipelines).
-
-Then, if you are only interested in a given field, say:
-bio-statistics,
-bio-informatics,
-environmetrics,
-econometrics,
-finance,
-machine learning,
-meta-analysis,
-pharmacokinetics,
-phylogenetics,
-psychometrics,
-social sciences,
-surveys,
-survival analysis,
-..., you will not have to install *all* the packages for which interfaces are provided
-if you intend to use only a subset of them. You only need to install
-the subset of packages you intend to use (which are probably already installed in your machine).
-
-Also, there are cases where some packages are in conflict if loaded simultaneously, leading
-to a segmentation fault (for example, kernlab functions fail when testing the whole
-examples provided with `intubate`, but not when testing kernlab only examples
-in a clean environment. I ignore which is/are the other(s) package(s) conflicting with it.
-The only thing I know is that the package name is alphabetically ordered prior to kernlab)
-
-I make no personal judgement (mostly due to personal ignorance)
-about the merit of any interfaced function.
-I have used only a subset of what is provided, and I am happy to include others,
-that I am currently unaware of, down the line. In principle I plan on including
-packages that are listed as reverse depends, imports, or suggest on package `Formula`
-(I am missing still quite a bit of them). Adding interfacings is easy (and can be
-boring...) so I will appreciate if you want to contribute (and you will be credited
-in the help of the interfaced package). Also is welcome the improvement of the
-provided examples (such as making sure the data used is correct for the statistical
-technique used).
-
-I do not claim to be a data scientist (I still have almost no clue of what a data scientist
-is or is not, and my confusion about the subject only increases with time),
-nor someone entitled to tell you what to use or not.
-
-As such, I am not capable of engaging in disputes of what is relevant or not, or,
-if there are competing packages, which to use.
-I will leave that to you to decide.
-
-Please keep in mind that `intubate`
-will **not** install any packages correponding to the interfaces
-that are provided. You can install *only* those that you need
-(or like) and disregard the rest. Also please remember that you can create your
-own interfaces (using helper function `intubate`),
-or call non-pipe-aware functions directly (using `ntbt`).
-
-The original aim of `intubate` was to be able to include functions that
-have *formula* and *data* (in that order) in a `magrittr` pipeline using `%>%`.
-As such, my search so far has been concentrated in packages containing formulas and
-misplaced (from pipes point of view) data.
-
-For example, this was my first implementation of `ntbt_lm`
-```{r}
-ntbt_lm <- function(data, formula, ...)
-  lm(formula, data, ...)
-```
-
-This was supposed to be repeated for each interface.
-
-Soon after I realized that `intubate` could have a few helper functions (that was
-version 0.99.2), later that only one helper function was needed (`intubate`), and
-later that you could call non-pipe-aware functions directly without defining
-interfaces (`ntbt`) and
-that the interfaces and `ntbt` could also be successfully used in cases
-where non-formula variants are implemented.
-
-However, my starting point inevitably led the way. I did not *see* the big picture
-(well, what *today* I *think* the big picture is...),
-so the current version only addresses packages containing functions that use formula
-variant, even
-if in those cases you can also use the non-formula variants (you can see the
-examples corresponding to `pROC`, where both cases for formula and non-formula
-are demonstrated. You should be able to use that technique also for the rest of
-the packages).
-
-I am brewing some ideas about a general approach to packages that
-do not use formula interface, but I leave that for a future iteration of `intubate`.
-
-This means that there are two possibilities to the eventual
-lack of inclusion of your favorite package for the time being:
-
-1. The package only uses matrices or x- y- like notation (and not formulas)
-2. (more likely reason) I should know better, but I missed it
-(truth is that by implementing the supplied interfaces I realized how little
-I knew, and still know, about a field in which I am supposed to be an expert),
-and I apologize for that.
-3. I got to the point I need to take a rest (this reason is competing with 2.
-with increasing strength as time passes by. If something looks odd,
-you can refer to the Spanish Inquisition by Monty Python)
-
-Also, please keep in mind you have a very good chance you can create your own interfaces
-(with the helper function `intubate`), or call the non-pipe-aware functions
-directly (with `ntbt`).
-
 #### Experimental features, not for general or production use
 `intubate` includes two experimental features: **intubOrders**, and **intuBags**.
 
@@ -547,6 +435,114 @@ This means `intubate` will have three modes of operations:
 * as interface only,
 * as interface + intubOrders, and
 * as interface + intubOrders + intuBags.
+
+#### More about interfaced libraries
+
+`intubate` core depends only on `base`, `stats`, and `utils` libraries.
+To keep it as lean as possible, and to be able to continue to include more interfaces without bloating your machine,  starting from version 0.99.3 `intubate` **will not**
+install the packages that contain the functions that are interfaced.
+*You will need to install them yourself*,
+and load the corresponding libraries before using them in your pipelines. This
+also applies to `magrittr` (in case you want to use `intubate` without pipelines).
+
+Then, if you are only interested in a given field, say:
+bio-statistics,
+bio-informatics,
+environmetrics,
+econometrics,
+finance,
+machine learning,
+meta-analysis,
+pharmacokinetics,
+phylogenetics,
+psychometrics,
+social sciences,
+surveys,
+survival analysis,
+..., you will not have to install *all* the packages for which interfaces are provided
+if you intend to use only a subset of them. You only need to install
+the subset of packages you intend to use (which are probably already installed in your machine).
+
+Also, there are cases where some packages are in conflict if loaded simultaneously, leading
+to a segmentation fault (for example, kernlab functions fail when testing the whole
+examples provided with `intubate`, but not when testing kernlab only examples
+in a clean environment. I ignore which is/are the other(s) package(s) conflicting with it.
+The only thing I know is that the package name is alphabetically ordered prior to kernlab)
+
+I make no personal judgement (mostly due to personal ignorance)
+about the merit of any interfaced function.
+I have used only a subset of what is provided, and I am happy to include others,
+that I am currently unaware of, down the line. In principle I plan on including
+packages that are listed as reverse depends, imports, or suggest on package `Formula`
+(I am missing still quite a bit of them). Adding interfacings is easy (and can be
+boring...) so I will appreciate if you want to contribute (and you will be credited
+in the help of the interfaced package). Also is welcome the improvement of the
+provided examples (such as making sure the data used is correct for the statistical
+technique used).
+
+I do not claim to be a data scientist (I am barely a statistician and I still have
+almost no clue of what a data scientist
+is or is not, and my confusion about the subject only increases with time),
+nor someone entitled to tell you what to use or not.
+
+As such, I am not capable of engaging in disputes of what is relevant or not, or,
+if there are competing packages, which to use.
+I will leave that to you to decide.
+
+Please keep in mind that `intubate`
+will **not** install any packages correponding to the interfaces
+that are provided. You can install *only* those that you need
+(or like) and disregard the rest. Also please remember that you can create your
+own interfaces (using helper function `intubate`),
+or call non-pipe-aware functions directly (using `ntbt`).
+
+The original aim of `intubate` was to be able to include functions that
+have *formula* and *data* (in that order) in a `magrittr` pipeline using `%>%`.
+As such, my search so far has been concentrated in packages containing formulas and
+misplaced (from pipes point of view) data (with the exeption of a couple of packages
+with non-formula variants interfaced as proofs of concept).
+
+For example, this was my first implementation of `ntbt_lm`
+```{r}
+ntbt_lm <- function(data, formula, ...)
+  lm(formula, data, ...)
+```
+
+This was supposed to be repeated for each interface.
+
+Soon after I realized that `intubate` could have a few helper functions (that was
+version 0.99.2), later that only one helper function was needed (`intubate`), and
+later that you could call non-pipe-aware functions directly without defining
+interfaces (`ntbt`) and
+that the interfaces and `ntbt` could also be successfully used in cases
+where non-formula variants are implemented.
+
+However, my starting point inevitably led the way. I did not *see* the big picture
+(well, what *today* I *think* the big picture is...),
+so the current version only addresses packages containing functions that use formula
+variant, even
+if in those cases you can also use the non-formula variants (you can see the
+examples corresponding to `pROC`, where both cases for formula and non-formula
+are demonstrated. You should be able to use that technique also for the rest of
+the packages).
+
+I am brewing some ideas about a general approach to packages that
+do not use formula interface, but I leave that for a future iteration of `intubate`.
+
+This means that there are three possibilities to the eventual
+lack of inclusion of your favorite package for the time being:
+
+1. The package only uses matrices or x- y- like notation (and not formulas)
+2. (more likely reason) I should know better, but I missed it
+(truth is that by implementing the supplied interfaces I realized how little
+I knew, and still know, about a field in which I am supposed to be an expert),
+and I apologize for that.
+3. I got to the point I need to take a rest (this reason is competing with 2.
+with increasing strength as time passes by)
+
+Also, please keep in mind you can always create your own interfaces
+(with the helper function `intubate`), or call the non-pipe-aware functions
+directly (with `ntbt`).
 
 #### Bugs and Feature requests
 The robustness and generality of the interfacing machinery still needs to be

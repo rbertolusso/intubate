@@ -83,6 +83,10 @@ set_intuEnv <- function(envir) {
   old_intuEnv
 }
 
+## (external)
+clear_intuEnv <- function() {
+  rm(list = ls(intuEnv()), envir = intuEnv())
+}
 
 ## Internal variables and functions
 
@@ -104,9 +108,17 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
 
   ## io$show_diagnostics <- TRUE
 
-  if (io$show_diagnostics || io$be_verbose)
-    print(user_Call)
-  
+  if (io$found || io$show_diagnostics) {
+    if (io$show_intubOrder)
+        user_Call[[io$pos + ifelse(called_from == "ntbt", 3, 2)]] <- io$intubOrder
+    else
+      user_Call[[io$pos + ifelse(called_from == "ntbt", 3, 2)]] <- NULL
+    if(length(io$input_functions) + length(io$result_functions) > 0) {
+      cat("\n")
+      print(user_Call)
+    }
+  }
+
   if (io$found) {
     preCall$...[[io$pos]] <- NULL   ## Remove intubOrder
     Call[[io$pos + 2]] <- NULL
@@ -148,7 +160,7 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
     }
   }
   ##  print(io)
-  if (!io$is_intuBag) {
+  if (!io$is_intuBag && !io$is_environment) {
     if (!is.null(result) && !io$forward_input) {
       if (result_visible && !io$force_return_invisible) {
         return (list(result = result, result_visible = TRUE))
@@ -177,6 +189,9 @@ parse_io <- function(par_list, data) {
   }
   if (!io$found)
     io$intubOrder <- intuBorder
+
+  ## Remove extra spaces or newlines to better print the call  
+  io$intubOrder <- gsub("[[:space:]]+", " ", io$intubOrder)
   
   io$input_functions <- trimws(gsub(".*<([^|]*)\\|[^|]*\\|.*>.*", "\\1", io$intubOrder))
   io$input_functions <- trimws(strsplit(io$input_functions, ";")[[1]])
@@ -188,6 +203,7 @@ parse_io <- function(par_list, data) {
   io$show_diagnostics <- (gsub(".*<.*\\|.*(D).*\\|.*>.*", "\\1", io$intubOrder) == "D")
   io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1", io$intubOrder) == "F")
   io$forward_input <- (gsub(".*<.*\\|.*(f).*\\|.*>.*", "\\1", io$intubOrder) == "f")
+  io$show_intubOrder <- (gsub(".*<.*\\|.*(I).*\\|.*>.*", "\\1", io$intubOrder) == "I")
   io$force_return_invisible <- (gsub(".*<.*\\|.*(i).*\\|.*>.*", "\\1", io$intubOrder) == "i")
   io$be_verbose <- (gsub(".*<.*\\|.*(v).*\\|.*>.*", "\\1", io$intubOrder) == "v")
   
@@ -199,11 +215,11 @@ parse_io <- function(par_list, data) {
   ## Get requested inputs.
   ## cat("Inputs\n")
   io$is_intuBag <- is_intuBag(data)
-
+  io$is_environment <- is.environment(data)
+  
   io$input <- trimws(input_output[1])
-  if (io$input != "") {   ## Add requirement of data being an intuBag?
-  ##  io$input_data <- as.list(data[io$input])  ## We removed class.
-    if (is.environment(data)) {
+  if (io$input != "") {
+    if (io$is_environment) {
       io$input_data <- list(get(io$input, envir = data))
       names(io$input_data) <- io$input
     } else {
@@ -240,7 +256,7 @@ exec_io <- function(..object_functions.., ..where.., ..object_value.., ..envir..
       ..header.. <- paste0("* ", ..this_function.., " <||> ", ..where.., " *")
       #sep <- paste0(paste0(rep("-", nchar(header)), collapse = ""), "\n")
       #cat(sep)
-      if (..io..$be_verbose) cat(paste0(..header.., "\n"))
+      cat(paste0(..header.., "\n"))
       #cat(sep)
       cat(..printed..[..printed.. != "NULL"], sep = "\n")
     }
@@ -271,11 +287,11 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
   errors <- list()
 
   names_from_formal <- names(formals(cfti))
-  data_pos <- which(names_from_formal %in% c("data", "_data"))
+  data_pos <- which(names_from_formal %in% "data")
   if (length(data_pos) > 0) {
-    names(Call)[[2]] <- names_from_formal[data_pos]
+    # names(Call)[[2]] <- names_from_formal[data_pos]
     data_pos <- data_pos + 1                          ## Adapt to our Call
-    
+
     if (data_pos > 2 && length(Call) > 2) {
       for (par in 3:min(data_pos, length(Call))) {    ## Move to natural position
         Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
@@ -287,7 +303,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
       which_envir <- input_data
     } else
       which_envir <- use_envir
-    
+
     if (io$show_diagnostics) { cat("* As-is, rename, and/or re-position data\n"); print(Call) }
     ## Try as it is (data is named)
     result <- try(eval(Call, envir = which_envir), silent = TRUE)
@@ -324,7 +340,6 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
     which_envir <- input_data
   } else
     which_envir <- use_envir
-  Call_data_unnamed <- Call               ## Create a copy for modification.
   names(Call)[[2]] <- ""     ## Leave data unnamed.
   if (io$show_diagnostics) { cat("* Leaving data unnamed\n"); print(Call) }
   result <- try(eval(Call, envir = which_envir), silent = TRUE)
@@ -334,7 +349,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
                 Call = Call))
   }
   errors[[paste0("Error", length(errors) + 1)]] <-
-    list(context = "Leaving data unnamed", call_attempted = Call_data_unnamed, error_message = result)
+    list(context = "Leaving data unnamed", call_attempted = Call, error_message = result)
   Call <- Call_saved
 
   if (io$show_diagnostics) { cat("* Formula # 1\n"); print(Call) }
@@ -348,11 +363,17 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
   errors[[paste0("Error", length(errors) + 1)]] <-
     list(context = "Formula # 1", call_attempted = Call, error_message = result)
   
+  if (io$input != "") {
+    Call[[2]] <- as.name(io$input)
+    which_envir <- input_data
+  } else
+    which_envir <- use_envir
+  
   Call[2:3] <- Call[3:2]                       ## Switch parameters
   names(Call)[2:3] <- names(Call)[3:2]         ## and names
   ## names(Call)[2:3] <- c("", "data")            ## Leave formula unnamed
   if (io$show_diagnostics) { cat("* Formula # 2\n"); print(Call) }
-  result <- try(eval(Call, envir = use_envir), silent = TRUE)
+  result <- try(eval(Call, envir = which_envir), silent = TRUE)
   if (class(result)[[1]] != "try-error") {
     return(list(result = result,
                 result_visible = withVisible(result)$visible,
@@ -364,7 +385,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
   ## Maybe data has other name. Remove parameter name for "data"
   names(Call)[[3]] <- ""
   if (io$show_diagnostics) { cat("* Formula # 3\n"); print(Call) }
-  result <- try(eval(Call, envir = use_envir), silent = TRUE)   ## Retry
+  result <- try(eval(Call, envir = which_envir), silent = TRUE)   ## Retry
   if (class(result)[[1]] != "try-error") {
     return(list(result = result,
                 result_visible = withVisible(result)$visible,
@@ -382,7 +403,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
       Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
       names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
       if (io$show_diagnostics) { cat("* Formula # 4\n"); print(Call) }
-      result <- try(eval(Call, envir = use_envir),    ## See if it flies
+      result <- try(eval(Call, envir = which_envir),    ## See if it flies
                     silent = TRUE)
       if (class(result)[[1]] != "try-error") {
         return(list(result = result,

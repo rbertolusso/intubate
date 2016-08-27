@@ -1,15 +1,16 @@
 \name{experimental}
 \alias{as_intuBag}
+\alias{clear_intuEnv}
 \alias{intuBag}
 \alias{is_intuBag}
 \alias{intuEnv}
 \alias{set_intuEnv}
 \title{Experimental features.}
 \description{
-  Undocumented experimental features. Functional, but under development, and can
-  change until stabilization. Not recommended for production code.}
+  Extensions (experimental) to pipelines. Plese see vignette for examples of use.}
 \usage{
 as_intuBag(object)
+clear_intuEnv()
 intuBag(...)
 is_intuBag(object)
 intuEnv()
@@ -27,9 +28,7 @@ set_intuEnv(envir)
 Roberto Bertolusso
 }
 \examples{
-library(intubate)
-
-## None yet
+## Please see vignette
 }
 \keyword{intubate}
 \keyword{magrittr}
