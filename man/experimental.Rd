@@ -7,19 +7,19 @@
 \alias{set_intuEnv}
 \title{Experimental features.}
 \description{
-  Extensions (experimental) to pipelines. Plese see vignette for examples of use.}
+  Extensions (experimental) to pipelines. Please see vignette for examples of use.}
 \usage{
 as_intuBag(object)
 clear_intuEnv()
 intuBag(...)
 is_intuBag(object)
-intuEnv()
+intuEnv(...)
 set_intuEnv(envir)
 }
 \arguments{
   \item{object}{Object.}
   \item{envir}{Environment.}
-  \item{...}{Other arguments.}
+  \item{...}{Objects.}
 }
 \value{
   Return value of functions.

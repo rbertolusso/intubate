@@ -35,9 +35,11 @@ ntbt <- function(data, fti, ...) {
   ## that still are there when you check the
   ## final Call (with print), and then
   ## there is an error when you eval().
-  
+
+  check_cfti(cfti)
+
   result <- process_call("ntbt", data, preCall, Call, cfti, parent.frame())
-  
+
   if (result$result_visible)
     return (result$result)
   invisible(result$result)
@@ -50,7 +52,8 @@ intuBag <- function(...) {
     stop("All elements of an intuBag must be named.")
   ## class(iBag) <- c("intuBag")
   attr(iBag, "intuBag") <- TRUE
-  iBag
+
+  invisible(iBag)
 }
 
 ## (external)
@@ -60,7 +63,8 @@ as_intuBag <- function(object) {
   iBag <- as.list(object)
   ## class(iBag) <- c("intuBag")
   attr(iBag, "intuBag") <- TRUE
-  iBag
+
+  invisible(iBag)
 }
 
 ## (external)
@@ -70,8 +74,18 @@ is_intuBag <- function(object) {
 }
 
 ## (external)
-intuEnv <- function() {
-  local_env$intuEnv
+intuEnv <- function(...) {
+  object_list <- list(...)
+  if (length(object_list) > 0) {
+    nms <- names(object_list)
+    if (sum(names(nms) == "") > 0)
+      stop("All elements in intuEnv must be named.")
+    
+    for (i in 1:length(nms))
+      assign(nms[i], object_list[[i]], envir = local_env$intuEnv)
+  }
+  
+  invisible(local_env$intuEnv)
 }
 
 ## (external)
@@ -142,7 +156,7 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   if (io$found) {
     if (io$show_diagnostics && length(io$input_functions) > 0)
       { cat("* Input functions:\n"); print(io$input_functions) }
-    exec_io(io$input_functions, "source", input_data, input_data, io)
+    exec_io(io$input_functions, "input", input_data, input_data, io)
 
     if (io$show_diagnostics && length(io$result_functions) > 0)
       { cat("* Result functions:\n"); print(io$result_functions) }
@@ -159,7 +173,7 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
       assign(io$output, result, envir = intuEnv())
     }
   }
-  ##  print(io)
+
   if (!io$is_intuBag && !io$is_environment) {
     if (!is.null(result) && !io$forward_input) {
       if (result_visible && !io$force_return_invisible) {
@@ -212,11 +226,10 @@ parse_io <- function(par_list, data) {
   if (length(input_output) > 2)             ## For overachievers...
     stop(paste0("Only one intuBorder, ", intuBorder, ", is currently implemented.\n"))
 
-  ## Get requested inputs.
-  ## cat("Inputs\n")
   io$is_intuBag <- is_intuBag(data)
   io$is_environment <- is.environment(data)
   
+  ## Get requested input.
   io$input <- trimws(input_output[1])
   if (io$input != "") {
     if (io$is_environment) {
@@ -228,11 +241,9 @@ parse_io <- function(par_list, data) {
   } else
     io$input_data <- data
   
-  ## Get names of outputs.
-  ## cat("Outputs\n")
+  ## Get name of output.
   io$output <- trimws(input_output[2])
 
-  #  print(io)
   io
 }
 
@@ -292,7 +303,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
     # names(Call)[[2]] <- names_from_formal[data_pos]
     data_pos <- data_pos + 1                          ## Adapt to our Call
 
-    if (data_pos > 2 && length(Call) > 2) {
+    if (length(Call) > 2) {
       for (par in 3:min(data_pos, length(Call))) {    ## Move to natural position
         Call[(par-1):par] <- Call[par:(par-1)]        ## Switch parameters
         names(Call)[(par-1):par] <- names(Call)[par:(par-1)]  ## and names
@@ -415,7 +426,6 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
     }
   }
 
-  
 #  Call <- Call[-length(Call)]
 #  if (io$show_diagnostics) print(Call)
 #  attach(input_data) ## Tried with() but calibrate() still complained. Too high maintenance!
@@ -465,17 +475,22 @@ get_calling_name <- function(prefix, full_name) {
                 "The interface should be named ", prefix, "_<name>\n",
                 "where <name> is the name of the function to be interfaced."))
   cfti <- gsub(paste0(prefix, "_(.+)"), "\\1", full_name)
+  
+  check_cfti(cfti)
+
+  cfti
+}
+
+check_cfti <- function(cfti) {
   if (!exists(cfti)) {
-    stop(paste0("The function <| ", cfti, " |> does not seem to be defined.\n",
+    stop(paste0("The function <| ", cfti, " |> does not seem to exist.\n",
                 "Did you install the package where <| ", cfti, " |> is included?\n",
                 "If not, please run: install.packages(\"package_name\")\n",
                 "Did you load the corresponding library?\n",
                 "If not, please run: library(package_name)\n",
                 "To keep system resources low, intubate does not install, nor loads, packages."))
   }
-  cfti
 }
-
 
 #intubate_interfaces <- function() {
 #  ls("package:intubate")

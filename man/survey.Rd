@@ -211,6 +211,67 @@ nwtco \%>\%
   ntbt_twophase(id = list(~seqno,~seqno), strata = list(NULL,~rel),
        subset = ~I(in.subcohort | rel)) \%>\%
   ntbt_svycoxph(Surv(edrel,rel)~factor(stage)+factor(histol)+I(age/12))
+
+## Involved example using `intubOrders`, transforming the code in:
+
+## https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf
+
+data(api)
+
+## First, the original code from the vignette
+vars<-names(apiclus1)[c(12:13,16:23,27:37)] 
+
+dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
+summary(dclus1)
+svymean(~api00, dclus1)
+svyquantile(~api00, dclus1, quantile=c(0.25,0.5,0.75), ci=TRUE)
+svytotal(~stype, dclus1)
+svytotal(~enroll, dclus1)
+svyratio(~api.stu,~enroll, dclus1)
+svyratio(~api.stu, ~enroll, design=subset(dclus1, stype=="H"))
+svymean(make.formula(vars),dclus1,na.rm=TRUE)
+svyby(~ell+meals, ~stype, design=dclus1, svymean)
+regmodel <- svyglm(api00~ell+meals,design=dclus1)
+logitmodel <- svyglm(I(sch.wide=="Yes")~ell+meals, design=dclus1, family=quasibinomial()) 
+summary(regmodel)
+summary(logitmodel)
+
+## Now using intubOrders and ntbt.
+
+## Strategy 1: long pipeline, light use of intubOrders.
+
+apiclus1 \%>\%
+  ntbt(svydesign, id = ~dnum, weights = ~ pw, fpc = ~ fpc, "<|| summary >") \%>\%
+  ntbt(svymean, ~ api00, "<|f| print >") \%>\%
+  ntbt(svyquantile, ~ api00, quantile = c(0.25,0.5,0.75), ci = TRUE, "<|f| print >") \%>\%
+  ntbt(svytotal, ~ stype, "<|f| print >") \%>\%
+  ntbt(svytotal, ~ enroll, "<|f| print >") \%>\%
+  ntbt(svyratio, ~ api.stu, ~ enroll, "<|f| print >") \%>\%
+  ntbt(svyratio, ~ api.stu, ~ enroll, design = subset("#", stype == "H"), "<|f| print >") \%>\%
+  ntbt(svymean, make.formula(vars), na.rm = TRUE, "<|f| print >") \%>\%
+  ntbt(svyby, ~ ell + meals, ~ stype, svymean, "<|f| print >") \%>\%
+  ntbt(svyglm, api00 ~ ell + meals, "<|f| summary >") \%>\%
+  ntbt(svyglm, I(sch.wide == "Yes") ~ ell + meals, family = quasibinomial(), "<|f| summary >") \%>\%
+  summary() ## We have forwarded the result from svydesign (line 2),
+            ## so we could still continue using it downstream.
+
+## Strategy 2: short pipeline, heavy use of *one* intubOrder.
+apiclus1 \%>\%
+  ntbt(svydesign, id = ~dnum, weights = ~pw, fpc = ~fpc,
+       "<|f|
+         summary;
+         svymean(~api00, #);
+         svyquantile(~api00, #, quantile = c(0.25, 0.5, 0.75), ci = TRUE);
+         svytotal(~stype, #);
+         svytotal(~enroll, #);
+         svyratio(~api.stu,~enroll, #);
+         svyratio(~api.stu, ~enroll, design = subset(#, stype == 'H'));
+         svymean(make.formula(vars), #, na.rm = TRUE);
+         svyby(~ell+meals, ~stype, #, svymean);
+         summary(svyglm(api00~ell+meals, #));
+         summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >") \%>\%
+  head()  ## We have forwarded the original dataset,
+          ## so we could continue using it downstream.
 }
 }
 \keyword{intubate}

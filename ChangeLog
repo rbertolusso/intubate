@@ -1,4 +1,8 @@
-        * Release 0.99.3?
+2016-08-28  Roberto Bertolusso  <rbertolusso@rice.edu>
+
+        * Release 1.0.0
+
+        * Details on github: rbertolusso/intubate
 
 2016-07-30  Roberto Bertolusso  <rbertolusso@rice.edu>
         * Interfaces to more CRAN packages ("e1071", "gbm",

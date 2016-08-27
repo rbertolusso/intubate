@@ -1,8 +1,8 @@
 Package: intubate
 Type: Package
 Title: Interface to Popular R Functions for Data Science Pipelines
-Version: 0.99.3
-Date: 2016-08-19
+Version: 1.0.0
+Date: 2016-08-28
 Author: Roberto Bertolusso
 Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
 Description:
@@ -12,5 +12,5 @@ Description:
   with the operator %>%.
 License: GPL (>=2)
 ByteCompile: no
-Suggests: knitr, rmarkdown
+Suggests: knitr, magrittr, rmarkdown
 VignetteBuilder: knitr

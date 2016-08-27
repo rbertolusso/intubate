@@ -3,17 +3,14 @@
 \docType{package}
 \title{Interface to Popular R Functions for Data Science Pipelines.}
 \description{
-  \code{intubate} implements interfaces to popular R functions with formulas,
-  such as \code{lm}, so they can be included painlessly in data science pipelines
-  implemented by \code{magrittr} with the operator \%>\%.
-  
-  \code{intubate} allows to use, effortlessly,
-  classic R functions in a consistent pipeline notation.
-  
-  For functions missing interfaces, there is an easy
-  (one line) way to to create new interfaces "on demand" 
-  (see \code{\link{intubate}} or \code{\link{ntbt}}) that should cover
-  the vast majority of functions.
+  The aim of \code{intubate} (logo \code{<||>}) is to offer a painless way to
+add R functions that that are not pipe-aware to data science pipelines implemented
+by `magrittr` with the operator \code{\%>\%}, without having to rely on workarounds of
+varying complexity. It also implements three extensions (experimental),
+called `intubOrders`, `intuEnv`, and `intuBags`.
+
+For a gentle introduction to \code{intubate}, please see the vignette
+that is included with the package. 
   
   Currently, there are 461 interfaces for:
   
@@ -216,8 +213,8 @@
 \tabular{ll}{
 Package: \tab intubate\cr
 Type: \tab Package\cr
-Version: \tab 0.99.3\cr
-Date: \tab 2016-08-07\cr
+Version: \tab 1.0.0\cr
+Date: \tab 2016-08-27\cr
 License: \tab GPL (>=2)\cr
 }
 See examples of use below.
