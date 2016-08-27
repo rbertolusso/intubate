@@ -30,6 +30,7 @@ called `intubOrders`, `intuEnv`, and `intuBags`.
 ```{r, eval = FALSE}
 install.packages("intubate")
 ```
+
 * the latest development version from github with
 
 ```{r, eval = FALSE}
@@ -93,7 +94,7 @@ create yours because you are searching for a pipeline-aware alternative to
 any of the following styles of coding (which, by the way, are perfectly fine
 as they are and you shouldn't change yours if you like it and serves your purposes):
 
-```{r, eval = FALSE}
+```{r, results = 'hide'}
 data(USJudgeRatings)
 
 ## 1)
@@ -269,9 +270,9 @@ The `intuBorder` separates 5 zones (`intuZones`?, maybe too much...):
   **result** of the interfaced function
 
 For example, instead of running the following sequence
-of function calls (results not shown):
+of function calls (only plot shown):
 
-```{r, eval = FALSE}
+```{r, results = 'hide'}
 head(LifeCycleSavings)
 tail(LifeCycleSavings, n = 3)
 dim(LifeCycleSavings)
@@ -304,7 +305,7 @@ LifeCycleSavings %>%
 * `intubOrders` may prove to be of interest to non-pipeline oriented people too
 (results not shown):
 
-```{r, eval = FALSE}
+```{r, results = 'hide'}
 ntbt_lm(LifeCycleSavings, sr ~ pop15 + pop75 + dpi + ddpi,
         "< head; tail(#, n = 3); dim; str; summary
            |i|
@@ -317,12 +318,12 @@ When using pipelines, the receiving function has to deal with the *whole* object
 that receives as its input. Then, it produces a result that, again, needs to be
 consumed as a whole by the following function.
 
-`intubOrders` allow you to work with a collection of object (for example, several
-data.frames) in *one* pipeline.
+`intubOrders` allow you to work with a collection of objects of any kind in *one* pipeline, selecting at each step which input to use.
 
-Suppose you want to perform all your statistical procedures together.
+As an example suppose you want to perform the following statistical procedures in
+one pipeline (results not shown).
 
-```{r}
+```{r, results = 'hide'}
 CO2 %>%
   ntbt_lm(conc ~ uptake)
 
@@ -333,20 +334,22 @@ sleep %>%
   ntbt_t.test(extra ~ group)
 ```
 
-We will now create a collection (a list) of the three dataframes,
-changing their names (to show we are not cheating...)
+We will first create a collection (a list) containing the three dataframes:
 
 ```{r}
-col <- list(CO3 = CO2,
-            USJudgeRatings1 = USJudgeRatings,
-            sleep1 = sleep)
-names(col)
+coll <- list(CO3 = CO2,
+             USJudgeRatings1 = USJudgeRatings,
+             sleep1 = sleep)
+names(coll)
 ```
 
-* Note: we *must* name the objects of the collection for the trick to work.
+(We have changed the names to show we are not cheating...)
 
-We will now use as source the *whole collection*. The `intubOrder` will need
-the following info:
+* Note: the objects of the collection *must* be named.
+
+We will now use as source the *whole collection*.
+
+The `intubOrder` will need the following info:
 
 * `zone 1`, in each case, indicates which is the data.frame (or any other object)
   that we want to use on this particular function
@@ -356,7 +359,7 @@ the following info:
   to be displayed
 
 ```{r}
-col %>%
+coll %>%
   ntbt_lm(conc ~ uptake, "CO3 <|f| print >") %>%
   ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <|f| print >") %>%
   ntbt_t.test(extra ~ group, "sleep1 <|f| print >") %>%
@@ -409,7 +412,7 @@ The `intubOrder` will need the following info:
   `intuEnv`
 
 ```{r}
-col %>%
+coll %>%
   ntbt_lm(conc ~ uptake, "CO3 <|f|> lmfit") %>%
   ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <|f|> ctres") %>%
   ntbt_t.test(extra ~ group, "sleep1 <|f|> ttres") %>%
@@ -488,7 +491,7 @@ saved_intuEnv <- set_intuEnv(globalenv())
 Now, we re-run the pipeline:
 
 ```{r}
-col %>%
+coll %>%
   ntbt_lm(conc ~ uptake, "CO3 <|f|> lmfit") %>%
   ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <|f|> ctres") %>%
   ntbt_t.test(extra ~ group, "sleep1 <|f|> ttres") %>%

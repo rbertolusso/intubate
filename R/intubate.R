@@ -288,7 +288,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
 
   names_from_formal <- names(formals(cfti))
   data_pos <- which(names_from_formal %in% "data")
-  if (length(data_pos) > 0) {
+  if (length(data_pos) > 0 && data_pos > 2) {
     # names(Call)[[2]] <- names_from_formal[data_pos]
     data_pos <- data_pos + 1                          ## Adapt to our Call
 
@@ -304,7 +304,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
     } else
       which_envir <- use_envir
 
-    if (io$show_diagnostics) { cat("* As-is, rename, and/or re-position data\n"); print(Call) }
+    if (io$show_diagnostics) { cat("* Re-position data\n"); print(Call) }
     ## Try as it is (data is named)
     result <- try(eval(Call, envir = which_envir), silent = TRUE)
     if (class(result)[[1]] != "try-error") {
@@ -313,7 +313,7 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
                   Call = Call))
     }
     errors[[paste0("Error", length(errors) + 1)]] <-
-      list(context = "As-is, rename, and/or re-position data", call_attempted = Call, error_message = result)
+      list(context = "Re-position data", call_attempted = Call, error_message = result)
     Call <- Call_saved
   }
 
@@ -323,16 +323,16 @@ call_interfaced_function <- function(cfti, Call, use_envir, input_data, io) {
     which_input_data <- input_data
 
   Call <- Call[-2]
-  if (io$show_diagnostics) { cat("* Using with()\n"); print(Call) }
-  ## Remove "data" [-2] when calling
-  result <- try(with(which_input_data, eval(Call)), silent = TRUE)
+  if (io$show_diagnostics) { cat("* Using which_input_data as environment\n"); print(Call) }
+##  result <- try(with(which_input_data, eval(Call)), silent = TRUE)
+  result <- try(eval(Call, envir = which_input_data), silent = TRUE)
   if (class(result)[[1]] != "try-error") {
     return(list(result = result,
                 result_visible = withVisible(result)$visible,
                 Call = Call))
   }
   errors[[paste0("Error", length(errors) + 1)]] <-
-    list(context = "Using with()", call_attempted = Call, error_message = result)
+    list(context = "Using which_input_data as environment", call_attempted = Call, error_message = result)
   Call <- Call_saved
   
   if (io$input != "") {
