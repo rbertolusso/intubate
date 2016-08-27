@@ -1,7 +1,6 @@
 #### intubate <||> *Roberto Bertolusso*
 
-##### *2016-07-26* - *2016-08-20* (GPL >= 2)
-
+##### *2016-07-26* - *2016-08-27* (GPL >= 2)
 
 The aim of `intubate` (`<||>`) is to offer a painless way to
 add R functions that that are not pipe-aware

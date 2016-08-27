@@ -17,12 +17,11 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = 'center',
 ##### License: GPL >= 2
 
 The aim of `intubate` (logo `<||>`) is to offer a painless way to
-add R functions that that are not pipe-aware
+add R functions that are not pipe-aware
 to data science pipelines implemented by `magrittr` with the
 operator `%>%`, without having to rely on workarounds of
 varying complexity. It also
-implements three extensions (experimental),
-called `intubOrders`, `intuEnv`, and `intuBags`.
+implements three extensions called `intubOrders`, `intuEnv`, and `intuBags`.
 
 #### Installation
 
@@ -127,7 +126,7 @@ Please note the **lack of parentheses**.
 
 Nothing else is required.
 
-The *only* thing you need to remember is that that the names of all interfaces
+The *only* thing you need to remember is that the names of an interface
 **must start** with `ntbt_` followed by the name of the *interfaced* function
 (`cor.test` in this particular case), no matter which function you want to
 interface.
@@ -668,16 +667,44 @@ iBag %>%
 
 ### Example of an `intuBag` acting as a database
 
-The following code illustrates all the database manipulations performed
-in chapter 13 of "R for data science", by Garrett Grolemund and Hadley Wickham
-(<http://r4ds.had.co.nz/relational-data.html>) using *one* pipeline, and getting *all*
-the inputs from an `intuBag` (`intuEnv` could also have been used):
+The following code has been extracted from chapter 13 of "R for data science",
+by Garrett Grolemund and Hadley Wickham
+(<http://r4ds.had.co.nz/relational-data.html>)
+
+Original code (output not shown):
 
 ```{r, eval = FALSE}
 library(dplyr)
 library(nycflights13)
 
-## nycflights13 is a database. As such, we can deal with it using intuBags.
+flights2 <- flights %>% 
+  select(year:day, hour, origin, dest, tailnum, carrier)
+flights2
+
+flights2 %>%
+  select(-origin, -dest) %>% 
+  left_join(airlines, by = "carrier")
+
+## 13.4.5 Defining the key columns
+
+flights2 %>%
+  left_join(weather)
+
+flights2 %>%
+  left_join(planes, by = "tailnum")
+
+flights2 %>%
+  left_join(airports, c("dest" = "faa"))
+
+flights2 %>%
+  left_join(airports, c("origin" = "faa"))
+```
+
+`nycflights13` is a database. As such, we can deal with it using intuBags.
+The following code illustrates how all the above can be performed using
+an `intuBag` (or `intuEnv`) and *one* pipeline:
+
+```{r, eval = FALSE}
 iBag <- intuBag(flightsIB = flights,
                 airlinesIB = airlines,
                 weatherIB = weather,
@@ -690,13 +717,11 @@ iBag %<>%
   ntbt(select, flightsIB, year:day, hour, origin, dest, tailnum, carrier, "<|| head > flights2") %>%
   ntbt(select, flights2, -origin, -dest, "<|| print > flights3") %>% 
   ntbt(left_join, flights3, airlinesIB, by = "carrier", "<|| print >") %>%
-  within(rm(flights3)) %>%  ## We do not need it anymore
   ntbt(left_join, flights2, weatherIB, "<|| print >") %>%
   ntbt(left_join, flights2, planesIB, by = "tailnum", "<|| print >") %>%
   ntbt(left_join, flights2, airportsIB, c("dest" = "faa"), "<|| print >") %>%
-  ntbt(left_join, flights2, airportsIB, c("origin" = "faa"), "<|| print >") %>%
-  within(rm(flights2))  ## We do not need it anymore
-  
+  ntbt(left_join, flights2, airportsIB, c("origin" = "faa"), "<|| print >")
+
 names(iBag)
 ```
 
@@ -755,9 +780,7 @@ Note: the results were copied from previously run code to avoid adding dependenc
 ## # ... with 336,766 more rows
 ## 
 ## ntbt(data = ., fti = left_join, flights2, weatherIB)
-
 ## Joining, by = c("year", "month", "day", "hour", "origin")
-
 ## 
 ## * print <||> result *
 ## # A tibble: 336,776 x 18
@@ -842,8 +865,30 @@ names(iBag)
 
 ```
 ## [1] "flightsIB"  "airlinesIB" "weatherIB"  "planesIB"   "airportsIB"
+## [6] "flights2"   "flights3"
 ```
 
+The same, using `intuEnv` (output not shown):
+
+```{r, eval = FALSE}
+clear_intuEnv()
+
+intuEnv(flightsIB = flights,
+        airlinesIB = airlines,
+        weatherIB = weather,
+        planesIB = planes,
+        airportsIB = airports) %>%
+  ntbt(select, flightsIB, year:day, hour, origin, dest, tailnum, carrier,
+       "<|D| head > flights2") %>%
+  ntbt(select, flights2, -origin, -dest, "<|| print > flights3") %>% 
+  ntbt(left_join, flights3, airlinesIB, by = "carrier", "<|| print >") %>%
+  ntbt(left_join, flights2, weatherIB, "<|| print >") %>%
+  ntbt(left_join, flights2, planesIB, by = "tailnum", "<|| print >") %>%
+  ntbt(left_join, flights2, airportsIB, c("dest" = "faa"), "<|| print >") %>%
+  ntbt(left_join, flights2, airportsIB, c("origin" = "faa"), "<|| print >")
+
+ls(intuEnv())
+```
 
 
 * Note: the book is still not published (as of 8/27/16), so the examples in the
@@ -1011,7 +1056,7 @@ misplaced (from pipes point of view) data (with the exception of a couple of pac
 with non-formula variants interfaced as proofs of concept).
 
 For example, this was the first implementation of `ntbt_lm`
-```{r}
+```{r, eval = FALSE}
 ntbt_lm <- function(data, formula, ...)
   lm(formula, data, ...)
 ```
@@ -1035,7 +1080,7 @@ are demonstrated. You should be able to use that technique also for the rest of
 the packages).
 
 I am brewing some ideas about a general approach to packages that
-do not use formula interface, but I leave that for a future iteration of `intubate`.
+do not use formula interface, but I leave it for a future iteration of `intubate`.
 
 This means that there are three possibilities to the eventual
 lack of inclusion of your favorite package for the time being:
