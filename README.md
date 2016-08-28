@@ -1,81 +1,88 @@
-#### intubate <||> *Roberto Bertolusso*
-
+#### intubate <||> 1.0.0
+##### *Roberto Bertolusso*
 ##### *2016-07-26* - *2016-08-27* (GPL >= 2)
 
-The aim of `intubate` (`<||>`) is to offer a painless way to
-add R functions that that are not pipe-aware
+The aim of `intubate` (logo `<||>`) is to offer a painless way to
+add R functions that are not pipe-aware
 to data science pipelines implemented by `magrittr` with the
-operator `%>%`, without having to rely on workarounds. It also
-offers three extensions (implemented but still considered experimental),
-called `intubOrders`, `intuEnv`, and `intuBags`.
+operator `%>%`, without having to rely on workarounds of
+varying complexity. It also
+implements three extensions called `intubOrders`, `intuEnv`, and `intuBags`.
 
 #### Installation
 
-* the latest released version from CRAN (0.99.3) with
+* the latest released version from CRAN (1.0.0) with
 
-```{r}
+```r
 install.packages("intubate")
 ```
+
 * the latest development version from github with
 
-```{r}
+```r
 # install.packages("devtools")
 devtools::install_github("rbertolusso/intubate")
 ```
 
-### In a nutshell
+## In a nutshell
 If you like `magrittr` pipelines (%>%) and you are looking
-for an alternative to perfoming a statistical analysis
+for an alternative to performing a statistical analysis
 in the following way:
 
-```{r}
-fit <- lm(sr ~ ., LifeCycleSavings)
+```r
+fit <- lm(sr ~ pop15, LifeCycleSavings)
 summary(fit)
 ```
 
 `intubate` let's you do it in these other ways:
 
-```{r}
+```r
 library(intubate)
 library(magrittr)
+```
 
-## 1) Using interface (provided by intubate OR user defined)
+#### 1) Using interface (provided by intubate *or* user defined)
+
+`ntbt_lm` is the interface provided to `lm`, and one of the over 450
+interfaces `intubate` currently implements
+(for the list of 88 packages currently containing interfaces see below).
+
+```r
 LifeCycleSavings %>%
-  ntbt_lm(sr ~ .) %>%    ## ntbt_lm is the interface
+  ntbt_lm(sr ~ pop15) %>%    ## ntbt_lm is the interface to lm provided by intubate
   summary()
+```
   
-## 2) Calling the non-pipe-aware function directly using ntbt
+#### 2) Calling the non-pipe-aware function directly with `ntbt`
+You do not *need* to use interfaces. You can call non-pipe-aware functions
+directly using `ntbt` (even those that currently do not have an interface
+provided by `intubate`).
+
+```r
 LifeCycleSavings %>%
-  ntbt(lm, sr ~ .) %>%   ## ntbt calls lm without need to define interface
+  ntbt(lm, sr ~ pop15) %>%   ## ntbt calls lm without needing to use an interface
   summary()
 ```
 
-`intubate` currently implements 461 interfaces (below you will find a list of packages
-containing the interfaced functions) that can be related to data science
-methodologies and other disciplines. For now the focus is on interfacing
-non-pipe-aware functions having "formula" and "data" (in that order),
-but the non-formula variants should also work (even cases currently lacking interfaces).
-As a proof of concept of this, two libraries that contain non-formula variants only (`glmnet` and `lars`) have also been interfaced.
+The help for each interface contains examples of use.
 
-#### Interfaces "on demand"
-`intubate` *also* allows to **create your own interfaces** "on demand",
+## Interfaces "on demand"
+`intubate` allows you to create **your own** interfaces "on demand",
 **right now**, giving you full power of decision regarding which functions
-to interface. It *also* lets you **call the non-pipe-aware functions directly**,
-without the need of defining an interface.
+to interface.
 
-The ability of being able to amplify the scope of `intubate`
-may prove to be particularly welcome in case you are related to a particular
+The ability to amplify the scope of `intubate`
+may prove to be particularly welcome if you are related to a particular
 field that may, in the long run, continue to lack interfaces due to my
 unforgivable, but unavoidable, ignorance.
 
 As an example of creating an interface "on demand", suppose the interface to
 `cor.test` was lacking in the current version of `intubate` and *suppose*
-(only for a moment) that you want to
+(at least for a moment) that you want to
 create yours because you are searching for a pipeline-aware alternative to
-any of the following styles of coding (which, by the way, are perfectly fine
-as they are and you shouldn't change yours if you like it and serves your purposes):
+any of the following styles of coding:
 
-```{r}
+```r
 data(USJudgeRatings)
 
 ## 1)
@@ -93,123 +100,650 @@ with(USJudgeRatings, cor.test(CONT, INTG))
 USJudgeRatings %>%
    with(cor.test(CONT, INTG))
 ```
+
 To be able to create an interface to `cor.test` "on demand", the *only* thing you
 need to do is to add the following line of code somewhere before its use
 in your pipeline:
 
-```{r}
+```r
 ntbt_cor.test <- intubate          ## intubate is the helper function
-
-## Note the lack of parentheses
 ```
+
+Please note the **lack of parentheses**.
 
 Nothing else is required.
 
-The *only* thing you need to remember is that that the names of all interfaces
-*must* start with `ntbt_` followed by the name of the *interfaced* function
+The *only* thing you need to remember is that the names of an interface
+**must start** with `ntbt_` followed by the name of the *interfaced* function
 (`cor.test` in this particular case), no matter which function you want to
 interface.
 
-Now you can use your "still hot" interface in any pipeline. A pipeline
+Now you can use your "just baked" interface in any pipeline. A pipeline
 alternative to the above code may look like this:
 
-```{r}
+```r
 USJudgeRatings %>%
   ntbt_cor.test(CONT, INTG)           ## Use it right away
-
-USJudgeRatings %>%                    
-  ntbt_cor.test(~ CONT + INTG)        ## Also the formula variant
 ```
 
-#### Calling non-pipe-aware functions directly
-Moreover, you **do not have to create an interface** if you do not
+### Calling non-pipe-aware functions directly with `ntbt`
+Of course, as already stated, you **do not have to create an interface** if you do not
 want to. You can **call the non-pipe-aware function directly** with `ntbt`,
 in the following way:
 
-```{r}
+```r
 USJudgeRatings %>%
-  ntbt(cor.test, CONT, INTG)           ## Use it right away
-
-USJudgeRatings %>%                    
-  ntbt(cor.test, ~ CONT + INTG)        ## Also the formula variant
+  ntbt(cor.test, CONT, INTG)
 ```
 
 You can potentially use `ntbt` with *any function*, also the ones without an interface
 provided by `intubate`. In principle,
 the functions you would like to call are the ones you cannot use directly in
-a pipeline (because `data` is in second place instead of first).
+a pipeline (because `data` is not in first place in the definition of the function).
 
-#### Example showing different techniques
+### Example showing different techniques
 
-The link below is to Dr. Sheather's website where code was extracted (around June 2015).
+The link below is to Dr. Sheather's website where code was extracted.
 In the link there is also information about the book. 
-This code could be used to produce Figure 3.1 on page 46, containing 4 plots.
+This code could be used to produce the plots in Figure 3.1 on page 46.
 Different strategies are illustrated.
 
 http://www.stat.tamu.edu/~sheather/book/
 
-```{r}
-par(mfrow=c(2,2))           # Produce 4 panels to accommodate each plot.
+#### 1) As in the book (without using pipes and attaching data):
 
-## 1) As in the book (without using pipes and attaching data):
+```r
 attach(anscombe)
 plot(x1, y1, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 1")
 abline(lsfit(x1, y1))
 detach()
+```
 
-## You needed to attach so variables are visible locally.
-## If not, you should have used anscombe$x1 and anscombe$y1.
-## You could also have used 'with'.
-## Spaces were added for clarity and better comparison with code below.
+You needed to `attach` so variables are visible locally.
+If not, you should have used `anscombe$x1` and `anscombe$y1`.
+You could also have used `with`.
+Spaces were added for clarity and better comparison with code below.
 
-## 2) Alternative using magrittr pipes (%>%) and intubate (no need to attach):
+#### 2) Using magrittr pipes (`%>%`) and `intubate` (1: provided interface and 2: `ntbt`):
+
+```r
 anscombe %>%
   ntbt_plot(x2, y2, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 2") %>%
   ntbt(lsfit, x2, y2) %>%   # Call non-pipe-aware function directly with `ntbt`
   abline()                  # No need to interface 'abline'.
-  
-## * 'ntbt_plot' is the interface to 'plot' provided by intubate.
-##   As 'plot' returns NULL, intubate forwards (invisibly) its input
-##   automatically without having to use %T>%, so 'lsfit' gets the
-##   original data (what it needs) and everything is done in one pipeline.
-## * 'ntbt' let's you call the non-pipe-aware function 'lsfit' directly.
-##   You can use 'ntbt' *always* (you do not need to use 'ntbt_' interfaces
-##   if you do not want to), but 'ntbt' is particularly useful to interface
-##   directly a non-pipe-aware function for which intubate does not provide
-##   an interface.
+```  
 
-## 3) Alternatively, if intubate does not provide an interface to a given
-## function (as currently happens with lsfit), you can create your own
-## interface "on demand" and use it right away in your pipeline.
-## You only need to include the following line of code before its use:
+* `ntbt_plot` is the interface to `plot` provided by `intubate`.
+   As `plot` returns `NULL`, `intubate` forwards (invisibly) its input
+   automatically without having to use `%T>%`, so `lsfit` gets the
+   original data (what it needs) and everything is done in one pipeline.
+* `ntbt` let's you call the non-pipe-aware function `lsfit` directly.
+   You can use `ntbt` *always* (you do not need to use `ntbt_` interfaces
+   if you do not want to), but `ntbt` is particularly useful to interface
+   directly a non-pipe-aware function for which `intubate` does not provide
+   an interface (as currently happens with `lsfit`).
 
+#### 3) Defining interface "on demand"
+If `intubate` does not provide an interface to a given function
+and you prefer to use interfaces instead of `ntbt`, you can create your own
+interface "on demand" and use it right away in your pipeline.
+To create an interface, it suffices the following line of code before its use:
+
+```r
 ntbt_lsfit <- intubate      # NOTE: we are *not* including parentheses.
+```
 
-## That's it. Just remember that:
-## 1) intubate interfaces *must* start with 'ntbt_' followed by the
-##    name of the function to interface.
-## 2) parentheses are *not* used in the definition of the interface.
+That's it, you have created you interface. Just remember that:
 
-## You can now use 'ntbt_lsfit' in your pipeline:
+1. `intubate` interfaces **must** start with `ntbt_` followed by the
+    name of the function to interface (`lsfit` in this case).
+2. Parentheses are *not* used in the definition of the interface.
+
+You can now use `ntbt_lsfit` in your pipeline as any other interfaced function:
+```r
 anscombe %>%
-  ntbt_plot(x3, y3, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 2") %>%
+  ntbt_plot(x3, y3, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 3") %>%
   ntbt_lsfit(x3, y3) %>%    # Using just created "on demand" interface
   abline()
+```
 
-## 4) Alternatively, you can use the formula variant (original aim of intubate):
+#### 4) Using the formula variants:
+Instead of the `X` `Y` approach, you can also use the formula variant.
+In this case, we will have to used `lm` as `lsfit` does not implement
+formulas.
+
+```r
 anscombe %>%
   ntbt_plot(y4 ~ x4, xlim = c(4, 20), ylim = c(3, 14), main = "Data Set 4") %>%
   ntbt_lm(y4 ~ x4) %>%      # We use 'ntbt_lm' instead of 'ntbt_lmfit' 
   abline()
 ```
 
-This is the plot produced:
-<div style="text-align:center"><img src=".excluded/img/sheather_fig_3.1.png" /></div>
+## Extensions for pipelines provided by `intubate`
+
+`intubate` implements three extensions:
+
+* `intubOrders`,
+* `intuEnv`, and
+* `intuBags`.
+
+These experimental features are functional for you to use.
+Unless you do not mind having to potentially make some changes to your
+code while the architecture solidifies, they are *not recommended* (yet)
+for production code.
+
+## `intubOrders`
+`intubOrders` allow, among other things, to:
+
+* run, in place, functions on the input (`data`)
+  to the interfaced function, such as `head`, `tail`, `dim`, `str`, `View`, ...
+
+* run, in place, functions that use the result generated by the interfaced
+  function, such as `print`, `summary`, `anova`, `plot`, ...
+  
+* forward the input to the interfaced function without using %T>%
+
+* signal other modifications to the behavior of the interface
+
+`intubOrders` are implemented by an `intuBorder` `<||>` (from where the
+logo of `intubate` originates).
+
+The `intuBorder` contains 5 zones (`intuZones`?, maybe too much...):
+
+`zone 1` **<** `zone 2` **|** `zone 3` **|** `zone 4` **>** `zone 5`
+
+* `zone 1` and `zone 5` will be explained later
+
+* `zone 2` is used to indicate the functions that are to be applied
+  to the **input** to the interfaced function
+  
+* `zone 3` to modify the behavior of the interface
+
+* `zone 4` to indicate the functions that are to be applied to the
+  **result** of the interfaced function
+
+For example, instead of running the following sequence
+of function calls (only plot shown):
+
+```r
+head(LifeCycleSavings)
+tail(LifeCycleSavings, n = 3)
+dim(LifeCycleSavings)
+str(LifeCycleSavings)
+summary(LifeCycleSavings)
+result <- lm(sr ~ pop15 + pop75 + dpi + ddpi, LifeCycleSavings)
+print(result)
+summary(result)
+anova(result)
+plot(result, which = 1)
+```
+
+you could have run, using an `intubOrder`:
+
+```r
+LifeCycleSavings %>%
+  ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi,
+          "< head; tail(#, n = 3); dim; str; summary
+             |i|
+             print; summary; anova; plot(#, which = 1) >")
+```
+
+* Note:
+    - `i` is used to force an invisible result
+    - `#` is used as a placeholder either for the input or result in cases the
+  call requires extra parameters.
+
+* `intubOrders` may prove to be of interest to non-pipeline oriented people too:
+
+```r
+ntbt_lm(LifeCycleSavings, sr ~ pop15 + pop75 + dpi + ddpi,
+        "< head; tail(#, n = 3); dim; str; summary
+           |i|
+           print; summary; anova; plot(#, which = 1) >")
+```
+
+### `intubOrders` with collections of inputs
+
+When using pipelines, the receiving function has to deal with the *whole* object
+that receives as its input. Then, it produces a result that, again, needs to be
+consumed as a whole by the following function.
+
+`intubOrders` allow you to work with a collection of objects of any kind in *one* pipeline, selecting at each step which input to use.
+
+As an example suppose you want to perform the following statistical procedures in
+one pipeline:
+
+```r
+CO2 %>%
+  ntbt_lm(conc ~ uptake)
+
+USJudgeRatings %>%
+  ntbt_cor.test(CONT, INTG)
+
+sleep %>%
+  ntbt_t.test(extra ~ group)
+```
+
+We will first create a collection (a `list` in this case, but it could also be
+`intuEnv` or an `intuBag`, explained later) containing the three dataframes:
+
+```r
+coll <- list(CO3 = CO2,
+             USJudgeRatings1 = USJudgeRatings,
+             sleep1 = sleep)
+names(coll)
+```
+
+(We have changed the names to show we are not cheating...)
+
+* Note: the objects of the collection *must* be named.
+
+We will now use as source the *whole collection*.
+
+The `intubOrder` will need the following info:
+
+* `zone 1`, in each case, indicates which is the data.frame (or any other object)
+  that we want to use as input in this particular function
+* `zone 3` needs to include `f` to *forward* the input (if you want the next
+  function to receive the whole collection, and not the result if this step)
+* `zone 4` (optional) may contain a `print` (or `summary`) if you want
+  something to be displayed
+
+```r
+coll %>%
+  ntbt_lm(conc ~ uptake, "CO3 <|f| print >") %>%
+  ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <|f| print >") %>%
+  ntbt_t.test(extra ~ group, "sleep1 <|f| print >") %>%
+  names()
+```
+
+* Note: `names()` was added at the end to show that we have forwarded
+  the original collection to the end of the pipeline.
+
+What happens if you would like to **save** the results of the function calls
+(or intermediate results of data manipulations)?
+
+## `intuEnv` and `intuBags`
+
+`intuEnv` and `intuBags` allow to save intermediate results without
+leaving the pipeline. They can also be used to contain the collections
+of objects.
+
+Let us first consider
+
+## `intuEnv`
+
+When `intubate` is loaded, it creates `intuEnv`, an empty environment that can
+be populated with results that you want to use later.
+
+You can access the `intuEnv` as follows:
+
+```r
+intuEnv()  ## intuEnv() returns invisible, so nothing is output
+```
+
+You can verify that, initially, it is empty:
+
+```r
+ls(intuEnv())
+```
+
+How can `intuEnv` be used?
+
+Suppose that we want, instead of displaying the results of interfaced functions,
+save the objects returned by them. One strategy (the other is using `intuBags`)
+is to save the results to `intuEnv`.
+
+#### How to save to `intuEnv`?
+
+The `intubOrder` will need the following info:
+
+* `zone 3` needs to include `f` to *forward* the input (if you want the next
+  function to receive the whole collection, and not its result)
+* `zone 5`, in each case, indicates the name that the result will have in the
+  `intuEnv`
+
+```r
+coll %>%
+  ntbt_lm(conc ~ uptake, "CO3 <|f|> lmfit") %>%
+  ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <|f|> ctres") %>%
+  ntbt_t.test(extra ~ group, "sleep1 <|f|> ttres") %>%
+  names()
+```
+
+As you can see, the collection stays unchanged, but look
+inside `intuEnv`
+
+```r
+ls(intuEnv())
+```
+
+`intuEnv` has collected the results, that are ready for use.
+
+Four strategies of using one of the collected results
+are shown below:
+
+#### Strategy 1
+
+```r
+intuEnv()$lmfit %>%
+  summary()
+```
+
+#### Strategy 2
+
+```r
+attach(intuEnv())
+lmfit %>%
+  summary()
+detach()
+```
+
+#### Strategy 3
+
+```r
+intuEnv() %>%
+  ntbt(summary, "lmfit <||>")
+```
+
+#### Strategy 4
+
+```r
+intuEnv() %>%
+  ntbt(I, "lmfit <|i| summary >")
+```
+
+`clear_intuEnv` can be used to empty the contents of `intuEnv`.
+
+```r
+clear_intuEnv()
+
+ls(intuEnv())
+```
+
+### Associating `intuEnv` with the Global Environment
+
+If you want your results to be saved to the Global environment (it could be
+*any* environment), you can associate `intuEnv` to it, so you can have your
+results available as any other saved object.
+
+First let's display the contents of the Global environment:
+
+```r
+ls()
+```
+
+`set_intuEnv` let's you associate `intuEnv` to an environment. It takes
+an environment as parameter, and returns the current `intuEnv`, in case you
+want to save it to reinstate it later. If not, I think it will be just
+garbage collected (I may be wrong).
+
+Let's associate `intuEnv` to the global environment (saving the current
+`intuEnv`):
+
+```r
+saved_intuEnv <- set_intuEnv(globalenv())
+```
+
+Now, we re-run the pipeline:
+
+```r
+coll %>%
+  ntbt_lm(conc ~ uptake, "CO3 <|f|> lmfit") %>%
+  ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <|f|> ctres") %>%
+  ntbt_t.test(extra ~ group, "sleep1 <|f|> ttres") %>%
+  names()
+```
+Before forgetting, let's reinstate the original `intuEnv`:
+
+```r
+set_intuEnv(saved_intuEnv)
+```
+And now, let's see if the results were saved to the global environment:
+
+```{r}
+ls()
+```
+
+They were.
+
+Now the results are at your disposal to use as any other variable (result not
+shown):
+
+```r
+lmfit %>%
+  summary()
+```
+
+### Using `intuEnv` as source of the pipeline
+
+You can use `intuEnv` (or any other environment) as the input
+of your pipeline.
+
+We already cleared the contents of `intuEnv`, but let's do it
+again to get used to how to do it:
+
+```r
+clear_intuEnv()
+
+ls(intuEnv())
+```
+
+Let's populate `intuEnv` with the same objects as before:
+
+```r
+intuEnv(CO3 = CO2,
+        USJudgeRatings1 = USJudgeRatings,
+        sleep1 = sleep)
+
+ls(intuEnv())
+```
+
+When using an environment, such as `intuEnv`, as the source of your pipeline,
+there is no need to specify `f` in `zone 3`, as the environment is always forwarded
+(the same happens when the source is an `intuBag`).
+
+Keep in mind that, if you are saving results and your source is an environment
+other than `intuEnv`, the results will be saved to `intuEnv`, and not to the source
+enviromnent. If the source is an `intuBag`, the results will be saved to the
+`intuBag`, and not to `intuEnv`.
+
+We will run the same pipeline as before, but this time we will add `subset`
+and `summary`(called directly with `ntbt`) to illustrate how we can use a previously
+generated result (such as from data transformations) in the *same* pipeline in which
+it was generated. We will use `intuEnv` as the source of the pipeline.
+
+```r
+intuEnv() %>%
+  ntbt(subset, Treatment == "nonchilled", "CO3 <||> CO3nc") %>%
+  ntbt_lm(conc ~ uptake, "CO3nc <||> lmfit") %>%
+  ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <||> ctres") %>%
+  ntbt_t.test(extra ~ group, "sleep1 <||> ttres") %>%
+  ntbt(summary, "lmfit <||> lmsfit") %>%
+  names()
+```
+
+* Note that, as `subset` is already pipe-aware (`data` is its first parameter),
+  you have two ways of proceeding. One is the one illustrated
+  above (same strategy used on non-pipe-aware functions). The other, that
+  works *only* when using pipe-aware functions, is:
+
+```r
+intuEnv() %>%
+  ntbt(subset, CO3, Treatment == "nonchilled", "<||> CO3nc")
+```
+
+## `intuBags`
+
+`intuBags` differ from `intEnv` in that they are based on lists, instead than
+on environments. Even if (with a little of care) you could keep track of several
+`intuEnvs`, it seems natural (to me) to deal with only one, while several `intuBags`
+(for example one for each database, or collection of objects) seem natural (to me).
+
+Other than that, using an `intuEnv` or an `intuBag` is a matter of 
+personal taste.
+
+What you can do with one you can do with the other.
+
+```r
+iBag <- intuBag(CO3 = CO2,
+                USJudgeRatings1 = USJudgeRatings,
+                sleep1 = sleep)
+```
+
+```{r}
+iBag %>%
+  ntbt(subset, Treatment == "nonchilled", "CO3 <||> CO3nc") %>%
+  ntbt_lm(conc ~ uptake, "CO3nc <||> lmfit") %>%
+  ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <||> ctres") %>%
+  ntbt_t.test(extra ~ group, "sleep1 <||> ttres") %>%
+  ntbt(summary, "lmfit <||> lmsfit") %>%
+  names()
+```
+
+When using `intuBags`, it is possible to
+use `%<>%` if you want to save your results to the `intuBag`.
+This way, instead of a long pipeline, you could run several
+short ones.
+
+```r
+iBag <- intuBag(CO3 = CO2,
+                USJudgeRatings1 = USJudgeRatings,
+                sleep1 = sleep)
+
+iBag %<>%
+  ntbt(subset, CO3, Treatment == "nonchilled", "<||> CO3nc") %>%
+  ntbt_lm(conc ~ uptake, "CO3nc <||> lmfit")
+
+iBag %<>%
+  ntbt_cor.test(CONT, INTG, "USJudgeRatings1 <||> ctres")
+
+iBag %<>%
+  ntbt_t.test(extra ~ group, "sleep1 <||> ttres") %>%
+  ntbt(summary, "lmfit <||> lmsfit")
+
+names(iBag)
+```
+ 
+The `intuBag` will keep all your results, in any way you prefer to use it.
+
+The same happens with `intuEnv`. Just remember that `%<>%` should *not*
+be used with `intuEnv` (you should always use `%>%`).
+
+### Using more than one source
+
+Suppose you have a database consisting in the following two tables
+
+```r
+iBag <- intuBag(members = data.frame(name=c("John", "Paul", "George",
+                                            "Ringo", "Brian", NA),
+                band=c("TRUE",  "TRUE", "TRUE", "TRUE", "FALSE", NA)),
+           what_played = data.frame(name=c("John", "Paul", "Ringo",
+                                           "George", "Stuart", "Pete"),
+                instrument=c("guitar", "bass", "drums", "guitar", "bass", "drums")))
+print(iBag)
+```
+
+and you want to perform an inner join. In these cases, the functions
+should receive the whole `intuBag` (or `intuEnv`, or collection), so
+`zone 1` should be empty, and the names of the tables should be specified
+directly, in the function call, in their corresponding order
+(or by stating their parameter names).
+
+```r
+iBag %>%
+  ntbt(merge, members, what_played, by = "name", "<|| print >")
+```
+
+### Example of an `intuBag` acting as a database
+
+The following code has been extracted from chapter 13 of "R for data science",
+by Garrett Grolemund and Hadley Wickham
+(<http://r4ds.had.co.nz/relational-data.html>)
+
+Original code:
+
+```r
+library(dplyr)
+library(nycflights13)
+
+flights2 <- flights %>% 
+  select(year:day, hour, origin, dest, tailnum, carrier)
+flights2
+
+flights2 %>%
+  select(-origin, -dest) %>% 
+  left_join(airlines, by = "carrier")
+
+## 13.4.5 Defining the key columns
+
+flights2 %>%
+  left_join(weather)
+
+flights2 %>%
+  left_join(planes, by = "tailnum")
+
+flights2 %>%
+  left_join(airports, c("dest" = "faa"))
+
+flights2 %>%
+  left_join(airports, c("origin" = "faa"))
+```
+
+`nycflights13` is a database. As such, we can deal with it using intuBags.
+The following code illustrates how all the above can be performed using
+an `intuBag` (or `intuEnv`) and *one* pipeline:
+
+```r
+iBag <- intuBag(flightsIB = flights,
+                airlinesIB = airlines,
+                weatherIB = weather,
+                planesIB = planes,
+                airportsIB = airports)
+## Note we are changing the names, to make sure we are not cheating
+## (by reading from globalenv()).
+
+iBag %<>%
+  ntbt(select, flightsIB, year:day, hour, origin, dest, tailnum, carrier, "<|| head > flights2") %>%
+  ntbt(select, flights2, -origin, -dest, "<|| print > flights3") %>% 
+  ntbt(left_join, flights3, airlinesIB, by = "carrier", "<|| print >") %>%
+  ntbt(left_join, flights2, weatherIB, "<|| print >") %>%
+  ntbt(left_join, flights2, planesIB, by = "tailnum", "<|| print >") %>%
+  ntbt(left_join, flights2, airportsIB, c("dest" = "faa"), "<|| print >") %>%
+  ntbt(left_join, flights2, airportsIB, c("origin" = "faa"), "<|| print >")
+
+names(iBag)
+```
+
+The same, using `intuEnv`:
+
+```r
+clear_intuEnv()
+
+intuEnv(flightsIB = flights,
+        airlinesIB = airlines,
+        weatherIB = weather,
+        planesIB = planes,
+        airportsIB = airports) %>%
+  ntbt(select, flightsIB, year:day, hour, origin, dest, tailnum, carrier,
+       "<|D| head > flights2") %>%
+  ntbt(select, flights2, -origin, -dest, "<|| print > flights3") %>% 
+  ntbt(left_join, flights3, airlinesIB, by = "carrier", "<|| print >") %>%
+  ntbt(left_join, flights2, weatherIB, "<|| print >") %>%
+  ntbt(left_join, flights2, planesIB, by = "tailnum", "<|| print >") %>%
+  ntbt(left_join, flights2, airportsIB, c("dest" = "faa"), "<|| print >") %>%
+  ntbt(left_join, flights2, airportsIB, c("origin" = "faa"), "<|| print >")
+
+ls(intuEnv())
+```
 
 
-#### Interfaced libraries
+* Note: the book is still not published (as of 8/27/16), so the examples in the
+        chapter may have changed by the time you are reading this.
+        
+## Packages containing interfaces
 
-The R packages that have interfaces implemented so far are:
+The 88 R packages that have interfaces implemented so far are:
 
 * `adabag`: Multiclass AdaBoost.M1, SAMME and Bagging
 * `AER`: Applied Econometrics with R
@@ -305,175 +839,42 @@ The R packages that have interfaces implemented so far are:
 The aim is to continue adding interfaces to most methodologies
   used in data science or other disciplines.
   
-#### Experimental features, not for general or production use
-`intubate` includes two experimental features: **intubOrders**, and **intuBags**.
+For now the main focus is on interfacing non-pipe-aware functions having "formula" and
+"data" (in that order), but the non-formula variants should also work (even cases
+currently lacking interfaces). As a proof of concept, two libraries that contain
+non-formula variants only (`glmnet` and `lars`) have also been interfaced.
 
-These experimental features are already in place but are still under development, are
-**not considered for general use**, and are not documented (yet).
- I want to make sure first, to the best of my abilities, that
-they are as general as possible, and that eventual future extensions will be backward
-compatible. You can play with them if you like (I need to play with them more...),
-but if you use them in production code
-be prepared to have to change it if I decide to modify the architecture while in the
-experimental phase.
-
-* **intubOrders** allow to forward the input without using %T>%, and to run `print`,
-`summary`, `anova`, `plot`, and such, in place. This may prove to be interesting to non-pipeline
-oriented people too. intubOrders are also needed by `intuBags`. If you want to have an
-idea of what I mean, please run (using the last version committed to github):
-
-```{r}
-## Note: this is *only* to demonstrate what you *can* do with intubOrders,
-##       not a suggestion of what you *should* do with them.
-
-## 1) Using interface
-LifeCycleSavings %>%
-  ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi,
-          "< head(#, n=10); tail(#, n=3); str; dim; summary; View
-             |f|
-             print; summary; anova; plot(#, which=1); plot(#, which=2);
-             par(mfrow=c(2,2)); plot(#, which=3:6) >") %>%
-  head()
-
-## 2) Calling function directly
-LifeCycleSavings %>%
-  ntbt(lm, sr ~ pop15 + pop75 + dpi + ddpi,
-       "< head(#, n=10); tail(#, n=3); str; dim; summary; View
-         |f|
-         print; summary; anova; plot(#, which=1); plot(#, which=2);
-         par(mfrow=c(2,2)); plot(#, which=3:6) >") %>%
-  head()
-```
-
-Below there is a more involved case, transforming the code in
-
-https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf
-
-```{r}
-library(survey)
-data(api)
-
-## First, the original code from the vignette
-vars<-names(apiclus1)[c(12:13,16:23,27:37)] 
-
-dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
-summary(dclus1)
-svymean(~api00, dclus1)
-svyquantile(~api00, dclus1, quantile=c(0.25,0.5,0.75), ci=TRUE)
-svytotal(~stype, dclus1)
-svytotal(~enroll, dclus1)
-svyratio(~api.stu,~enroll, dclus1)
-svyratio(~api.stu, ~enroll, design=subset(dclus1, stype=="H"))
-svymean(make.formula(vars),dclus1,na.rm=TRUE)
-svyby(~ell+meals, ~stype, design=dclus1, svymean)
-regmodel <- svyglm(api00~ell+meals,design=dclus1)
-logitmodel <- svyglm(I(sch.wide=="Yes")~ell+meals, design=dclus1, family=quasibinomial()) 
-summary(regmodel)
-summary(logitmodel)
-
-## Now using intubOrders. I will use ntbt. Alternatively,
-## the interfaces could be defined and used.
-
-## Strategy 1: long pipeline, light use of intubOrders.
-apiclus1 %>%
-  ntbt(svydesign, id = ~dnum, weights = ~ pw, fpc = ~ fpc, "<|C| summary >") %>%
-  ntbt(svymean, ~ api00, "<|Cf| print >") %>%
-  ntbt(svyquantile, ~ api00, quantile = c(0.25,0.5,0.75), ci = TRUE, "<|Cf| print >") %>%
-  ntbt(svytotal, ~ stype, "<|Cf| print >") %>%
-  ntbt(svytotal, ~ enroll, "<|Cf| print >") %>%
-  ntbt(svyratio, ~ api.stu, ~ enroll, "<|Cf| print >") %>%
-  ntbt(svyratio, ~ api.stu, ~ enroll, design=subset("#", stype=="H"), "<|Cf| print >") %>%
-  ntbt(svymean, make.formula(vars), na.rm = TRUE, "<|Cf| print >") %>%
-  ntbt(svyby, ~ ell + meals, ~ stype, svymean, "<|Cf| print >") %>%
-  ntbt(svyglm, api00 ~ ell + meals, "<|Cf| summary >") %>%
-  ntbt(svyglm, I(sch.wide=="Yes") ~ ell + meals, family = quasibinomial(), "<|Cf| summary >") %>%
-  summary() ## We have forwarded the result from svydesign (line 2),
-            ## so we could still continue using it downstream.
-
-## Strategy 2: short pipeline, heavy use of *one* intubOrder.
-apiclus1 %>%
-  ntbt(svydesign, id = ~dnum, weights = ~pw, fpc = ~fpc,
-       "<|Cf|
-         summary;
-         svymean(~api00, #);
-         svyquantile(~api00, #, quantile = c(0.25, 0.5, 0.75), ci = TRUE);
-         svytotal(~stype, #);
-         svytotal(~enroll, #);
-         svyratio(~api.stu,~enroll, #);
-         svyratio(~api.stu, ~enroll, design = subset(#, stype == 'H'));
-         svymean(make.formula(vars), #, na.rm = TRUE);
-         svyby(~ell+meals, ~stype, #, svymean);
-         summary(svyglm(api00~ell+meals, #));
-         summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >") %>%
-  head()  ## We have forwarded the original dataset,
-          ## so we could continue using it downstream.
-```
-
-`intubOrders` are under heavy development, so this is just an idea that is searching
-for a final form.
-
-* **intuBags** allow to run *one* pipeline containing *several* sources. intuBags can be
-dynamically populated by result(s?) at each step of the pipeline. Results can be, for example, modifications of an original source that can be replaced by the modification or saved as new object. They can also be from a statistical procedure, such as `lm`, or other things.
-Each step of the pipeline can choose which source(s?) to use, and has the choice to add its
-result(s?) to the intuBag, and these added or modified results can be used downstream,
-or once the pipeline is ended. If you save the end result, you will have a single object
-containing all the sources, their modifications (or replacements of sources by their
-modifications), and results of processing sources by the different steps (if you
-wanted to save them). You can also stop the pipeline at any point (saving your iBag
-perhaps with a %<>%), do something else, and then restarting your pipeline from the
-point you stopped. 
-This means you could potentially have one object only, the intuBag, containing all the
-objects (sources and products). One possible use of intuBags could be to process a *whole database* (several tables, data.frames, or tibbles) in *one* pipeline. I am not sure yet,
-but maybe it is a good idea to intubate pipe-aware functions too (I have played with
-intubating `subset`). Maybe not. Of course  pipe-aware functions can always get the
-whole intuBag at any point of the pipeline, do their magic without being intubated,
-and then let the pipe continue.
-
-This means `intubate` will have three modes of operations:
-
-* as interface only,
-* as interface + intubOrders, and
-* as interface + intubOrders + intuBags.
-
-#### More about interfaced libraries
+Also, only packages in CRAN (in addition to the ones provided in the base installation
+of R) have been implemented. Packages from, for example, bioconductor, could also be
+easily added, but I would need some help from the maintainers of those packages.
 
 `intubate` core depends only on `base`, `stats`, and `utils` libraries.
-To keep it as lean as possible, and to be able to continue to include more interfaces without bloating your machine,  starting from version 0.99.3 `intubate` **will not**
+To keep it as lean as possible, and to be able to continue to include more interfaces without bloating your machine,  starting from version 1.0.0 `intubate` **will not**
 install the packages that contain the functions that are interfaced.
 *You will need to install them yourself*,
 and load the corresponding libraries before using them in your pipelines. This
 also applies to `magrittr` (in case you want to use `intubate` without pipelines).
 
 Then, if you are only interested in a given field, say:
-bio-statistics,
-bio-informatics,
-environmetrics,
-econometrics,
-finance,
-machine learning,
-meta-analysis,
-pharmacokinetics,
-phylogenetics,
-psychometrics,
-social sciences,
-surveys,
-survival analysis,
-..., you will not have to install *all* the packages for which interfaces are provided
+bio-statistics, bio-informatics, environmetrics, econometrics, finance, machine learning,
+meta-analysis, pharmacokinetics, phylogenetics, psychometrics, social sciences,
+surveys, survival analysis, ..., you will not have to install *all* the packages
+for which interfaces are provided
 if you intend to use only a subset of them. You only need to install
 the subset of packages you intend to use (which are probably already installed in your machine).
 
-Also, there are cases where some packages are in conflict if loaded simultaneously, leading
+Moreover, there are cases where some packages are in conflict if loaded simultaneously, leading
 to a segmentation fault (for example, kernlab functions fail when testing the whole
 examples provided with `intubate`, but not when testing kernlab only examples
 in a clean environment. I ignore which is/are the other(s) package(s) conflicting with it.
 The only thing I know is that the package name is alphabetically ordered prior to kernlab)
 
-I make no personal judgement (mostly due to personal ignorance)
+I make no personal judgment (mostly due to personal ignorance)
 about the merit of any interfaced function.
 I have used only a subset of what is provided, and I am happy to include others,
 that I am currently unaware of, down the line. In principle I plan on including
 packages that are listed as reverse depends, imports, or suggest on package `Formula`
-(I am missing still quite a bit of them). Adding interfacings is easy (and can be
+(I am missing still some of them). Adding interfaces is easy (and can be
 boring...) so I will appreciate if you want to contribute (and you will be credited
 in the help of the interfaced package). Also is welcome the improvement of the
 provided examples (such as making sure the data used is correct for the statistical
@@ -489,7 +890,7 @@ if there are competing packages, which to use.
 I will leave that to you to decide.
 
 Please keep in mind that `intubate`
-will **not** install any packages correponding to the interfaces
+will **not** install any packages corresponding to the interfaces
 that are provided. You can install *only* those that you need
 (or like) and disregard the rest. Also please remember that you can create your
 own interfaces (using helper function `intubate`),
@@ -498,25 +899,26 @@ or call non-pipe-aware functions directly (using `ntbt`).
 The original aim of `intubate` was to be able to include functions that
 have *formula* and *data* (in that order) in a `magrittr` pipeline using `%>%`.
 As such, my search so far has been concentrated in packages containing formulas and
-misplaced (from pipes point of view) data (with the exeption of a couple of packages
+misplaced (from pipes point of view) data (with the exception of a couple of packages
 with non-formula variants interfaced as proofs of concept).
 
-For example, this was my first implementation of `ntbt_lm`
-```{r}
+For example, this was the first implementation of `ntbt_lm`
+
+```r
 ntbt_lm <- function(data, formula, ...)
   lm(formula, data, ...)
 ```
 
-This was supposed to be repeated for each interface.
+This approach was supposed to be repeated for each interface.
 
-Soon after I realized that `intubate` could have a few helper functions (that was
-version 0.99.2), later that only one helper function was needed (`intubate`), and
+Soon after I realized that `intubate` could have just a few helper functions (that was
+version 0.99.2), later that only one helper function was enough (`intubate`), and
 later that you could call non-pipe-aware functions directly without defining
 interfaces (`ntbt`) and
 that the interfaces and `ntbt` could also be successfully used in cases
 where non-formula variants are implemented.
 
-However, my starting point inevitably led the way. I did not *see* the big picture
+However, the starting point inevitably led the way. I did not *see* the big picture
 (well, what *today* I *think* the big picture is...),
 so the current version only addresses packages containing functions that use formula
 variant, even
@@ -526,7 +928,7 @@ are demonstrated. You should be able to use that technique also for the rest of
 the packages).
 
 I am brewing some ideas about a general approach to packages that
-do not use formula interface, but I leave that for a future iteration of `intubate`.
+do not use formula interface, but I leave it for a future iteration of `intubate`.
 
 This means that there are three possibilities to the eventual
 lack of inclusion of your favorite package for the time being:
@@ -543,7 +945,7 @@ Also, please keep in mind you can always create your own interfaces
 (with the helper function `intubate`), or call the non-pipe-aware functions
 directly (with `ntbt`).
 
-#### Bugs and Feature requests
+## Bugs and Feature requests
 The robustness and generality of the interfacing machinery still needs to be
 further *verified* (and very likely improved),
 as there are thousands of potential functions to interface and
@@ -565,13 +967,13 @@ if you have some coding skills and can follow the code of the interface,
 if you could provide the proposed *solution*, that *shouldn't break anything else*,
 together with the feature request.
 
-#### Logo of `intubate`
+## Logo of `intubate`
 The logo of `intubate` is: **`<||>`**. It corresponds to an **intuBorder**. I have not
 found it in a Google search as of 2016/08/08. I intend to use it as a visual
 identification of `intubate`. If you know of it having being in use before this date
 in any software related project, please let me know, and I will change it.
 
-#### Names used
+## Names used
 *intuBorder(s)* and *intubOrder(s)*, as of 2016/08/08, only has been found, on Google,
 in a snippet of code for the name of a variable (`intUBorder`) (http://www.office-loesung.de/ftopic246897_0_0_asc.php) that would mean something
 like an "integer upper border". There is also an `intLBorder` for the lower border.
@@ -586,13 +988,13 @@ more InTuBags!
 also by the oil pipeline industry (at least "entubar" in Spanish is more general than the
 medical procedure), but not for software related projects.
 
-*intuEnv*, as of 2016/08/18, was found only in some latin text.
+*intuEnv*, as of 2016/08/18, was found only in some Latin text.
 
 I intend to use "intubate", "<||>", "intuBorder", "intubOrder(s)", "intuBag(s)",
 "intuEnv(s)"and other derivations starting with "intu", in relation to the use
 and promotion of "intubate" for software related activities.
 
-Down the line I intend to register the names and logo as trademarks.
+At some point I intend to register the names and logo as trademarks.
 
 #### See also
 
