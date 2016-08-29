@@ -94,7 +94,8 @@ set_intuEnv <- function(envir) {
   if (!is.environment(envir))
     stop("You need to provide an environment!")
   local_env$intuEnv <- envir
-  old_intuEnv
+
+  invisible(old_intuEnv)
 }
 
 ## (external)

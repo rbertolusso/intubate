@@ -1,4 +1,4 @@
-#### intubate <||> 1.0.0
+#### intubate <||> 1.0.1
 ##### *Roberto Bertolusso*
 ##### *2016-07-26* - *2016-08-29* (GPL >= 2)
 
@@ -11,7 +11,7 @@ implements three extensions called `intubOrders`, `intuEnv`, and `intuBags`.
 
 #### Installation
 
-* the latest released version from CRAN (1.0.0) on  2016-08-27 with
+* the latest released version from CRAN (1.0.0) on 2016-08-28 with
 
 ```r
 install.packages("intubate")

@@ -1,15 +1,17 @@
 Package: intubate
 Type: Package
 Title: Interface to Popular R Functions for Data Science Pipelines
-Version: 1.0.0
-Date: 2016-08-28
+Version: 1.0.1
+Date: 2016-08-29
 Author: Roberto Bertolusso
 Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
 Description:
   Interface to popular R functions with formulas and data,
   such as 'lm', so they can be included painlessly in data
   science pipelines implemented by 'magrittr'
-  with the operator %>%.
+  with the operator %>%. In addition, three
+  experimental extensions, called 'intubOrders',
+  'intuEnv', and 'intuBags', are implemented.
 License: GPL (>=2)
 ByteCompile: no
 Suggests: knitr, magrittr, rmarkdown

@@ -1,10 +1,10 @@
 ---
-title: "intubate <||> 1.0.0"
+title: "intubate <||> 1.0.1"
 author: "Roberto Bertolusso"
-date: "August 27, 2016"
+date: "August 29, 2016"
 output: rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{intubate <||> 1.0.0}
+  %\VignetteIndexEntry{intubate <||> 1.0.1}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -505,7 +505,7 @@ coll %>%
 Before forgetting, let's reinstate the original `intuEnv`:
 
 ```{r}
-set_intuEnv(saved_intuEnv)
+set_intuEnv(saved_intuEnv)    ## set_intuEnv() returns invisibly
 ```
 
 And now, let's see if the results were saved to the global environment:

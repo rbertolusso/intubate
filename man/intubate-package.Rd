@@ -213,8 +213,8 @@ that is included with the package.
 \tabular{ll}{
 Package: \tab intubate\cr
 Type: \tab Package\cr
-Version: \tab 1.0.0\cr
-Date: \tab 2016-08-27\cr
+Version: \tab 1.0.1\cr
+Date: \tab 2016-08-29\cr
 License: \tab GPL (>=2)\cr
 }
 See examples of use below.
