@@ -635,7 +635,7 @@ iBag %<>%
 names(iBag)
 ```
  
-The `intuBag` will keep all your results, in any way you prefer to use it.
+The `intuBag` will collect all your results, in any way you prefer to use it.
 
 The same happens with `intuEnv`. Just remember that `%<>%` should *not*
 be used with `intuEnv` (you should always use `%>%`).

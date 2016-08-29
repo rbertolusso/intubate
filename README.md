@@ -1,6 +1,6 @@
 #### intubate <||> 1.0.0
 ##### *Roberto Bertolusso*
-##### *2016-07-26* - *2016-08-27* (GPL >= 2)
+##### *2016-07-26* - *2016-08-29* (GPL >= 2)
 
 The aim of `intubate` (logo `<||>`) is to offer a painless way to
 add R functions that are not pipe-aware
@@ -11,7 +11,7 @@ implements three extensions called `intubOrders`, `intuEnv`, and `intuBags`.
 
 #### Installation
 
-* the latest released version from CRAN (1.0.0) with
+* the latest released version from CRAN (1.0.0) on  2016-08-27 with
 
 ```r
 install.packages("intubate")
@@ -624,7 +624,7 @@ iBag %<>%
 names(iBag)
 ```
  
-The `intuBag` will keep all your results, in any way you prefer to use it.
+The `intuBag` will collect all your results, in any way you prefer to use it.
 
 The same happens with `intuEnv`. Just remember that `%<>%` should *not*
 be used with `intuEnv` (you should always use `%>%`).
