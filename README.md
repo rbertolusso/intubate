@@ -127,7 +127,7 @@ USJudgeRatings %>%
 ```
 
 ### Calling non-pipe-aware functions directly with `ntbt`
-Of course, as already stated, you **do not have to create an interface** if you do not
+As already stated, you **do not have to create an interface** if you do not
 want to. You can **call the non-pipe-aware function directly** with `ntbt`,
 in the following way:
 
@@ -143,7 +143,7 @@ a pipeline (because `data` is not in first place in the definition of the functi
 
 ### Example showing different techniques
 
-The link below is to Dr. Sheather's website where code was extracted.
+The link below is to Dr. Sheather's website where the original code was extracted.
 In the link there is also information about the book. 
 This code could be used to produce the plots in Figure 3.1 on page 46.
 Different strategies are illustrated.
@@ -193,7 +193,7 @@ To create an interface, it suffices the following line of code before its use:
 ntbt_lsfit <- intubate      # NOTE: we are *not* including parentheses.
 ```
 
-That's it, you have created you interface. Just remember that:
+That's it, you have created the interface to `lsfit`. Just remember that:
 
 1. `intubate` interfaces **must** start with `ntbt_` followed by the
     name of the function to interface (`lsfit` in this case).
@@ -263,7 +263,7 @@ The `intuBorder` contains 5 zones (`intuZones`?, maybe too much...):
   **result** of the interfaced function
 
 For example, instead of running the following sequence
-of function calls (only plot shown):
+of function calls:
 
 ```r
 head(LifeCycleSavings)
@@ -345,7 +345,7 @@ The `intubOrder` will need the following info:
 * `zone 1`, in each case, indicates which is the data.frame (or any other object)
   that we want to use as input in this particular function
 * `zone 3` needs to include `f` to *forward* the input (if you want the next
-  function to receive the whole collection, and not the result if this step)
+  function to receive the whole collection, and not the result of this step)
 * `zone 4` (optional) may contain a `print` (or `summary`) if you want
   something to be displayed
 
@@ -379,7 +379,7 @@ be populated with results that you want to use later.
 You can access the `intuEnv` as follows:
 
 ```r
-intuEnv()  ## intuEnv() returns invisible, so nothing is output
+intuEnv()  ## intuEnv() returns invisibly, so nothing is output
 ```
 
 You can verify that, initially, it is empty:
@@ -390,9 +390,8 @@ ls(intuEnv())
 
 How can `intuEnv` be used?
 
-Suppose that we want, instead of displaying the results of interfaced functions,
-save the objects returned by them. One strategy (the other is using `intuBags`)
-is to save the results to `intuEnv`.
+Suppose that we want, instead of, or in addition to, displaying the results of interfaced functions, save the objects returned by them. One strategy
+is to save the results to `intuEnv` (the other is using `intuBags`).
 
 #### How to save to `intuEnv`?
 
@@ -507,7 +506,7 @@ ls()
 
 They were.
 
-Now the results are at your disposal to use as any other variable (result not
+Now the results are at your disposal to use as any other variable (output not
 shown):
 
 ```r
