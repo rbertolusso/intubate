@@ -302,6 +302,17 @@ ntbt_lm(LifeCycleSavings, sr ~ pop15 + pop75 + dpi + ddpi,
            print; summary; anova; plot(#, which = 1) >")
 ```
 
+* Also using parameters in their preferred order.
+  Please note that, in this case, `data` needs to be specified,
+  at least for now:
+
+```r
+ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings,
+        "< head; tail(#, n = 3); dim; str; summary
+           |i|
+           print; summary; anova; plot(#, which = 1) >")
+```
+
 ### `intubOrders` with collections of inputs
 
 When using pipelines, the receiving function has to deal with the *whole* object
@@ -550,7 +561,7 @@ enviromnent. If the source is an `intuBag`, the results will be saved to the
 We will run the same pipeline as before, but this time we will add `subset`
 and `summary`(called directly with `ntbt`) to illustrate how we can use a previously
 generated result (such as from data transformations) in the *same* pipeline in which
-it was generated. We will use `intuEnv` as the source of the pipeline.
+it was generated, when using `intuEnv` (or an `intuBag`) as the source of the pipeline.
 
 ```r
 intuEnv() %>%
@@ -578,6 +589,9 @@ intuEnv() %>%
 on environments. Even if (with a little of care) you could keep track of several
 `intuEnvs`, it seems natural (to me) to deal with only one, while several `intuBags`
 (for example one for each database, or collection of objects) seem natural (to me).
+`intuEnv` (being a function call) can be called directly from inside functions
+(it always knows where the environment is), so you don't have to send it as an
+argument, as in the case of an `intuBag`.
 
 Other than that, using an `intuEnv` or an `intuBag` is a matter of 
 personal taste.
@@ -714,7 +728,7 @@ iBag %<>%
 names(iBag)
 ```
 
-The same, using `intuEnv`:
+The same, using `intuEnv`, and avoiding creating flights3:
 
 ```r
 clear_intuEnv()
@@ -726,8 +740,8 @@ intuEnv(flightsIB = flights,
         airportsIB = airports) %>%
   ntbt(select, flightsIB, year:day, hour, origin, dest, tailnum, carrier,
        "<|D| head > flights2") %>%
-  ntbt(select, flights2, -origin, -dest, "<|| print > flights3") %>% 
-  ntbt(left_join, flights3, airlinesIB, by = "carrier", "<|| print >") %>%
+  ntbt(left_join, select(flights2, -origin, -dest), airlinesIB, by = "carrier",
+       "<|| print >") %>%
   ntbt(left_join, flights2, weatherIB, "<|| print >") %>%
   ntbt(left_join, flights2, planesIB, by = "tailnum", "<|| print >") %>%
   ntbt(left_join, flights2, airportsIB, c("dest" = "faa"), "<|| print >") %>%
@@ -735,7 +749,6 @@ intuEnv(flightsIB = flights,
 
 ls(intuEnv())
 ```
-
 
 * Note: the book is still not published (as of 8/27/16), so the examples in the
         chapter may have changed by the time you are reading this.
@@ -882,7 +895,8 @@ technique used).
 I do not claim to be a data scientist (I am barely a statistician and I still have
 almost no clue of what a data scientist
 is or is not, and my confusion about the subject only increases with time),
-nor someone entitled to tell you what to use or not.
+nor someone entitled to tell you what to use or not (I do not even feel entitled
+to tell you how you should use `intubate`, *if* you decide to use it).
 
 As such, I am not capable of engaging in disputes of what is relevant or not, or,
 if there are competing packages, which to use.
