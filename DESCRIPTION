@@ -1,7 +1,7 @@
 Package: intubate
 Type: Package
 Title: Interface to Popular R Functions for Data Science Pipelines
-Version: 1.1.0
+Version: 1.2.0
 Date: 2016-09-02
 Author: Roberto Bertolusso
 Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
@@ -15,5 +15,5 @@ Description:
   'intuEnv', and 'intuBags', are implemented.
 License: GPL (>=2)
 ByteCompile: no
-Suggests: knitr, magrittr, rmarkdown
+Suggests: dplyr, knitr, magrittr, nycflights13, rmarkdown
 VignetteBuilder: knitr

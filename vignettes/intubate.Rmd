@@ -1,5 +1,5 @@
 ---
-title: "intubate <||> 1.1.0"
+title: "intubate <||> 1.2.0"
 author: "Roberto Bertolusso"
 date: "September 2, 2016"
 output: rmarkdown::html_document
@@ -466,7 +466,7 @@ intuEnv() %>%
 ```
 
 #### Strategy 4
-```{r, results = 'hide'}
+```{r, results='hide'}
 intuEnv() %>%
   ntbt(I, "lmfit <|i| summary >")
 ```
@@ -687,10 +687,12 @@ by Garrett Grolemund and Hadley Wickham
 
 Original code (output not shown):
 
-```{r, eval = FALSE}
+```{r, message=FALSE}
 library(dplyr)
 library(nycflights13)
+```
 
+```{r, eval = FALSE}
 flights2 <- flights %>% 
   select(year:day, hour, origin, dest, tailnum, carrier)
 flights2
@@ -718,7 +720,7 @@ flights2 %>%
 The following code illustrates how all the above can be performed using
 an `intuBag` (or `intuEnv`) and *one* pipeline:
 
-```{r, eval = FALSE}
+```{r, message=FALSE}
 iBag <- intuBag(flightsIB = flights,
                 airlinesIB = airlines,
                 weatherIB = weather,
@@ -735,155 +737,15 @@ iBag %<>%
   ntbt(left_join, flights2, planesIB, by = "tailnum", "<|| print >") %>%
   ntbt(left_join, flights2, airportsIB, c("dest" = "faa"), "<|| print >") %>%
   ntbt(left_join, flights2, airportsIB, c("origin" = "faa"), "<|| print >")
+```
 
+```{r}
 names(iBag)
 ```
 
-Note: the output was copied from previously run code to avoid adding dependencies.
-
-```
-## 
-## ntbt(data = ., fti = select, flightsIB, year:day, hour, origin, 
-##     dest, tailnum, carrier)
-## 
-## * head <||> result *
-## # A tibble: 6 x 8
-##    year month   day  hour origin  dest tailnum carrier
-##   <int> <int> <int> <dbl>  <chr> <chr>   <chr>   <chr>
-## 1  2013     1     1     5    EWR   IAH  N14228      UA
-## 2  2013     1     1     5    LGA   IAH  N24211      UA
-## 3  2013     1     1     5    JFK   MIA  N619AA      AA
-## 4  2013     1     1     5    JFK   BQN  N804JB      B6
-## 5  2013     1     1     6    LGA   ATL  N668DN      DL
-## 6  2013     1     1     5    EWR   ORD  N39463      UA
-## 
-## ntbt(data = ., fti = select, flights2, -origin, -dest)
-## 
-## * print <||> result *
-## # A tibble: 336,776 x 6
-##     year month   day  hour tailnum carrier
-##    <int> <int> <int> <dbl>   <chr>   <chr>
-## 1   2013     1     1     5  N14228      UA
-## 2   2013     1     1     5  N24211      UA
-## 3   2013     1     1     5  N619AA      AA
-## 4   2013     1     1     5  N804JB      B6
-## 5   2013     1     1     6  N668DN      DL
-## 6   2013     1     1     5  N39463      UA
-## 7   2013     1     1     6  N516JB      B6
-## 8   2013     1     1     6  N829AS      EV
-## 9   2013     1     1     6  N593JB      B6
-## 10  2013     1     1     6  N3ALAA      AA
-## # ... with 336,766 more rows
-## 
-## ntbt(data = ., fti = left_join, flights3, airlinesIB, by = "carrier")
-## 
-## * print <||> result *
-## # A tibble: 336,776 x 7
-##     year month   day  hour tailnum carrier                     name
-##    <int> <int> <int> <dbl>   <chr>   <chr>                    <chr>
-## 1   2013     1     1     5  N14228      UA    United Air Lines Inc.
-## 2   2013     1     1     5  N24211      UA    United Air Lines Inc.
-## 3   2013     1     1     5  N619AA      AA   American Airlines Inc.
-## 4   2013     1     1     5  N804JB      B6          JetBlue Airways
-## 5   2013     1     1     6  N668DN      DL     Delta Air Lines Inc.
-## 6   2013     1     1     5  N39463      UA    United Air Lines Inc.
-## 7   2013     1     1     6  N516JB      B6          JetBlue Airways
-## 8   2013     1     1     6  N829AS      EV ExpressJet Airlines Inc.
-## 9   2013     1     1     6  N593JB      B6          JetBlue Airways
-## 10  2013     1     1     6  N3ALAA      AA   American Airlines Inc.
-## # ... with 336,766 more rows
-## 
-## ntbt(data = ., fti = left_join, flights2, weatherIB)
-## Joining, by = c("year", "month", "day", "hour", "origin")
-## 
-## * print <||> result *
-## # A tibble: 336,776 x 18
-##     year month   day  hour origin  dest tailnum carrier  temp  dewp humid
-##    <dbl> <dbl> <int> <dbl>  <chr> <chr>   <chr>   <chr> <dbl> <dbl> <dbl>
-## 1   2013     1     1     5    EWR   IAH  N14228      UA    NA    NA    NA
-## 2   2013     1     1     5    LGA   IAH  N24211      UA    NA    NA    NA
-## 3   2013     1     1     5    JFK   MIA  N619AA      AA    NA    NA    NA
-## 4   2013     1     1     5    JFK   BQN  N804JB      B6    NA    NA    NA
-## 5   2013     1     1     6    LGA   ATL  N668DN      DL 39.92 26.06 57.33
-## 6   2013     1     1     5    EWR   ORD  N39463      UA    NA    NA    NA
-## 7   2013     1     1     6    EWR   FLL  N516JB      B6 39.02 26.06 59.37
-## 8   2013     1     1     6    LGA   IAD  N829AS      EV 39.92 26.06 57.33
-## 9   2013     1     1     6    JFK   MCO  N593JB      B6 39.02 26.06 59.37
-## 10  2013     1     1     6    LGA   ORD  N3ALAA      AA 39.92 26.06 57.33
-## # ... with 336,766 more rows, and 7 more variables: wind_dir <dbl>,
-## #   wind_speed <dbl>, wind_gust <dbl>, precip <dbl>, pressure <dbl>,
-## #   visib <dbl>, time_hour <time>
-## 
-## ntbt(data = ., fti = left_join, flights2, planesIB, by = "tailnum")
-## 
-## * print <||> result *
-## # A tibble: 336,776 x 16
-##    year.x month   day  hour origin  dest tailnum carrier year.y
-##     <int> <int> <int> <dbl>  <chr> <chr>   <chr>   <chr>  <int>
-## 1    2013     1     1     5    EWR   IAH  N14228      UA   1999
-## 2    2013     1     1     5    LGA   IAH  N24211      UA   1998
-## 3    2013     1     1     5    JFK   MIA  N619AA      AA   1990
-## 4    2013     1     1     5    JFK   BQN  N804JB      B6   2012
-## 5    2013     1     1     6    LGA   ATL  N668DN      DL   1991
-## 6    2013     1     1     5    EWR   ORD  N39463      UA   2012
-## 7    2013     1     1     6    EWR   FLL  N516JB      B6   2000
-## 8    2013     1     1     6    LGA   IAD  N829AS      EV   1998
-## 9    2013     1     1     6    JFK   MCO  N593JB      B6   2004
-## 10   2013     1     1     6    LGA   ORD  N3ALAA      AA     NA
-## # ... with 336,766 more rows, and 7 more variables: type <chr>,
-## #   manufacturer <chr>, model <chr>, engines <int>, seats <int>,
-## #   speed <int>, engine <chr>
-## 
-## ntbt(data = ., fti = left_join, flights2, airportsIB, c(dest = "faa"))
-## 
-## * print <||> result *
-## # A tibble: 336,776 x 14
-##     year month   day  hour origin  dest tailnum carrier
-##    <int> <int> <int> <dbl>  <chr> <chr>   <chr>   <chr>
-## 1   2013     1     1     5    EWR   IAH  N14228      UA
-## 2   2013     1     1     5    LGA   IAH  N24211      UA
-## 3   2013     1     1     5    JFK   MIA  N619AA      AA
-## 4   2013     1     1     5    JFK   BQN  N804JB      B6
-## 5   2013     1     1     6    LGA   ATL  N668DN      DL
-## 6   2013     1     1     5    EWR   ORD  N39463      UA
-## 7   2013     1     1     6    EWR   FLL  N516JB      B6
-## 8   2013     1     1     6    LGA   IAD  N829AS      EV
-## 9   2013     1     1     6    JFK   MCO  N593JB      B6
-## 10  2013     1     1     6    LGA   ORD  N3ALAA      AA
-## # ... with 336,766 more rows, and 6 more variables: name <chr>, lat <dbl>,
-## #   lon <dbl>, alt <int>, tz <dbl>, dst <chr>
-## 
-## ntbt(data = ., fti = left_join, flights2, airportsIB, c(origin = "faa"))
-## 
-## * print <||> result *
-## # A tibble: 336,776 x 14
-##     year month   day  hour origin  dest tailnum carrier
-##    <int> <int> <int> <dbl>  <chr> <chr>   <chr>   <chr>
-## 1   2013     1     1     5    EWR   IAH  N14228      UA
-## 2   2013     1     1     5    LGA   IAH  N24211      UA
-## 3   2013     1     1     5    JFK   MIA  N619AA      AA
-## 4   2013     1     1     5    JFK   BQN  N804JB      B6
-## 5   2013     1     1     6    LGA   ATL  N668DN      DL
-## 6   2013     1     1     5    EWR   ORD  N39463      UA
-## 7   2013     1     1     6    EWR   FLL  N516JB      B6
-## 8   2013     1     1     6    LGA   IAD  N829AS      EV
-## 9   2013     1     1     6    JFK   MCO  N593JB      B6
-## 10  2013     1     1     6    LGA   ORD  N3ALAA      AA
-## # ... with 336,766 more rows, and 6 more variables: name <chr>, lat <dbl>,
-## #   lon <dbl>, alt <int>, tz <dbl>, dst <chr>
-```
-
-```r
-names(iBag)
-```
-
-```
-## [1] "flightsIB"  "airlinesIB" "weatherIB"  "planesIB"   "airportsIB"
-## [6] "flights2"   "flights3"
-```
 The same, using `intuEnv`, and avoiding creating flights3 (output not shown):
 
-```{r, eval = FALSE}
+```{r, results='hide', message=FALSE}
 clear_intuEnv()
 
 intuEnv(flightsIB = flights,
@@ -892,20 +754,68 @@ intuEnv(flightsIB = flights,
         planesIB = planes,
         airportsIB = airports) %>%
   ntbt(select, flightsIB, year:day, hour, origin, dest, tailnum, carrier,
-       "<|D| head > flights2") %>%
+       "<|| head > flights2") %>%
   ntbt(left_join, select(flights2, -origin, -dest), airlinesIB, by = "carrier",
        "<|| print >") %>%
   ntbt(left_join, flights2, weatherIB, "<|| print >") %>%
   ntbt(left_join, flights2, planesIB, by = "tailnum", "<|| print >") %>%
   ntbt(left_join, flights2, airportsIB, c("dest" = "faa"), "<|| print >") %>%
   ntbt(left_join, flights2, airportsIB, c("origin" = "faa"), "<|| print >")
+```
 
+```{r}
 ls(intuEnv())
 ```
 
 * Note: the book is still not published (as of 8/27/16), so the examples in the
         chapter may have changed by the time you are reading this.
-        
+
+### Saving results of function calls in `zone 2` and `zone 4` of the `intubOrder`:
+
+Starting from version 1.2.0, you can save the results generated by functions
+included in `zone 2` and `zone 4` of the `intubOrder`. The results will be
+collected following the same rules as with a result specified in `zone 5`.
+
+For example, the following case will be collected by `intubOrder`:
+
+```{r}
+clear_intuEnv()
+
+LifeCycleSavings %>%
+  ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi,
+          "< head; LCSt <- tail(#, n = 3); dim; str; LCSs <- summary
+             |i|
+             print; sfit <- summary; afit <- anova > fit")
+ls(intuEnv())
+```
+
+By default, cases where you are saving results (on `zone 2` and `zone 4`) will be printed.
+
+If you want to only assign, but not print, you need to specify `S` in `zone 3`:
+
+```{r}
+clear_intuEnv()
+
+LifeCycleSavings %>%
+  ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi,
+          "< head; LCSt <- tail(#, n = 3); dim; str; LCSs <- summary
+             |iS|
+             print; sfit <- summary; afit <- anova > fit")
+ls(intuEnv())
+```
+
+In the case the source is an `intuBag`, the result is collected, as expected, by the `intuBag`:
+
+```{r}
+iBag <- intuBag(CO3 = CO2,
+                USJudgeRatings1 = USJudgeRatings,
+                sleep1 = sleep)
+iBag %<>%
+  ntbt_lm(conc ~ uptake, "CO3 < CO3h <- head |S| sfit <- summary; afit <- anova > fit")
+
+names(iBag)
+```
+
 ## Packages containing interfaces
 
 The 88 R packages that have interfaces implemented so far are:

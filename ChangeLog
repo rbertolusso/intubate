@@ -1,12 +1,19 @@
 2016-09-02  Roberto Bertolusso  <rbertolusso@rice.edu>
 
-        * 1.1.0 (not released to CRAN)
+        * 1.2.0 (not released to CRAN).
 
-        * set_intuEnv() now returns invisibly
+        * Save results of functions specified in zone 2 and
+          zone 4 of intubOrder.
+
+2016-09-02  Roberto Bertolusso  <rbertolusso@rice.edu>
+
+        * 1.1.0 (not released to CRAN).
+
+        * set_intuEnv() now returns invisibly.
 
 2016-08-28  Roberto Bertolusso  <rbertolusso@rice.edu>
 
-        * Release 1.0.0
+        * Release 1.0.0 (released to CRAN).
 
         * Details on github: rbertolusso/intubate
 
@@ -34,7 +41,7 @@
 
 2016-07-29  Roberto Bertolusso  <rbertolusso@rice.edu>
 
-        * Release 0.99.2
+        * 0.99.2 (released to CRAN)
 
         * Interfaces to recommended R packages ("lattice", "nlme",
           "nnet", "rpart", "survival") and CRAN packages
@@ -42,6 +49,6 @@
 
 2016-07-26  Roberto Bertolusso  <rbertolusso@rice.edu>
 
-        * Release 0.99.1
+        * 0.99.1 (released to CRAN)
 
         * Initial version. Interfaces to "stats", "graphics", and "MASS".

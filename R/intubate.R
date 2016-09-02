@@ -154,24 +154,35 @@ process_call <- function(called_from, data, preCall, Call, cfti, use_envir) {
   if (io$show_diagnostics) cat(paste0("* Result is ", ifelse(result_visible, "", "in"), "visible\n"))
   if (io$show_diagnostics && is.null(result)) cat("* Result is null\n")
     
-  if (io$found) {
-    if (io$show_diagnostics && length(io$input_functions) > 0)
-      { cat("* Input functions:\n"); print(io$input_functions) }
-    exec_io(io$input_functions, "input", input_data, input_data, io)
-
-    if (io$show_diagnostics && length(io$result_functions) > 0)
-      { cat("* Result functions:\n"); print(io$result_functions) }
-    exec_io(io$result_functions, "result", result, input_data, io)
-
-    if (io$show_diagnostics && io$force_return_invisible) cat("* Force return invisible\n")
+  if (length(io$input_functions) > 0) {
+    if (io$show_diagnostics) { cat("* Input functions:\n"); print(io$input_functions) }
+    if (io$input != "") {
+      which_input_name <- io$input
+      which_input_data <- input_data[[io$input]]
+    } else {
+      which_input_name <- "input"
+      which_input_data <- input_data
+    }
+    data <- exec_io(io$input_functions, which_input_name,
+                    which_input_data, io, data)
+  }
+  if (length(io$result_functions) > 0) {
+    if (io$result != "")
+      which_result_name <- io$result
+    else
+      which_result_name <- "result"
+    if (io$show_diagnostics) { cat("* Result functions:\n"); print(io$result_functions) }
+    data <- exec_io(io$result_functions, which_result_name, result, io, data)
   }
 
-  if (!is.null(result) && io$output != "") {
+  if (io$show_diagnostics && io$force_return_invisible) cat("* Force return invisible\n")
+
+  if (!is.null(result) && io$result != "") {
     if (io$is_intuBag) {
-      data[[io$output]] <- result
-      ##    data[io$output] <- ifelse(is.list(result), result, list(result)) ## For later
+      data[[io$result]] <- result
+      ##    data[io$result] <- ifelse(is.list(result), result, list(result)) ## For later
     } else {
-      assign(io$output, result, envir = intuEnv())
+      assign(io$result, result, envir = intuEnv())
     }
   }
 
@@ -196,7 +207,7 @@ parse_io <- function(par_list, data) {
   for (pos in 1:length(par_list)) {
     io$intubOrder <- par_list[[pos]]
     if (is.character(io$intubOrder) &&
-        gsub(".*(<).*(\\|).*(\\|).*(>).*", "\\1\\2\\3\\4", io$intubOrder)[[1]] == intuBorder) {
+        gsub("[^<]*(<).*(\\|).*(\\|).*(>).*", "\\1\\2\\3\\4", io$intubOrder)[[1]] == intuBorder) {
       io$found <- TRUE
       io$pos <- pos
       break
@@ -208,30 +219,31 @@ parse_io <- function(par_list, data) {
   ## Remove extra spaces or newlines to better print the call  
   io$intubOrder <- gsub("[[:space:]]+", " ", io$intubOrder)
   
-  io$input_functions <- trimws(gsub(".*<([^|]*)\\|[^|]*\\|.*>.*", "\\1", io$intubOrder))
+  io$input_functions <- trimws(gsub("[^<]*<([^|]*)\\|[^|]*\\|.*>.*", "\\1", io$intubOrder))
   io$input_functions <- trimws(strsplit(io$input_functions, ";")[[1]])
 
-  io$result_functions <- trimws(gsub(".*<[^|]*\\|[^|]*\\|(.*)>.*", "\\1", io$intubOrder))
+  io$result_functions <- trimws(gsub("[^<]*<[^|]*\\|[^|]*\\|(.*)>.*", "\\1", io$intubOrder))
   io$result_functions <- trimws(strsplit(io$result_functions, ";")[[1]])
 
-  io$show_successful_call <- (gsub(".*<.*\\|.*(C).*\\|.*>.*", "\\1", io$intubOrder) == "C")
-  io$show_diagnostics <- (gsub(".*<.*\\|.*(D).*\\|.*>.*", "\\1", io$intubOrder) == "D")
-  io$force_formula_case <- (gsub(".*<.*\\|.*(F).*\\|.*>.*", "\\1", io$intubOrder) == "F")
-  io$forward_input <- (gsub(".*<.*\\|.*(f).*\\|.*>.*", "\\1", io$intubOrder) == "f")
-  io$show_intubOrder <- (gsub(".*<.*\\|.*(I).*\\|.*>.*", "\\1", io$intubOrder) == "I")
-  io$force_return_invisible <- (gsub(".*<.*\\|.*(i).*\\|.*>.*", "\\1", io$intubOrder) == "i")
-  io$be_verbose <- (gsub(".*<.*\\|.*(v).*\\|.*>.*", "\\1", io$intubOrder) == "v")
+  io$show_successful_call <- (gsub("[^<]*<.*\\|.*(C).*\\|.*>.*", "\\1", io$intubOrder) == "C")
+  io$show_diagnostics <- (gsub("[^<]*<.*\\|.*(D).*\\|.*>.*", "\\1", io$intubOrder) == "D")
+  io$force_formula_case <- (gsub("[^<]*<.*\\|.*(F).*\\|.*>.*", "\\1", io$intubOrder) == "F")
+  io$forward_input <- (gsub("[^<]*<.*\\|.*(f).*\\|.*>.*", "\\1", io$intubOrder) == "f")
+  io$show_intubOrder <- (gsub("[^<]*<.*\\|.*(I).*\\|.*>.*", "\\1", io$intubOrder) == "I")
+  io$force_return_invisible <- (gsub("[^<]*<.*\\|.*(i).*\\|.*>.*", "\\1", io$intubOrder) == "i")
+  io$silent_on_assignment <- (gsub("[^<]*<.*\\|.*(S).*\\|.*>.*", "\\1", io$intubOrder) == "S")
+  io$be_verbose <- (gsub("[^<]*<.*\\|.*(v).*\\|.*>.*", "\\1", io$intubOrder) == "v")
   
-  input_output <- strsplit(paste0(" ", io$intubOrder, " "), ## Spaces to avoid failure.
+  input_result <- strsplit(paste0(" ", io$intubOrder, " "), ## Spaces to avoid failure.
                            "<.*\\|.*\\|.*>")[[1]]
-  if (length(input_output) > 2)             ## For overachievers...
+  if (length(input_result) > 2)             ## For overachievers...
     stop(paste0("Only one intuBorder, ", intuBorder, ", is currently implemented.\n"))
 
   io$is_intuBag <- is_intuBag(data)
   io$is_environment <- is.environment(data)
   
   ## Get requested input.
-  io$input <- trimws(input_output[1])
+  io$input <- trimws(input_result[1])
   if (io$input != "") {
     if (io$is_environment) {
       io$input_data <- list(get(io$input, envir = data))
@@ -242,37 +254,51 @@ parse_io <- function(par_list, data) {
   } else
     io$input_data <- data
   
-  ## Get name of output.
-  io$output <- trimws(input_output[2])
+  ## Get name of result.
+  io$result <- trimws(input_result[2])
 
   io
 }
 
 ## (internal)
-exec_io <- function(..object_functions.., ..where.., ..object_value.., ..envir.., ..io..) {
-  for (..this_function.. in ..object_functions..) {
-    ..include_object.. <- TRUE
-    if (..this_function.. == "print") {
-      ..printed.. <- capture.output(print(..object_value..))
-    } else {
-      if (length(strsplit(..this_function.., "\\(")[[1]]) > 1) {
-        ..printed.. <- capture.output(print(eval(parse(text = gsub("#", "..object_value..", ..this_function..)),
-                                             envir = ..envir..)))
-      } else {
-        ..printed.. <- capture.output(print(do.call(..this_function.., args=list(quote(..object_value..)))))
+exec_io <- function(object_functions, where, object_value, io, data) {
+  for (this_fn in object_functions) {
+    if (length(strsplit(this_fn, "\\(")[[1]]) == 1)
+      this_fn <- paste0(this_fn, "(#)")
+    this_fn_prnt <- this_fn
+    
+    this_fn <- gsub("#", "object_value", this_fn)
+    
+    this_fn_sp <- trimws(strsplit(this_fn, "<-")[[1]])
+    
+    printed <- capture.output(result <- eval(parse(text = this_fn_sp[length(this_fn_sp)]),
+                                             envir = list(object_value = object_value)))
+    if (!(length(printed) > 0 && printed[1] != "NULL") & !is.null(result))
+      printed <- capture.output(print(result))
+    
+    if (length(this_fn_sp) > 1) {
+      if (!is.null(result) && this_fn_sp[1] != "") {
+        if (io$silent_on_assignment)
+          printed <- character()
+        if (io$is_intuBag) {
+          data[[this_fn_sp[1]]] <- result
+        } else {
+          assign(this_fn_sp[1], result, envir = intuEnv())
+        } 
       }
     }
-    ## print(str(..printed..))
-    if (length(..printed..) > 0 && ..printed..[1] != "NULL" && ..include_object..) {
+
+    if (length(printed) > 0 && printed[1] != "NULL") {
       cat("\n")
-      ..header.. <- paste0("* ", ..this_function.., " <||> ", ..where.., " *")
+      header <- paste0("* ", this_fn_prnt, " <||> ", where, " *")
       #sep <- paste0(paste0(rep("-", nchar(header)), collapse = ""), "\n")
       #cat(sep)
-      cat(paste0(..header.., "\n"))
+      cat(paste0(header, "\n"))
       #cat(sep)
-      cat(..printed..[..printed.. != "NULL"], sep = "\n")
+      cat(printed[printed != "NULL"], sep = "\n")
     }
   }
+  data
 }
 
 
