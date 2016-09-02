@@ -1,7 +1,7 @@
-2016-08-29  Roberto Bertolusso  <rbertolusso@rice.edu>
+2016-09-02  Roberto Bertolusso  <rbertolusso@rice.edu>
 
-        * 1.0.1 (not released)
-        
+        * 1.1.0 (not released to CRAN)
+
         * set_intuEnv() now returns invisibly
 
 2016-08-28  Roberto Bertolusso  <rbertolusso@rice.edu>
@@ -13,25 +13,25 @@
 2016-07-30  Roberto Bertolusso  <rbertolusso@rice.edu>
         * Interfaces to more CRAN packages ("e1071", "gbm",
           "randomForest", "tree").
-          
+
         * Functions with formula followed by data now are
           in two groups: one in which the reversal of
           parameters is necessary (and this is associated
           to the helper function ntbt_function_formula_data),
           and another in which it is not.
-          
+
         * Added vignette.
-        
+
         * C stack error on definition #1 (barryrowlingson)
           Fixed potential bug if user creates an interface
           function non starting with ntbt_.
-          
+
         * Feature request: support for lfe::felm #3 (kendonB)
           Interface to "felm" in "lfe"is there now.
-          
+
         * ntbt_function_* functions fail if you use :: #5 (richierocks)
           Fixed.
-        
+
 2016-07-29  Roberto Bertolusso  <rbertolusso@rice.edu>
 
         * Release 0.99.2

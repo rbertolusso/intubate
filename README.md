@@ -1,13 +1,13 @@
-#### intubate <||> 1.0.1
+#### intubate <||> 1.1.0
 ##### *Roberto Bertolusso*
-##### *2016-07-26* - *2016-08-29* (GPL >= 2)
+##### *2016-07-26* - *2016-09-02* (GPL >= 2)
 
 The aim of `intubate` (logo `<||>`) is to offer a painless way to
-add R functions that are not pipe-aware
+add R functions that are non-pipe-aware
 to data science pipelines implemented by `magrittr` with the
 operator `%>%`, without having to rely on workarounds of
-varying complexity. It also
-implements three extensions called `intubOrders`, `intuEnv`, and `intuBags`.
+varying complexity In addition, three extensions for pipelines,
+called 'intubOrders', 'intuEnv', and 'intuBags', are implemented.
 
 #### Installation
 
@@ -645,7 +645,7 @@ be used with `intuEnv` (you should always use `%>%`).
 
 ### Using more than one source
 
-Suppose you have a database consisting in the following two tables
+Suppose you have a "database" containing the following two "tables":
 
 ```r
 iBag <- intuBag(members = data.frame(name=c("John", "Paul", "George",

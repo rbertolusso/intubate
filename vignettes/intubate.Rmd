@@ -1,7 +1,7 @@
 ---
-title: "intubate <||> 1.0.1"
+title: "intubate <||> 1.1.0"
 author: "Roberto Bertolusso"
-date: "August 29, 2016"
+date: "September 2, 2016"
 output: rmarkdown::html_document
 vignette: >
   %\VignetteIndexEntry{intubate <||> 1.0.1}
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = 'center',
 ##### License: GPL >= 2
 
 The aim of `intubate` (logo `<||>`) is to offer a painless way to
-add R functions that are not pipe-aware
+add R functions that are non-pipe-aware
 to data science pipelines implemented by `magrittr` with the
 operator `%>%`, without having to rely on workarounds of
 varying complexity. It also
@@ -656,7 +656,8 @@ be used with `intuEnv` (you should always use `%>%`).
 
 ### Using more than one source
 
-Suppose you have a database consisting in the following two tables
+Suppose you have a "database" containing the following two "tables":
+
 ```{r}
 iBag <- intuBag(members = data.frame(name=c("John", "Paul", "George",
                                             "Ringo", "Brian", NA),

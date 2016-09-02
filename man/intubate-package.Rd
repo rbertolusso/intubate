@@ -2,12 +2,27 @@
 \alias{intubate-package}
 \docType{package}
 \title{Interface to Popular R Functions for Data Science Pipelines.}
+\details{
+\tabular{ll}{
+Package: \tab intubate\cr
+Type: \tab Package\cr
+Version: \tab 1.1.0\cr
+Date: \tab 2016-09-02\cr
+License: \tab GPL (>=2)\cr
+}
+See examples of use below.
+}
+\author{
+Roberto Bertolusso
+
+Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
+}
 \description{
   The aim of \code{intubate} (logo \code{<||>}) is to offer a painless way to
-add R functions that that are not pipe-aware to data science pipelines implemented
+add R functions that that are non-pipe-aware to data science pipelines implemented
 by `magrittr` with the operator \code{\%>\%}, without having to rely on workarounds of
-varying complexity. It also implements three extensions (experimental),
-called `intubOrders`, `intuEnv`, and `intuBags`.
+varying complexity. In addition, three extensions for pipelines, called 'intubOrders',
+'intuEnv', and 'intuBags', are implemented.
 
 For a gentle introduction to \code{intubate}, please see the vignette
 that is included with the package. 
@@ -208,21 +223,6 @@ that is included with the package.
   \code{intubate} is still a work in progress.
   As such, the implementation may change in future
   versions until stabilization.
-}
-\details{
-\tabular{ll}{
-Package: \tab intubate\cr
-Type: \tab Package\cr
-Version: \tab 1.0.1\cr
-Date: \tab 2016-08-29\cr
-License: \tab GPL (>=2)\cr
-}
-See examples of use below.
-}
-\author{
-Roberto Bertolusso
-
-Maintainer: Roberto Bertolusso <rbertolusso@rice.edu>
 }
 \examples{
 \dontrun{
