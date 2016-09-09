@@ -722,6 +722,9 @@ intubate <-
     
     Call <- match.call(expand.dots = TRUE)
     
+    if (as.character(Call[[1]]) == "intubate")
+      return (add_interfaces_to(Call))
+    
     cfti <- get_calling_name("ntbt", as.character(Call[[1]]))
     
     result <- process_call("intubate", data, preCall, Call, cfti, parent.frame())

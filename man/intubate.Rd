@@ -1,5 +1,6 @@
 \name{intubate}
 \alias{intubate}
+\alias{intubate_rm_all_interfaces}
 \alias{ntbt}
 \alias{ntbt_function_formula_data}
 \alias{ntbt_function_model_data}
@@ -22,6 +23,9 @@
 \usage{
 ## Helper function to define interfaces
 intubate(data, ...)
+
+## Remove all interfaces (functions starting with ntbt_)
+intubate_rm_all_interfaces()
 
 ## Function to call non-pipe-aware functions directly
 ntbt(data, fti, ...)

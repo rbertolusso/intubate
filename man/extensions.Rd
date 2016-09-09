@@ -1,4 +1,4 @@
-\name{experimental}
+\name{extensions}
 \alias{as_intuBag}
 \alias{clear_intuEnv}
 \alias{intuBag}

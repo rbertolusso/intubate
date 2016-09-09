@@ -1,6 +1,6 @@
-#### intubate <||> 1.3.0
+#### intubate <||> 1.4.0
 ##### *Roberto Bertolusso*
-##### *2016-07-26* - *2016-09-08* (GPL >= 2)
+##### *2016-07-26* - *2016-09-09* (GPL >= 2)
 
 The aim of `intubate` (logo `<||>`) is to offer a painless way to
 add R functions that are non-pipe-aware
@@ -313,6 +313,88 @@ ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings,
            print; summary; anova; plot(#, which = 1) >")
 ```
 
+ \
+
+
+#### Example demonstrating two strategies of using `intubOrders`
+
+This example uses the code provided in the vignette of
+package `survey`, that can be found in:
+
+<https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf>
+
+The original code on the vignette is:
+
+```r
+library(survey)
+
+data(api)
+
+vars<-names(apiclus1)[c(12:13,16:23,27:37)] 
+
+dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
+summary(dclus1)
+svymean(~api00, dclus1)
+svyquantile(~api00, dclus1, quantile=c(0.25,0.5,0.75), ci=TRUE)
+svytotal(~stype, dclus1)
+svytotal(~enroll, dclus1)
+svyratio(~api.stu,~enroll, dclus1)
+svyratio(~api.stu, ~enroll, design=subset(dclus1, stype=="H"))
+svymean(make.formula(vars),dclus1,na.rm=TRUE)
+svyby(~ell+meals, ~stype, design=dclus1, svymean)
+regmodel <- svyglm(api00~ell+meals,design=dclus1)
+logitmodel <- svyglm(I(sch.wide=="Yes")~ell+meals, design=dclus1, family=quasibinomial()) 
+summary(regmodel)
+summary(logitmodel)
+```
+
+ \
+
+
+Two strategies of using intubOrders are illustrated.
+
+##### **Strategy 1**: long pipeline, light use of intubOrders:
+
+```r
+apiclus1 %>%
+  ntbt(svydesign, id = ~dnum, weights = ~ pw, fpc = ~ fpc, "<|| summary >") %>%
+  ntbt(svymean, ~ api00, "<|f| print >") %>%
+  ntbt(svyquantile, ~ api00, quantile = c(0.25,0.5,0.75), ci = TRUE, "<|f| print >") %>%
+  ntbt(svytotal, ~ stype, "<|f| print >") %>%
+  ntbt(svytotal, ~ enroll, "<|f| print >") %>%
+  ntbt(svyratio, ~ api.stu, ~ enroll, "<|f| print >") %>%
+  ntbt(svyratio, ~ api.stu, ~ enroll, design = subset("#", stype == "H"), "<|f| print >") %>%
+  ntbt(svymean, make.formula(vars), na.rm = TRUE, "<|f| print >") %>%
+  ntbt(svyby, ~ ell + meals, ~ stype, svymean, "<|f| print >") %>%
+  ntbt(svyglm, api00 ~ ell + meals, "<|f| summary >") %>%
+  ntbt(svyglm, I(sch.wide == "Yes") ~ ell + meals, family = quasibinomial(), "<|f| summary >")
+```
+
+ \
+
+
+##### **Strategy 2**: short pipeline, heavy use of *one* intubOrder:
+
+```r
+apiclus1 %>%
+  ntbt(svydesign, id = ~dnum, weights = ~pw, fpc = ~fpc,
+       "<|f|
+         summary;
+         svymean(~api00, #);
+         svyquantile(~api00, #, quantile = c(0.25, 0.5, 0.75), ci = TRUE);
+         svytotal(~stype, #);
+         svytotal(~enroll, #);
+         svyratio(~api.stu,~enroll, #);
+         svyratio(~api.stu, ~enroll, design = subset(#, stype == 'H'));
+         svymean(make.formula(vars), #, na.rm = TRUE);
+         svyby(~ell+meals, ~stype, #, svymean);
+         summary(svyglm(api00~ell+meals, #));
+         summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >")
+```
+
+ \
+
+ 
 ### `intubOrders` with collections of inputs
 
 When using pipelines, the receiving function has to deal with the *whole* object
@@ -373,6 +455,9 @@ coll %>%
 
 What happens if you would like to **save** the results of the function calls
 (or intermediate results of data manipulations)?
+
+ \
+
 
 ## `intuEnv` and `intuBags`
 
@@ -582,6 +667,9 @@ intuEnv() %>%
 intuEnv() %>%
   ntbt(subset, CO3, Treatment == "nonchilled", "<||> CO3nc")
 ```
+
+ \
+
 
 ## `intuBags`
 
@@ -1003,6 +1091,47 @@ with increasing strength as time passes by)
 Also, please keep in mind you can always create your own interfaces
 (with the helper function `intubate`), or call the non-pipe-aware functions
 directly (with `ntbt`).
+
+### Removing all interfaces in `package:intubate` environment
+If you want to interface functions exclusively with `ntbt`, starting
+from version 1.3.0 you can remove all the supplied interfaces (functions starting
+with `ntbt_`) with the function `intubate_rm_all_interfaces`, that takes no
+arguments. This will not remove the interfaces created "on demand" by the user in the
+global environment (or any environment that is not the `package:intubate` environment).
+
+```r
+intubate_rm_all_interfaces()
+```
+
+This makes the footprint of `intubate` even smaller, if you are interested in
+a minimalistic approach.
+
+### Creating interfaces "on demand" in `package:intubate` environment
+If you want to create your own interfaces "on demand", but you do not want to
+pollute the global environment with the names, starting from version 1.4.0 there
+is a new approach.
+
+Instead of using:
+```r
+ntbt_fntointerface1 <- ntbt_fntointerface2 <- intubate
+```
+
+that creates the interfaces `ntbt_fntointerface1` and
+`ntbt_fntointerface2` in the global environment (or any other 
+environment where you are creating it), you can do:
+
+```r
+intubate(fntointerface1, "fntointerface2")
+```
+
+that creates the interfaces `ntbt_fntointerface1` and
+`ntbt_fntointerface2` in the `package:intubate` environment (where
+the interfaces provided by `intubate` are defined). This way your
+global environment will only contain variables related to your work,
+and not interfaces. As demonstrated above, you can supply either the names
+directly without quotations, or the strings containing the names.
+
+Interfaces created this way are removed if you call `intubate_rm_all_interfaces`.
 
 ## Bugs and Feature requests
 The robustness and generality of the interfacing machinery still needs to be

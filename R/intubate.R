@@ -53,8 +53,8 @@ intubate_rm_all_interfaces <- function() {
   ndx <- which(gsub("(ntbt_).+", "\\1", fn) == "ntbt_")
   if (ret <- (length(ndx) > 0)) {
     ntbt_ns <- asNamespace("intubate")
-    .Call("unlock_envir", ntbt_ns)
-    .Call("unlock_envir", ntbt_env)
+    .Call("unlock_frame", ntbt_ns)
+    .Call("unlock_frame", ntbt_env)
     rm(list = fn[ndx], envir = ntbt_ns)
     rm(list = fn[ndx], envir = ntbt_env)
     lockEnvironment(ntbt_env, bindings = TRUE)
@@ -62,7 +62,6 @@ intubate_rm_all_interfaces <- function() {
   }
   invisible(ret)
 }
-
 
 ## (external)
 intuBag <- function(...) {
@@ -527,6 +526,7 @@ get_calling_name <- function(prefix, full_name) {
   cfti
 }
 
+## (internal)
 check_cfti <- function(cfti) {
   if (!exists(cfti)) {
     stop(paste0("The function <| ", cfti, " |> does not seem to exist.\n",
@@ -536,4 +536,43 @@ check_cfti <- function(cfti) {
                 "If not, please run: library(package_name)\n",
                 "To keep system resources low, intubate does not install, nor loads, packages."))
   }
+}
+
+## (internal)
+## The source of inspiration is a gist by Winston Chang:
+## https://gist.github.com/wch/3280369 on the file called
+## unlockEnvironment.r (Thanks Winston!)
+add_interfaces_to <- function(Call) {
+  if (ret <- (length(Call) > 1)) {
+    ntbt_ns <- asNamespace("intubate")
+    .Call("unlock_frame", ntbt_ns)
+    ntbt_env <- as.environment("package:intubate")
+    .Call("unlock_frame", ntbt_env)
+    for(ndx in 2:length(Call)) {
+      this_arg <- Call[[ndx]]
+      if (is.character(this_arg)) {
+        this_fn <- this_arg
+      } else {
+        this_fn <- all.names(this_arg)
+        this_fn <- this_fn[length(this_fn)]
+      }
+      interface <- paste0("ntbt_", this_fn)
+      if (exists(interface, envir = ntbt_env))
+        next
+
+      assign(interface, intubate, envir = ntbt_ns)
+      ns_interface <- get(interface, envir = ntbt_ns)
+      environment(ns_interface) <- ntbt_ns
+      
+      assign(interface, ns_interface, envir = ntbt_env)
+      
+      exp_env <- ntbt_ns$.__NAMESPACE__.$exports
+      fn_vector <- interface
+      names(fn_vector) <- interface
+      assign(interface, fn_vector, envir = exp_env)
+    }    
+    lockEnvironment(ntbt_env, bindings = TRUE)
+    lockEnvironment(ntbt_ns, bindings = TRUE)
+  }
+  invisible(ret)
 }

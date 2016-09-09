@@ -1,7 +1,7 @@
 ---
-title: "intubate <||> 1.3.0"
+title: "intubate <||> 1.4.0"
 author: "Roberto Bertolusso"
-date: "September 8, 2016"
+date: "September 9, 2016"
 output: rmarkdown::html_document
 vignette: >
   %\VignetteIndexEntry{intubate <||> 1.3.0}
@@ -325,14 +325,17 @@ ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings,
            print; summary; anova; plot(#, which = 1) >")
 ```
 
+ \
+
+
 #### Example demonstrating two strategies of using `intubOrders`
 
-For this example, we will use the code provided in the vignette of
+This example uses the code provided in the vignette of
 package `survey`, that can be found in:
 
 <https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf>
 
-We start by illustrating the original code on the vignette (output not shown):
+The original code on the vignette (output not shown) is:
 
 ```{r, results = 'hide', message=FALSE}
 library(survey)
@@ -360,7 +363,7 @@ summary(logitmodel)
  \
 
 
-Below we illustrate two strategies of using intubOrders.
+Two strategies of using intubOrders are illustrated.
 
 ##### **Strategy 1**: long pipeline, light use of intubOrders:
 
@@ -400,6 +403,9 @@ apiclus1 %>%
          summary(svyglm(api00~ell+meals, #));
          summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >")
 ```
+
+ \
+
 
 ### `intubOrders` with collections of inputs
 
@@ -461,6 +467,9 @@ coll %>%
 
 What happens if you would like to **save** the results of the function calls
 (or intermediate results of data manipulations)?
+
+ \
+
 
 ## `intuEnv` and `intuBags`
 
@@ -668,6 +677,9 @@ intuEnv() %>%
 intuEnv() %>%
   ntbt(subset, CO3, Treatment == "nonchilled", "<||> CO3nc")
 ```
+
+ \
+
 
 ## `intuBags`
 
@@ -1095,6 +1107,47 @@ with increasing strength as time passes by)
 Also, please keep in mind you can always create your own interfaces
 (with the helper function `intubate`), or call the non-pipe-aware functions
 directly (with `ntbt`).
+
+### Removing all interfaces in `package:intubate` environment
+If you want to interface functions exclusively with `ntbt`, starting
+from version 1.3.0 you can remove all the supplied interfaces (functions starting
+with `ntbt_`) with the function `intubate_rm_all_interfaces`, that takes no
+arguments. This will not remove the interfaces created "on demand" by the user in the
+global environment (or any environment that is not the `package:intubate` environment).
+
+```{r, eval=FALSE}
+intubate_rm_all_interfaces()
+```
+
+This makes the footprint of `intubate` even smaller, if you are interested in
+a minimalistic approach.
+
+### Creating interfaces "on demand" in `package:intubate` environment
+If you want to create your own interfaces "on demand", but you do not want to
+pollute the global environment with the names, starting from version 1.4.0 there
+is a new approach.
+
+Instead of using:
+```{r, eval=FALSE}
+ntbt_fntointerface1 <- ntbt_fntointerface2 <- intubate
+```
+
+that creates the interfaces `ntbt_fntointerface1` and
+`ntbt_fntointerface2` in the global environment (or any other 
+environment where you are creating it), you can do:
+
+```{r, eval=FALSE}
+intubate(fntointerface1, "fntointerface2")
+```
+
+that creates the interfaces `ntbt_fntointerface1` and
+`ntbt_fntointerface2` in the `package:intubate` environment (where
+the interfaces provided by `intubate` are defined). This way your
+global environment will only contain variables related to your work,
+and not interfaces. As demonstrated above, you can supply either the names
+directly without quotations, or the strings containing the names.
+
+Interfaces created this way are removed if you call `intubate_rm_all_interfaces`.
 
 ## Bugs and Feature requests
 The robustness and generality of the interfacing machinery still needs to be
