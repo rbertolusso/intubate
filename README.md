@@ -1,6 +1,6 @@
-#### intubate <||> 1.2.0
+#### intubate <||> 1.3.0
 ##### *Roberto Bertolusso*
-##### *2016-07-26* - *2016-09-02* (GPL >= 2)
+##### *2016-07-26* - *2016-09-08* (GPL >= 2)
 
 The aim of `intubate` (logo `<||>`) is to offer a painless way to
 add R functions that are non-pipe-aware

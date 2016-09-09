@@ -45,6 +45,7 @@
 #                    "rcorrcens", "redun", "summary", "summaryD", "summaryM",
 #                    "summaryP", "summaryRc", "summaryS", "transcan", "varclus",
 #                    "xYplot")
+importFrom("inline", "cfunction")
 #importFrom("ipred", "bagging", "errorest", "inbagg", "inclass", "slda")
 #importFrom("iRegression", "bivar", "ccrm", "cm", "crm", "MinMax")
 #importFrom("ivfixed", "ivFixed")
@@ -127,4 +128,5 @@ importFrom("utils", "capture.output")
 #importFrom("vegan", "adipart", "adonis", "adonis2", "bioenv", "capscale",
 #                    "cca", "dbrda", "envfit", "gdispweight", "multipart",
 #                    "ordicloud", "ordisplom", "ordisurf", "ordixyplot")
-exportPattern("intu|ntbt")
+exportPattern("intu|ntbt|unlock")
+useDynLib(intubate)

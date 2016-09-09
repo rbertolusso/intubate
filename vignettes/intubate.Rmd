@@ -1,10 +1,10 @@
 ---
-title: "intubate <||> 1.2.0"
+title: "intubate <||> 1.3.0"
 author: "Roberto Bertolusso"
-date: "September 2, 2016"
+date: "September 8, 2016"
 output: rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{intubate <||> 1.0.1}
+  %\VignetteIndexEntry{intubate <||> 1.3.0}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -323,6 +323,82 @@ ntbt_lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings,
         "< head; tail(#, n = 3); dim; str; summary
            |i|
            print; summary; anova; plot(#, which = 1) >")
+```
+
+#### Example demonstrating two strategies of using `intubOrders`
+
+For this example, we will use the code provided in the vignette of
+package `survey`, that can be found in:
+
+<https://cran.r-project.org/web/packages/survey/vignettes/survey.pdf>
+
+We start by illustrating the original code on the vignette (output not shown):
+
+```{r, results = 'hide', message=FALSE}
+library(survey)
+
+data(api)
+
+vars<-names(apiclus1)[c(12:13,16:23,27:37)] 
+
+dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
+summary(dclus1)
+svymean(~api00, dclus1)
+svyquantile(~api00, dclus1, quantile=c(0.25,0.5,0.75), ci=TRUE)
+svytotal(~stype, dclus1)
+svytotal(~enroll, dclus1)
+svyratio(~api.stu,~enroll, dclus1)
+svyratio(~api.stu, ~enroll, design=subset(dclus1, stype=="H"))
+svymean(make.formula(vars),dclus1,na.rm=TRUE)
+svyby(~ell+meals, ~stype, design=dclus1, svymean)
+regmodel <- svyglm(api00~ell+meals,design=dclus1)
+logitmodel <- svyglm(I(sch.wide=="Yes")~ell+meals, design=dclus1, family=quasibinomial()) 
+summary(regmodel)
+summary(logitmodel)
+```
+
+ \
+
+
+Below we illustrate two strategies of using intubOrders.
+
+##### **Strategy 1**: long pipeline, light use of intubOrders:
+
+```{r}
+apiclus1 %>%
+  ntbt(svydesign, id = ~dnum, weights = ~ pw, fpc = ~ fpc, "<|| summary >") %>%
+  ntbt(svymean, ~ api00, "<|f| print >") %>%
+  ntbt(svyquantile, ~ api00, quantile = c(0.25,0.5,0.75), ci = TRUE, "<|f| print >") %>%
+  ntbt(svytotal, ~ stype, "<|f| print >") %>%
+  ntbt(svytotal, ~ enroll, "<|f| print >") %>%
+  ntbt(svyratio, ~ api.stu, ~ enroll, "<|f| print >") %>%
+  ntbt(svyratio, ~ api.stu, ~ enroll, design = subset("#", stype == "H"), "<|f| print >") %>%
+  ntbt(svymean, make.formula(vars), na.rm = TRUE, "<|f| print >") %>%
+  ntbt(svyby, ~ ell + meals, ~ stype, svymean, "<|f| print >") %>%
+  ntbt(svyglm, api00 ~ ell + meals, "<|f| summary >") %>%
+  ntbt(svyglm, I(sch.wide == "Yes") ~ ell + meals, family = quasibinomial(), "<|f| summary >")
+```
+
+ \
+
+
+##### **Strategy 2**: short pipeline, heavy use of *one* intubOrder:
+
+```{r}
+apiclus1 %>%
+  ntbt(svydesign, id = ~dnum, weights = ~pw, fpc = ~fpc,
+       "<|f|
+         summary;
+         svymean(~api00, #);
+         svyquantile(~api00, #, quantile = c(0.25, 0.5, 0.75), ci = TRUE);
+         svytotal(~stype, #);
+         svytotal(~enroll, #);
+         svyratio(~api.stu,~enroll, #);
+         svyratio(~api.stu, ~enroll, design = subset(#, stype == 'H'));
+         svymean(make.formula(vars), #, na.rm = TRUE);
+         svyby(~ell+meals, ~stype, #, svymean);
+         summary(svyglm(api00~ell+meals, #));
+         summary(svyglm(I(sch.wide == 'Yes')~ell+meals, #, family = quasibinomial())) >")
 ```
 
 ### `intubOrders` with collections of inputs

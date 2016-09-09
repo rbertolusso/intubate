@@ -45,6 +45,25 @@ ntbt <- function(data, fti, ...) {
   invisible(result$result)
 }
 
+
+## (external)
+intubate_rm_all_interfaces <- function() {
+  ntbt_env <- as.environment("package:intubate")
+  fn <- ls(ntbt_env)
+  ndx <- which(gsub("(ntbt_).+", "\\1", fn) == "ntbt_")
+  if (ret <- (length(ndx) > 0)) {
+    ntbt_ns <- asNamespace("intubate")
+    .Call("unlock_envir", ntbt_ns)
+    .Call("unlock_envir", ntbt_env)
+    rm(list = fn[ndx], envir = ntbt_ns)
+    rm(list = fn[ndx], envir = ntbt_env)
+    lockEnvironment(ntbt_env, bindings = TRUE)
+    lockEnvironment(ntbt_ns, bindings = TRUE)
+  }
+  invisible(ret)
+}
+
+
 ## (external)
 intuBag <- function(...) {
   iBag <- list(...)
@@ -518,10 +537,3 @@ check_cfti <- function(cfti) {
                 "To keep system resources low, intubate does not install, nor loads, packages."))
   }
 }
-
-#intubate_interfaces <- function() {
-#  ls("package:intubate")
-#  unlockBinding("intuBag", as.environment("package:intubate"))
-#  rm(intuBag, envir = as.environment("package:intubate"))
-#  ls("package:intubate")
-#}

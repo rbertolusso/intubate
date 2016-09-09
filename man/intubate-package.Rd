@@ -6,7 +6,7 @@
 \tabular{ll}{
 Package: \tab intubate\cr
 Type: \tab Package\cr
-Version: \tab 1.2.0\cr
+Version: \tab 1.3.0\cr
 Date: \tab 2016-09-02\cr
 License: \tab GPL (>=2)\cr
 }
